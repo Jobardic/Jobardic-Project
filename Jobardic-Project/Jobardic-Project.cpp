@@ -2,10 +2,25 @@
 //
 
 #include <iostream>
+#include <string>
+#include "Location.h"
+
+void Exploration();
 
 int main()
 {
+    Exploration();
+
     std::cout << "Hello World!\n";
+}
+
+void Exploration() {
+
+    Location loc1("bedroom", "this is your bedroom");
+    Location loc2("kitchen", "this is your kitchen", { &loc1 });
+
+    loc1.printConnectedLocationNames();
+    loc2.printConnectedLocationNames();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
