@@ -16,11 +16,19 @@ int main()
 
 void Exploration() {
 
+    //Code for testing progress with Location class
     Location loc1("bedroom", "this is your bedroom");
-    Location loc2("kitchen", "this is your kitchen", { &loc1 });
+    Location loc2("kitchen", "this is your kitchen");
+    Location loc3("hall", "this is your hallway between the bedroom, kitchen, and bathroom");
+    Location loc4("bathroom", "this is your bathroom", { &loc3 });
+
+    loc1.addConnectedLocation(&loc3);
+    loc3.addConnectedLocation(&loc2);
 
     loc1.printConnectedLocationNames();
     loc2.printConnectedLocationNames();
+    loc3.printConnectedLocationNames();
+    loc4.printConnectedLocationNames();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

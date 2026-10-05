@@ -24,6 +24,7 @@ Location::Location(std::string name, std::string description, std::vector<Locati
 }
 void Location::addConnectedLocation(Location* location) {
 	connectedLocations.push_back(location);
+	location->connectedLocations.push_back(this);
 }
 std::string Location::getName() {
 	return name;
