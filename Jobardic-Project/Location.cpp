@@ -37,12 +37,9 @@ std::string Location::getName() {
 std::string Location::getDescription() {
 	return description;
 }
-std::vector<std::string> Location::getConnectedLocationNames() {
-	std::vector<std::string> connectedLocationNames;
-	for (Location* loc : connectedLocations) {
-		connectedLocationNames.push_back(loc->getName());
-	}
-	return connectedLocationNames;
+
+std::vector<Location*> Location::getConnectedLocations() {
+	return connectedLocations;
 }
 
 bool Location::isNearbyLocation(Location* location) {
@@ -56,7 +53,17 @@ bool Location::isNearbyLocation(Location* location) {
 	return false;
 }
 
+
+std::vector<std::string> Location::getConnectedLocationNames() {
+	std::vector<std::string> connectedLocationNames;
+	for (Location* loc : connectedLocations) {
+		connectedLocationNames.push_back(loc->getName());
+	}
+	return connectedLocationNames;
+}
+
 //For Testing Only
+
 void Location::printConnectedLocationNames() {
 	/*
 	for (Location* loc : connectedLocations) {
@@ -65,6 +72,7 @@ void Location::printConnectedLocationNames() {
 	}
 	std::cout << std::endl;
 	*/
+
 
 	for (std::string locName : getConnectedLocationNames()) {
 		std::cout << getName() << ": ";

@@ -4,32 +4,129 @@
 #include <iostream>
 #include <string>
 #include "Location.h"
+#include "Character.h"
 
-void Exploration();
 
 int main()
 {
-    Exploration();
+    //Initializing the game world
+    //===============================================================================================
+    Location homeBedroom("Home Bedroom", "You are now in your bedroom.");
+    Location homeKitchen("Home Kitchen", "You are now in your kitchen.");
+    Location homeLivingRoom("Home Living Room", "You are now in your living room.");
+    Location homeBathroom("Home Bathroom", "You are now in your bathroom.");
+    Location homeFrontDoor("Home Front Door", "You are now at the front door to your home from the inside");
+    Location homeFrontPorch("Home Front Porch", "You are now outside on your front porch");
+    Location homeBackDoor("Home Back Door", "You are now at the back door to your home from the inside");
+    Location homeBackyard("Home Back Porch", "You are now outside in your backyard");
+
+    homeBedroom.addConnectedLocation(&homeLivingRoom);
+    homeBedroom.addConnectedLocation(&homeBathroom);
+    homeLivingRoom.addConnectedLocation(&homeKitchen);
+    homeLivingRoom.addConnectedLocation(&homeBathroom);
+    homeLivingRoom.addConnectedLocation(&homeBackDoor);
+    homeBackDoor.addConnectedLocation(&homeBackyard);
+    homeKitchen.addConnectedLocation(&homeFrontDoor);
+    homeFrontDoor.addConnectedLocation(&homeFrontPorch);
+
+    Character player(&homeBedroom);
+
+    
+
+    //===================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //Location Exploration Functionality
+    //=============================================================================================
+    
+    do {
+
+        std::string playerInput;
+        bool validInput = false;
+
+        system("cls");
+        std::cout << std::endl;
+
+        std::cout << player.getCurrentLocation()->getDescription() << std::endl << std::endl;
+        std::cout << "What would you like to do now?" << std::endl;
+        std::cout << "==== Nothing" << std::endl;
+        std::cout << "==== Move" << std::endl << std::endl;
+
+        
+
+        while (validInput == false) {
+            std::getline(std::cin, playerInput);
+            if (playerInput != "Nothing" && playerInput != "Move") {
+                std::cout << "I don't know what you mean! Try again" << std::endl;
+            }
+            else {
+                validInput = true;
+            }
+        }
+
+        if (playerInput == "Nothing") {
+            return false;
+        }
+        else {
+
+            std::cout << std::endl;
+            std::cout << "Where would you like to move to?" << std::endl;
+            for (Location* possibleLocation : player.getCurrentLocation()->getConnectedLocations()) {
+                std::cout << "==== " << possibleLocation->getName() << std::endl;
+            }
+            std::cout << std::endl;
+            
+            validInput = false;
+            while (validInput == false) {
+                std::getline(std::cin, playerInput);
+
+                for (Location* loc : player.getCurrentLocation()->getConnectedLocations()) {
+                    if (playerInput == loc->getName()) {
+                        validInput = true;
+                        player.setCurrentLocation(loc);
+                    }
+                }
+
+                if (validInput == false)
+                {
+                    std::cout << "That location doesn't exist here! Try again" << std::endl;
+                }
+            }
+            
+        }
+
+
+    } while (true);
+    //=======================================================================================
 
     std::cout << "Hello World!\n";
 }
 
-void Exploration() {
 
-    //Code for testing progress with Location class
-    Location loc1("bedroom", "this is your bedroom");
-    Location loc2("kitchen", "this is your kitchen");
-    Location loc3("hall", "this is your hallway between the bedroom, kitchen, and bathroom");
-    Location loc4("bathroom", "this is your bathroom", { &loc3 });
-
-    loc1.addConnectedLocation(&loc3);
-    loc3.addConnectedLocation(&loc2);
-
-    loc1.printConnectedLocationNames();
-    loc2.printConnectedLocationNames();
-    loc3.printConnectedLocationNames();
-    loc4.printConnectedLocationNames();
-}
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

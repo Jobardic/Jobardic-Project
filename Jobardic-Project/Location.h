@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <string>
 
 class Location
 {
@@ -14,6 +13,7 @@ public:
 	std::string getName();
 	std::string getDescription();
 	std::vector<std::string> getConnectedLocationNames();
+	std::vector<Location*> getConnectedLocations();
 	void addConnectedLocation(Location* location);
 	bool isNearbyLocation(Location* location);
 
