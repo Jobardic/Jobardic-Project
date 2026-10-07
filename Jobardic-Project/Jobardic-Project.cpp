@@ -18,7 +18,7 @@ int main()
     Location homeFrontDoor("Home Front Door", "You are now at the front door to your home from the inside");
     Location homeFrontPorch("Home Front Porch", "You are now outside on your front porch");
     Location homeBackDoor("Home Back Door", "You are now at the back door to your home from the inside");
-    Location homeBackyard("Home Back Porch", "You are now outside in your backyard");
+    Location homeBackyard("Home Backyard", "You are now outside in your backyard"); //renaming name argument from "Home Back Porch" to "Home Backyard" to match the description argument and variable name
 
     homeBedroom.addConnectedLocation(&homeLivingRoom);
     homeBedroom.addConnectedLocation(&homeBathroom);
