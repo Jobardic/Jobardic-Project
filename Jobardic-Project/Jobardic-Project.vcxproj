@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{D3B3D6B3-E24A-1EB7-A623-3E4B86EB3DAD}</ProjectGuid>
+    <ProjectGuid>{C828CCF6-7F19-4D45-959F-61FD773FFC38}</ProjectGuid>
     <RootNamespace>JobardicProject</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -142,10 +142,12 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Jobardic-Project.cpp" />
     <ClCompile Include="Location.cpp" />
+    <ClCompile Include="Object.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="Location.h" />
+    <ClInclude Include="Object.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -20,6 +20,8 @@ int main()
     Location homeBackDoor("Home Back Door", "You are now at the back door to your home from the inside");
     Location homeBackyard("Home Backyard", "You are now outside in your backyard"); //renaming name argument from "Home Back Porch" to "Home Backyard" to match the description argument and variable name
 
+    Object chewtoy("Chewtoy", "It is your dog's favorite chewtoy, which reminds you that you haven't seen your dog all morning");
+
     homeBedroom.addConnectedLocation(&homeLivingRoom);
     homeBedroom.addConnectedLocation(&homeBathroom);
     homeLivingRoom.addConnectedLocation(&homeKitchen);
@@ -28,6 +30,8 @@ int main()
     homeBackDoor.addConnectedLocation(&homeBackyard);
     homeKitchen.addConnectedLocation(&homeFrontDoor);
     homeFrontDoor.addConnectedLocation(&homeFrontPorch);
+
+    homeBackDoor.addLocationObject(&chewtoy);
 
     Character player(&homeBedroom);
 
