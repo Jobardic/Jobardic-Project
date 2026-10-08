@@ -70,7 +70,7 @@ int main()
 
         system("cls");
         std::cout << std::endl;
-
+		std::cout << "Health: " << player.getEnergy() << std::endl;
         std::cout << player.getCurrentLocation()->getDescription() << std::endl << std::endl;
         std::cout << "What would you like to do now?" << std::endl;
         std::cout << "==== Nothing" << std::endl;
@@ -115,11 +115,17 @@ int main()
                 {
                     std::cout << "That location doesn't exist here! Try again" << std::endl;
                 }
+                else
+                {
+                    player.decreaseEnergy();
+                }
             }
             
         }
-
-
+		if (player.isCharacterExhausted()) {
+			std::cout << "You have run out of energy and can no longer continue your journey." << std::endl;
+			break;
+		}
     } while (true);
     //=======================================================================================
 
