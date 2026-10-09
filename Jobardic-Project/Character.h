@@ -11,6 +11,7 @@
 ///		setCurrentLocation(Location*)
 /// 	getCurrentLocation()
 /// 	getEnergy() - returns current energy
+///		getMaxEnergy () - returns max energy, a constant
 ///		decreaseEnergy() - decreases energy by 1 (hard code, can be changed later)
 ///		isCharacterExhausted() - returns true if energy is 0 or less, currently leads to game over
 
@@ -22,6 +23,7 @@ public:
 	void setCurrentLocation(Location* location);
 	Location* getCurrentLocation();
 	int getEnergy();
+	int getMaxEnergy();
 	void decreaseEnergy();
 	bool isCharacterExhausted();
 private:

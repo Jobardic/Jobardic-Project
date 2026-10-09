@@ -70,13 +70,14 @@ int main()
 
         system("cls");
         std::cout << std::endl;
-		std::cout << "Health: " << player.getEnergy() << std::endl;
+
+        std::cout << "Energy: " << player.getEnergy() << " / " << player.getMaxEnergy(); //substitute for energy bar
+        std::cout << "\n\n-------------------------------------\n\n";
+
         std::cout << player.getCurrentLocation()->getDescription() << std::endl << std::endl;
         std::cout << "What would you like to do now?" << std::endl;
         std::cout << "==== Nothing" << std::endl;
         std::cout << "==== Move" << std::endl << std::endl;
-
-        
 
         while (validInput == false) {
             std::getline(std::cin, playerInput);

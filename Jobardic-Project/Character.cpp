@@ -17,6 +17,10 @@ int Character::getEnergy() {
 	return characterEnergy;
 }
 
+int Character::getMaxEnergy() {
+	return MAX_ENERGY;
+}
+
 void Character::decreaseEnergy() {
 	if (characterEnergy > MIN_ENERGY) {
 		characterEnergy--;
