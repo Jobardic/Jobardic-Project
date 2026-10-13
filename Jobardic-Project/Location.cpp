@@ -38,6 +38,10 @@ void Location::addLocationObject(Object* obj) {
 	locationObjects.push_back(obj);
 }
 
+void Location::removeLocationObject(int index) {
+	locationObjects.erase(locationObjects.begin() + index);
+}
+
 std::string Location::getName() {
 	return name;
 }

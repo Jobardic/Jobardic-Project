@@ -15,6 +15,7 @@ public:
 	std::vector<Object*> getLocationObjects();
 	void addConnectedLocation(Location* location);
 	void addLocationObject(Object* obj);
+	void removeLocationObject(int index);
 	bool isNearbyLocation(Location* location);
 
 	//For Testing Only

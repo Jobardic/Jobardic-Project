@@ -77,14 +77,14 @@ int main()
 
         std::cout << player.getCurrentLocation()->getDescription() << std::endl << std::endl;
         std::cout << "What would you like to do now?" << std::endl;
-        std::cout << "==== Nothing" << std::endl;
+        std::cout << "==== Look" << std::endl;
         std::cout << "==== Move" << std::endl << std::endl;
 
         
 
         while (validInput == false) {
             std::getline(std::cin, playerInput);
-            if (playerInput != "Nothing" && playerInput != "Move") {
+            if (playerInput != "Look" && playerInput != "Move") {
                 std::cout << "I don't know what you mean! Try again" << std::endl;
             }
             else {
@@ -92,8 +92,33 @@ int main()
             }
         }
 
-        if (playerInput == "Nothing") {
-            return false;
+        if (playerInput == "Look"){
+            validInput = false;
+            std::cout << std::endl << "You look around and find..." << std::endl;
+            if (player.getCurrentLocation()->getLocationObjects().size() == 0) {
+                std::cout << "...Nothing!" << std::endl << "Press enter to return to menu";
+                std::getline(std::cin, playerInput);
+            } else {
+                for (Object* ob : player.getCurrentLocation()->getLocationObjects()) { // gets all the objects in the location to loop through
+                    std::cout << ob->getName() << ": " << ob->getDescription() << std::endl;
+                }
+                std::cout << std::endl;
+                std::cout << "What would you like to take?" << std::endl;
+                while (validInput == false) {
+                    std::getline(std::cin, playerInput);
+                    for (int i = 0; i < player.getCurrentLocation()->getLocationObjects().size(); i++) {
+                        if (playerInput == player.getCurrentLocation()->getLocationObjects()[i]->getName()) {
+                            validInput = true;
+                            player.pickUpObject(player.getCurrentLocation()->getLocationObjects()[i]);
+                            player.getCurrentLocation()->removeLocationObject(i);
+                        }
+                    }
+                    if (validInput == false)
+                    {
+                        std::cout << "This object doesn't exist here! Try again" << std::endl;
+                    }
+                }
+            }
         }
         else {
 
