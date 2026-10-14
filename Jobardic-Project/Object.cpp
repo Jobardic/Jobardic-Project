@@ -13,3 +13,6 @@ std::string Object::getName() {
 std::string Object::getDescription() {
 	return description;
 }
+void Object::setName(std::string newObjectName) {
+	Object::name = newObjectName;
+}

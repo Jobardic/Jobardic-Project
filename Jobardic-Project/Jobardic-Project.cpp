@@ -113,10 +113,15 @@ int main()
                             player.pickUpObject(player.getCurrentLocation()->getLocationObjects()[i]);
                             player.getCurrentLocation()->removeLocationObject(i);
                         }
+						else {
+                            player.getCurrentLocation()->getLocationObjects()[i]->setName("garbage!!!");
+						}
                     }
                     if (validInput == false)
                     {
                         std::cout << "This object doesn't exist here! Try again" << std::endl;
+                        std::cout << "  an imp modified an object in the room\n";
+                        break;
                     }
                 }
             }
