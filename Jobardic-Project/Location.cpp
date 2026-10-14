@@ -1,15 +1,18 @@
 #include "Location.h"
+#include "Object.h"
 #include <iostream>
 
 Location::Location(std::string name, std::string description) {
 	Location::name = name;
 	Location::description = description;
 	Location::connectedLocations = {};
+	Location::locationObjects = {};
 }
-Location::Location(std::string name, std::string description, std::vector<Location*> cls) {
+Location::Location(std::string name, std::string description, std::vector<Location*> cls, std::vector<Object*> lbs) {
 	Location::name = name;
 	Location::description = description;
 	Location::connectedLocations = cls;
+	Location::locationObjects = lbs;
 
 	//The following Makes sure that connected locations are consistent when going back and forth.
 	//ex:
@@ -30,6 +33,15 @@ void Location::addConnectedLocation(Location* location) {
 		location->connectedLocations.push_back(this);
 	}
 }
+
+void Location::addLocationObject(Object* obj) {
+	locationObjects.push_back(obj);
+}
+
+void Location::removeLocationObject(int index) {
+	locationObjects.erase(locationObjects.begin() + index);
+}
+
 std::string Location::getName() {
 	return name;
 }
@@ -40,6 +52,10 @@ std::string Location::getDescription() {
 
 std::vector<Location*> Location::getConnectedLocations() {
 	return connectedLocations;
+}
+
+std::vector<Object*> Location::getLocationObjects() {
+	return locationObjects;
 }
 
 bool Location::isNearbyLocation(Location* location) {

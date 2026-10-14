@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Jobardic-Project/Jobardic-Project.vcxproj" />
+  <Project Path="Jobardic-Project/Jobardic-Project.vcxproj" Id="c828ccf6-7f19-4d45-959f-61fd773ffc38" />
 </Solution>
