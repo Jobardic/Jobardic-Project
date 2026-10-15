@@ -113,6 +113,9 @@ int main()
                             player.pickUpObject(player.getCurrentLocation()->getLocationObjects()[i]);
                             player.getCurrentLocation()->removeLocationObject(i);
                         }
+                        else if (playerInput == "") {
+                            validInput = true;
+                        }
                     }
                     if (validInput == false)
                     {
