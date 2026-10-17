@@ -143,11 +143,13 @@
     <ClCompile Include="Jobardic-Project.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="Location.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Time.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
