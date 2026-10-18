@@ -47,12 +47,13 @@ bool Character::isCharacterExhausted() {
 	return characterEnergy <= MIN_ENERGY; // returns true if 0 or less
 }
 
-std::string Character::Sleep(bool canSleep, Time time, Character character) {
+std::string Character::Sleep(bool canSleep) {
 	if (!canSleep) {
 		return "You can't sleep here.";
 	}
 	else {
-		time.passTime(SLEEP_HOURS, true, character);
+		Time::passTime(SLEEP_HOURS);
+		changeEnergy(SLEEP_HOURS * SLEEP_ENERGY_RATE); 
 		return "You sleep for " + std::to_string(SLEEP_HOURS) + " hours and wake up feeling refreshed.";
 	}
 }

@@ -17,17 +17,16 @@ class Character;
 
 class Time
 {
-public:
-	Time(int startDay, float startHour);
-	int getDay();
-	float getHour();
-	void passTime(int hours, bool sleeping, Character character);
-	std::string timeDisplay();
 private:
-	int day;
-	float hour;
-	const int SLEEP_ENERGY_RATE = 10;
-	const int WAKE_ENERGY_RATE = -3;
+	static int day;
+	static float hour;
+	static const int START_HOUR = 22;
+	static const int START_DAY = 1;
+public:
+	static int getDay();
+	static float getHour();
+	static void passTime(int hours);
+	static std::string timeDisplay();
 };
 
 /*

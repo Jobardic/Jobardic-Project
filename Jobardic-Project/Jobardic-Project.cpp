@@ -36,9 +36,6 @@ int main()
 
     Character player(&homeBedroom, 20);
 
-    Time time(1, 22);
-
-    
 
     //===================================================================================================
 
@@ -78,13 +75,14 @@ int main()
         system("cls");
         std::cout << std::endl;
 
+        std::cout << Time::timeDisplay() << std::endl;
         std::cout << "Energy: " << player.getEnergy() << " / " << player.getMaxEnergy(); //substitute for energy bar
         std::cout << "\n\n-------------------------------------\n\n";
 
         std::cout << player.getCurrentLocation()->getDescription() << std::endl << std::endl;
         std::cout << "What would you like to do now?" << std::endl;
         std::cout << "==== Look" << std::endl;
-        std::cout << "==== Move" << std::endl << std::endl;
+        std::cout << "==== Move" << std::endl;
 		if (player.getCurrentLocation()->canPlayerSleepHere()) {
 			std::cout << "==== Sleep" << std::endl << std::endl;
 		}
@@ -128,7 +126,9 @@ int main()
             }
         }
 		else if (playerInput == "Sleep") {
-            player.Sleep(player.getCurrentLocation()->canPlayerSleepHere(), time, player);
+            std::cout << player.Sleep(player.getCurrentLocation()->canPlayerSleepHere());
+            std::cout << "\nPress enter to continue";   // To-Do: figure out better way to handle clearing screen after inputs
+            std::getline(std::cin, playerInput);
 		}
         else {
 

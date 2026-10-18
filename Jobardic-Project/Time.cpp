@@ -1,10 +1,8 @@
 #include "Time.h"
 #include "Character.h"
 
-Time::Time(int startDay, float startHour) {
-	day = startDay;
-	hour = startHour;
-}
+int Time::day = START_DAY;
+float Time::hour = START_HOUR;
 
 int Time::getDay() {
 	return day;
@@ -14,22 +12,22 @@ float Time::getHour() {
 	return hour;
 }
 
-void Time::passTime(int hours, bool sleeping, Character character) {
+void Time::passTime(int hours) {
 	hour += hours;
 	while (hour >= 24) {
 		hour -= 24;
 		day++;
 	}
-	if (sleeping) {
+	/*if (sleeping) {
 		character.changeEnergy(SLEEP_ENERGY_RATE * hours);
 	}
 	else {
 		character.changeEnergy(WAKE_ENERGY_RATE * hours);
-	}
+	}*/
 }
 
 std::string Time::timeDisplay() {
-	return "Day " + std::to_string(day) + "     " + std::to_string(static_cast<int>(hour) + 1) + ":00"; //currently doesn't work for non integer values for hour
+	return "Day " + std::to_string(day) + "     " + std::to_string(static_cast<int>(hour)) + ":00"; //currently doesn't work for non integer values for hour
 }
 
 /*

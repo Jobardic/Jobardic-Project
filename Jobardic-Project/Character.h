@@ -31,7 +31,7 @@ public:
 	int getMaxEnergy();
 	void changeEnergy(int amount);
 	bool isCharacterExhausted();
-	std::string Sleep(bool canSleep, Time time, Character character);
+	std::string Sleep(bool canSleep);
 private:
 	Location* currentLocation;
 	std::vector<Object*> inventory;
@@ -40,6 +40,8 @@ private:
 	const int MAX_ENERGY = 100; ///< Maximum energy a character can have
 	const int MIN_ENERGY = 0;  ///< Minimum energy a character can have
 	const int SLEEP_HOURS = 8; ///< Number of hours a character sleeps at a time
+	const int SLEEP_ENERGY_RATE = 10;
+	const int WAKE_ENERGY_RATE = -3;
 };
 
 /*
