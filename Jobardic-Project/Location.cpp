@@ -85,6 +85,10 @@ std::vector<std::string> Location::getConnectedLocationNames() {
 	return connectedLocationNames;
 }
 
+bool Location::canPlayerSleepHere() {
+	return allowsSleep;
+}
+
 //For Testing Only
 
 void Location::printConnectedLocationNames() {
@@ -102,4 +106,5 @@ void Location::printConnectedLocationNames() {
 		std::cout << locName << ", ";
 	}
 	std::cout << std::endl;
+
 }
