@@ -1,5 +1,5 @@
 #pragma once
-#include "Character.h"
+//#include "Character.h"    
 #include <string>
 
 /// @file Time.h
@@ -13,6 +13,7 @@
 ///		getHour() - returns the current hour
 ///		PassTime(int hours, bool sleeping, Character& character) - adds to hour/day and updates energy based on sleeping or not
 
+class Character;
 
 class Time
 {
