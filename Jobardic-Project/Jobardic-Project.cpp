@@ -78,7 +78,7 @@ int main()
         std::cout << std::endl;
 
         std::cout << "Energy: " << player.getEnergy() << " / " << player.getMaxEnergy(); //substitute for energy bar
-        std::cout << "Food: " << player.getFood() << " / " << player.getMaxFood(); // substitute for food bar
+        std::cout << "\nFood: " << player.getFood() << " / " << player.getMaxFood(); // substitute for food bar
         std::cout << "\n\n-------------------------------------\n\n";
 
 
@@ -96,12 +96,13 @@ int main()
         std::cout << player.getCurrentLocation()->getDescription() << std::endl << std::endl;
         std::cout << "What would you like to do now?" << std::endl;
         std::cout << "==== Look" << std::endl;
-        std::cout << "==== Move" << std::endl << std::endl;
-		std::cout << "==== Inventory" << std::endl << std::endl;
+        std::cout << "==== Move" << std::endl;
+        std::cout << "==== Inventory" << std::endl;
+        std::cout << std::endl;
 
         while (validInput == false) {
             std::getline(std::cin, playerInput);
-            if (playerInput != "Look" && playerInput != "Move") {
+            if (playerInput != "Look" && playerInput != "Move" && playerInput != "Inventory") {
                 std::cout << "I don't know what you mean! Try again" << std::endl;
             }
             else {
@@ -151,6 +152,8 @@ int main()
 
             if (items.empty()) {
                 std::cout << "Your inventory is empty.\n";
+                std::cout << "\nPress Enter to continue:";
+                std::getline(std::cin, playerInput);
             }
             else {
                 for (Object* item : items) {

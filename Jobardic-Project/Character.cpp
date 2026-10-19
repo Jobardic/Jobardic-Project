@@ -6,7 +6,7 @@ Character::Character(Location* startingLocation) {
 	Character::currentLocation = startingLocation;
 	Character::inventory = {};
 	characterEnergy = MAX_ENERGY;
-	characterFood = MAX_FOOD;
+	characterFood = START_FOOD;
 }
 
 Location* Character::getCurrentLocation() {

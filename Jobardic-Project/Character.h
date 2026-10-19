@@ -41,6 +41,7 @@ private:
     // NEW: Food resource
     int characterFood;
     const int MAX_FOOD = 100;
+    const int START_FOOD = 50;
 };
 
 
