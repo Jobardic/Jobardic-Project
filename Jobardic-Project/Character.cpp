@@ -6,6 +6,7 @@ Character::Character(Location* startingLocation) {
 	Character::currentLocation = startingLocation;
 	Character::inventory = {};
 	characterEnergy = MAX_ENERGY;
+	characterFood = MAX_FOOD;
 }
 
 Location* Character::getCurrentLocation() {
@@ -40,4 +41,30 @@ void Character::decreaseEnergy() {
 
 bool Character::isCharacterExhausted() {
 	return characterEnergy <= MIN_ENERGY; // returns true if 0 or less
+}
+
+
+int Character::getFood() {
+	return characterFood;
+}
+
+int Character::getMaxFood() {
+	return MAX_FOOD;
+}
+
+void Character::increaseFood(int amount) {
+	if (amount > 0) {
+		characterFood += amount;
+
+		if (characterFood > MAX_FOOD) {
+			characterFood = MAX_FOOD;
+		}
+	}
+}
+
+void Character::removeInventoryObject(int index) {
+	if (index >= 0 &&
+		index < static_cast<int>(inventory.size())) {
+		inventory.erase(inventory.begin() + index);
+	}
 }

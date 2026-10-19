@@ -21,6 +21,7 @@ int main()
     Location homeBackyard("Home Backyard", "You are now outside in your backyard"); //renaming name argument from "Home Back Porch" to "Home Backyard" to match the description argument and variable name
 
     Object chewtoy("Chewtoy", "It is your dog's favorite chewtoy, which reminds you that you haven't seen your dog all morning");
+    Object burger("Burger", "A delicious burger is waiting in the oven.");
 
     homeBedroom.addConnectedLocation(&homeLivingRoom);
     homeBedroom.addConnectedLocation(&homeBathroom);
@@ -32,6 +33,7 @@ int main()
     homeFrontDoor.addConnectedLocation(&homeFrontPorch);
 
     homeBackDoor.addLocationObject(&chewtoy);
+    homeKitchen.addLocationObject(&burger);
 
     Character player(&homeBedroom);
 
@@ -76,12 +78,26 @@ int main()
         std::cout << std::endl;
 
         std::cout << "Energy: " << player.getEnergy() << " / " << player.getMaxEnergy(); //substitute for energy bar
+        std::cout << "Food: " << player.getFood() << " / " << player.getMaxFood(); // substitute for food bar
         std::cout << "\n\n-------------------------------------\n\n";
+
+
+        if (player.getCurrentLocation() == &homeKitchen) {
+            for (Object* item : homeKitchen.getLocationObjects()) {
+                if (item->getName() == "Burger") {
+                    std::cout << "There is a burger waiting in the oven!"
+                        << std::endl << std::endl;
+                    break;
+                }
+            }
+        }
+
 
         std::cout << player.getCurrentLocation()->getDescription() << std::endl << std::endl;
         std::cout << "What would you like to do now?" << std::endl;
         std::cout << "==== Look" << std::endl;
         std::cout << "==== Move" << std::endl << std::endl;
+		std::cout << "==== Inventory" << std::endl << std::endl;
 
         while (validInput == false) {
             std::getline(std::cin, playerInput);
@@ -99,7 +115,8 @@ int main()
             if (player.getCurrentLocation()->getLocationObjects().size() == 0) {
                 std::cout << "...Nothing!" << std::endl << "Press enter to return to menu";
                 std::getline(std::cin, playerInput);
-            } else {
+            } else 
+            {
                 for (Object* ob : player.getCurrentLocation()->getLocationObjects()) { // gets all the objects in the location to loop through
                     std::cout << ob->getName() << ": " << ob->getDescription() << std::endl;
                 }
@@ -124,6 +141,53 @@ int main()
                 }
             }
         }
+
+
+        else if (playerInput == "Inventory") {
+
+            std::cout << "\nYour Inventory:\n";
+
+            std::vector<Object*> items = player.getInventory();
+
+            if (items.empty()) {
+                std::cout << "Your inventory is empty.\n";
+            }
+            else {
+                for (Object* item : items) {
+                    std::cout << "==== " << item->getName() << "\n";
+                }
+
+                std::cout << "\nType 'Eat Burger' to eat the burger.";
+                std::cout << "\nPress Enter to return.\n";
+
+                std::getline(std::cin, playerInput);
+
+                if (playerInput == "Eat Burger") {
+                    bool burgerFound = false;
+
+                    for (int i = 0; i < static_cast<int>(items.size()); i++) {
+                        if (items[i]->getName() == "Burger") {
+
+                            player.increaseFood(25);
+                            player.removeInventoryObject(i);
+
+                            std::cout << "\nYou ate the burger!\n";
+                            burgerFound = true;
+                            break;
+                        }
+                    }
+
+                    if (!burgerFound) {
+                        std::cout << "You don't have a burger.\n";
+                    }
+
+                    std::cout << "Press Enter to continue...";
+                    std::getline(std::cin, playerInput);
+                }
+            }
+        }
+
+
         else {
 
             std::cout << std::endl;
@@ -164,6 +228,8 @@ int main()
 
     std::cout << "Hello World!\n";
 }
+
+
 
 
 
