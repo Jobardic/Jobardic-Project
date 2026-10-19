@@ -5,12 +5,14 @@
 #include <string>
 #include "Location.h"
 #include "Character.h"
+#include "World.h"
 
 
 int main()
 {
     //Initializing the game world
     //===============================================================================================
+    /*
     Location homeBedroom("Home Bedroom", "You are now in your bedroom.");
     Location homeKitchen("Home Kitchen", "You are now in your kitchen.");
     Location homeLivingRoom("Home Living Room", "You are now in your living room.");
@@ -32,14 +34,21 @@ int main()
     homeFrontDoor.addConnectedLocation(&homeFrontPorch);
 
     homeBackDoor.addLocationObject(&chewtoy);
+    */
 
-    Character player(&homeBedroom);
+    //Character player(&homeBedroom);
 
-    
+    World* world = new World();
+
 
     //===================================================================================================
 
-
+    //Test Code
+    while (true) {
+        std::string playerInput;
+        std::getline(std::cin, playerInput);
+        std::cout << world->locationString(world->findLocation(playerInput)) << std::endl;
+    }
 
 
 
@@ -66,7 +75,7 @@ int main()
 
     //Location Exploration Functionality
     //=============================================================================================
-    
+    /*
     do {
 
         std::string playerInput;
@@ -162,7 +171,7 @@ int main()
     } while (true);
     //=======================================================================================
 
-    std::cout << "Hello World!\n";
+    std::cout << "Hello World!\n";*/
 }
 
 
