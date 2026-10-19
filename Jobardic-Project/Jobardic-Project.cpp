@@ -19,9 +19,15 @@ int main()
     Location homeFrontPorch("Home Front Porch", "You are now outside on your front porch");
     Location homeBackDoor("Home Back Door", "You are now at the back door to your home from the inside");
     Location homeBackyard("Home Backyard", "You are now outside in your backyard"); //renaming name argument from "Home Back Porch" to "Home Backyard" to match the description argument and variable name
+    Location innerWoods("Inner Woods", "You are now in the middle of the woods");
+    Location northForestEdge("North Forest Edge", "You are now at the northern edge of the forest");
+    Location eastForestEdge("East Forest Edge", "You are now at the eastern edge of the forest");
+    Location westForestEdge("West Forest Edge", "You are now at the western edge of the forest");
+    //South Forest Edge is a different story, will wait for Matthew to do the refactor
 
     Object chewtoy("Chewtoy", "It is your dog's favorite chewtoy, which reminds you that you haven't seen your dog all morning");
     Object burger("Burger", "A delicious burger is waiting in the oven.");
+    Object dog("Your Dog", "Your loyal dog! His favorite toy is his chewtoy");
 
     homeBedroom.addConnectedLocation(&homeLivingRoom);
     homeBedroom.addConnectedLocation(&homeBathroom);
@@ -31,9 +37,13 @@ int main()
     homeBackDoor.addConnectedLocation(&homeBackyard);
     homeKitchen.addConnectedLocation(&homeFrontDoor);
     homeFrontDoor.addConnectedLocation(&homeFrontPorch);
+    innerWoods.addConnectedLocation(&northForestEdge);
+    innerWoods.addConnectedLocation(&westForestEdge);
+    innerWoods.addConnectedLocation(&eastForestEdge);
 
     homeBackDoor.addLocationObject(&chewtoy);
     homeKitchen.addLocationObject(&burger);
+    eastForestEdge.addLocationObject(&dog);
 
     Character player(&homeBedroom);
 
@@ -110,10 +120,10 @@ int main()
             }
         }
 
-        if (playerInput == "Look"){
-            validInput = false;
+        if (playerInput == "Look"){ //Player wants to look around the location
+            validInput = false; //change validInput to false to recieve new input
             std::cout << std::endl << "You look around and find..." << std::endl;
-            if (player.getCurrentLocation()->getLocationObjects().size() == 0) {
+            if (player.getCurrentLocation()->getLocationObjects().size() == 0) { //if there are no objects then print that
                 std::cout << "...Nothing!" << std::endl << "Press enter to return to menu";
                 std::getline(std::cin, playerInput);
             } else 
@@ -124,18 +134,18 @@ int main()
                 std::cout << std::endl;
                 std::cout << "What would you like to take?" << std::endl;
                 while (validInput == false) {
-                    std::getline(std::cin, playerInput);
-                    for (int i = 0; i < player.getCurrentLocation()->getLocationObjects().size(); i++) {
-                        if (playerInput == player.getCurrentLocation()->getLocationObjects()[i]->getName()) {
+                    std::getline(std::cin, playerInput); //takes in player input
+                    for (int i = 0; i < player.getCurrentLocation()->getLocationObjects().size(); i++) { //loops through the objects again to check if any of them match
+                        if (playerInput == player.getCurrentLocation()->getLocationObjects()[i]->getName()) { //what the player inputed
                             validInput = true;
-                            player.pickUpObject(player.getCurrentLocation()->getLocationObjects()[i]);
+                            player.pickUpObject(player.getCurrentLocation()->getLocationObjects()[i]); //if it does, place in player inv and remove from location inv
                             player.getCurrentLocation()->removeLocationObject(i);
                         }
-                        else if (playerInput == "") {
+                        else if (playerInput == "" || playerInput == "Nothing" || playerInput == "None") { //if they just hit enter or type nothing, take them out of the menu
                             validInput = true;
                         }
                     }
-                    if (validInput == false)
+                    if (validInput == false) //if it's not a valid input, let them try again
                     {
                         std::cout << "This object doesn't exist here! Try again" << std::endl;
                     }
