@@ -10,72 +10,31 @@
 
 int main()
 {
-    //Initializing the game world
-    //===============================================================================================
-    /*
-    Location homeBedroom("Home Bedroom", "You are now in your bedroom.");
-    Location homeKitchen("Home Kitchen", "You are now in your kitchen.");
-    Location homeLivingRoom("Home Living Room", "You are now in your living room.");
-    Location homeBathroom("Home Bathroom", "You are now in your bathroom.");
-    Location homeFrontDoor("Home Front Door", "You are now at the front door to your home from the inside");
-    Location homeFrontPorch("Home Front Porch", "You are now outside on your front porch");
-    Location homeBackDoor("Home Back Door", "You are now at the back door to your home from the inside");
-    Location homeBackyard("Home Backyard", "You are now outside in your backyard"); //renaming name argument from "Home Back Porch" to "Home Backyard" to match the description argument and variable name
-
-    Object chewtoy("Chewtoy", "It is your dog's favorite chewtoy, which reminds you that you haven't seen your dog all morning");
-
-    homeBedroom.addConnectedLocation(&homeLivingRoom);
-    homeBedroom.addConnectedLocation(&homeBathroom);
-    homeLivingRoom.addConnectedLocation(&homeKitchen);
-    homeLivingRoom.addConnectedLocation(&homeBathroom);
-    homeLivingRoom.addConnectedLocation(&homeBackDoor);
-    homeBackDoor.addConnectedLocation(&homeBackyard);
-    homeKitchen.addConnectedLocation(&homeFrontDoor);
-    homeFrontDoor.addConnectedLocation(&homeFrontPorch);
-
-    homeBackDoor.addLocationObject(&chewtoy);
-    */
-
-    //Character player(&homeBedroom);
-
+    //Initializing the game world & player
     World* world = new World();
+    Character player(World::HOME_BEDROOM);
 
 
-    //===================================================================================================
-
-    //Test Code
-    while (true) {
+    //Test Code. Entering "e" exits the testing loop and begins main program
+    /*while (true) {
         std::string playerInput;
         std::getline(std::cin, playerInput);
-        std::cout << world->locationString(world->findLocation(playerInput)) << std::endl;
-    }
+        if (playerInput == "e") {
+            break;
+        }
+        auto foundLocation = world->findLocation(playerInput);
+
+        std::cout << world->locationString(foundLocation) << std::endl;
+        if (world->isValidLocation(foundLocation)) {
+            std::cout << world->findLocation(foundLocation)->getDescription() << std::endl;
+        }
+    }*/
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //Location Exploration Functionality
+    //Main Program Loop
     //=============================================================================================
-    /*
+    
     do {
 
         std::string playerInput;
@@ -87,7 +46,7 @@ int main()
         std::cout << "Energy: " << player.getEnergy() << " / " << player.getMaxEnergy(); //substitute for energy bar
         std::cout << "\n\n-------------------------------------\n\n";
 
-        std::cout << player.getCurrentLocation()->getDescription() << std::endl << std::endl;
+        std::cout << world->findLocation(player.getCurrentLocation())->getDescription() << std::endl << std::endl;
         std::cout << "What would you like to do now?" << std::endl;
         std::cout << "==== Look" << std::endl;
         std::cout << "==== Move" << std::endl << std::endl;
@@ -105,22 +64,22 @@ int main()
         if (playerInput == "Look"){
             validInput = false;
             std::cout << std::endl << "You look around and find..." << std::endl;
-            if (player.getCurrentLocation()->getLocationObjects().size() == 0) {
+            if (world->findLocation(player.getCurrentLocation())->getLocationObjects().size() == 0) {
                 std::cout << "...Nothing!" << std::endl << "Press enter to return to menu";
                 std::getline(std::cin, playerInput);
             } else {
-                for (Object* ob : player.getCurrentLocation()->getLocationObjects()) { // gets all the objects in the location to loop through
+                for (Object* ob : world->findLocation(player.getCurrentLocation())->getLocationObjects()) { // gets all the objects in the location to loop through
                     std::cout << ob->getName() << ": " << ob->getDescription() << std::endl;
                 }
                 std::cout << std::endl;
                 std::cout << "What would you like to take?" << std::endl;
                 while (validInput == false) {
                     std::getline(std::cin, playerInput);
-                    for (int i = 0; i < player.getCurrentLocation()->getLocationObjects().size(); i++) {
-                        if (playerInput == player.getCurrentLocation()->getLocationObjects()[i]->getName()) {
+                    for (int i = 0; i < world->findLocation(player.getCurrentLocation())->getLocationObjects().size(); i++) {
+                        if (playerInput == world->findLocation(player.getCurrentLocation())->getLocationObjects()[i]->getName()) {
                             validInput = true;
-                            player.pickUpObject(player.getCurrentLocation()->getLocationObjects()[i]);
-                            player.getCurrentLocation()->removeLocationObject(i);
+                            player.pickUpObject(world->findLocation(player.getCurrentLocation())->getLocationObjects()[i]);
+                            world->findLocation(player.getCurrentLocation())->removeLocationObject(i);
                         }
                         else if (playerInput == "") {
                             validInput = true;
@@ -133,24 +92,32 @@ int main()
                 }
             }
         }
-        else {
+        else { //shows player the locations they can go
 
             std::cout << std::endl;
             std::cout << "Where would you like to move to?" << std::endl;
-            for (Location* possibleLocation : player.getCurrentLocation()->getConnectedLocations()) {
+            
+            /*for (Location* possibleLocation : world->findLocation(player.getCurrentLocation())->getConnectedLocations()) {
                 std::cout << "==== " << possibleLocation->getName() << std::endl;
-            }
+            }*/
+            world->findLocation(player.getCurrentLocation())->outputConnectedLocations();
+
             std::cout << std::endl;
             
             validInput = false;
-            while (validInput == false) {
+            while (validInput == false) { //asks user where they want to go and if they input a valid location their location is set to it
                 std::getline(std::cin, playerInput);
+                World::LOCATION_ENUMS inputLocationEnum = world->findLocation(playerInput);
 
-                for (Location* loc : player.getCurrentLocation()->getConnectedLocations()) {
+                /*for (Location* loc : world->findLocation(player.getCurrentLocation())->getConnectedLocations()) {
                     if (playerInput == loc->getName()) {
                         validInput = true;
                         player.setCurrentLocation(loc);
                     }
+                }*/
+                if (world->isLocationConnected(player.getCurrentLocation(), inputLocationEnum)) {
+                    validInput = true;
+                    player.setCurrentLocation(inputLocationEnum);
                 }
 
                 if (validInput == false)
@@ -170,8 +137,6 @@ int main()
 		}
     } while (true);
     //=======================================================================================
-
-    std::cout << "Hello World!\n";*/
 }
 
 

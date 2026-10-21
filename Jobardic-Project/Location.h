@@ -17,6 +17,7 @@ public:
 	void addLocationObject(Object* obj);
 	void removeLocationObject(int index);
 	bool isNearbyLocation(Location* location);
+	void outputConnectedLocations();
 
 	//For Testing Only
 	void printConnectedLocationNames();

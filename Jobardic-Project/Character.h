@@ -1,6 +1,7 @@
 #pragma once
 #include "Location.h"
 #include "Object.h"
+#include "World.h"
 
 /// @file Character.h
 /// @brief Character class, with location and energy/time implemented
@@ -20,9 +21,9 @@
 class Character
 {
 public:
-	Character(Location* startingLocation);
-	void setCurrentLocation(Location* location);
-	Location* getCurrentLocation();
+	Character(World::LOCATION_ENUMS startingLocation);
+	void setCurrentLocation(World::LOCATION_ENUMS location);
+	World::LOCATION_ENUMS getCurrentLocation();
 	std::vector<Object*> getInventory();
 	void pickUpObject(Object* item);
 	int getEnergy();
@@ -30,7 +31,7 @@ public:
 	void decreaseEnergy();
 	bool isCharacterExhausted();
 private:
-	Location* currentLocation;
+	World::LOCATION_ENUMS currentLocation;
 	std::vector<Object*> inventory;
 	int characterEnergy;
 	const int MAX_ENERGY = 20; ///< Maximum energy a character can have, can be changed later

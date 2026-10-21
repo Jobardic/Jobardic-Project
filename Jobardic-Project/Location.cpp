@@ -70,6 +70,19 @@ bool Location::isNearbyLocation(Location* location) {
 }
 
 
+void Location::outputConnectedLocations() {
+	for (Location* loc : connectedLocations) {
+		//ToDo: convert these "cout" statments into UI class method calls
+		std::cout << "=== " << loc->getName() << std::endl;
+	}
+}
+
+
+
+
+
+
+
 std::vector<std::string> Location::getConnectedLocationNames() {
 	std::vector<std::string> connectedLocationNames;
 	for (Location* loc : connectedLocations) {
