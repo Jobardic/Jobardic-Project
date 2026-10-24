@@ -5,36 +5,14 @@
 Location::Location(std::string name, std::string description) {
 	Location::name = name;
 	Location::description = description;
-	//Location::connectedLocations = {};
 	Location::locationObjects = {};
 }
 Location::Location(std::string name, std::string description, std::vector<Object*> lbs) {
 	Location::name = name;
 	Location::description = description;
-	//Location::connectedLocations = cls;
 	Location::locationObjects = lbs;
-
-	//The following Makes sure that connected locations are consistent when going back and forth.
-	//ex:
-	// Location1 is initialized with no connectedLocations
-	// Location2 is initialized with Location1 connected
-	// 
-	// then Location1 needs to be updated to connect to Location2 as well so it goes both ways.
-	//for (Location* loc : connectedLocations) {
-	//	loc->addConnectedLocation(this);
-	//}
-
 }
-/*
-void Location::addConnectedLocation(Location* location) {
-	if (isNearbyLocation(location) == false) {
-		connectedLocations.push_back(location);
-	}
-	if (location->isNearbyLocation(this) == false) {
-		location->connectedLocations.push_back(this);
-	}
-}
-*/
+
 void Location::addLocationObject(Object* obj) {
 	locationObjects.push_back(obj);
 }
@@ -50,47 +28,6 @@ std::string Location::getName() {
 std::string Location::getDescription() {
 	return description;
 }
-/*
-std::vector<Location*> Location::getConnectedLocations() {
-	return connectedLocations;
-}
-*/
 std::vector<Object*> Location::getLocationObjects() {
 	return locationObjects;
 }
-
-/*
-bool Location::isNearbyLocation(Location* location) {
-
-	for (Location* loc : connectedLocations) {
-		if (location == loc)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-*/
-/*
-void Location::outputConnectedLocations() {
-	for (Location* loc : connectedLocations) {
-		//ToDo: convert these "cout" statments into UI class method calls
-		std::cout << "=== " << loc->getName() << std::endl;
-	}
-}
-*/
-
-
-
-
-
-/*
-std::vector<std::string> Location::getConnectedLocationNames() {
-	std::vector<std::string> connectedLocationNames;
-	for (Location* loc : connectedLocations) {
-		connectedLocationNames.push_back(loc->getName());
-	}
-	return connectedLocationNames;
-}
-*/
-

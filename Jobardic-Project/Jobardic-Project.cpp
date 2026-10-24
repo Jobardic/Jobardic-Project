@@ -12,25 +12,6 @@ int main()
 {
     World* world = new World();
     Character player(World::INITIAL_LOCATION);
-
-
-
-    while (true) {
-        std::string playerInput;
-        std::getline(std::cin, playerInput);
-        if (playerInput == "e") {
-            break;
-        }
-        auto foundLocation = world->findLocation(playerInput);
-
-        std::cout << world->locationString(foundLocation) << std::endl;
-        if (world->isValidLocation(foundLocation)) {
-            std::cout << world->findLocation(foundLocation)->getDescription() << std::endl;
-        }
-    }
-
-
-
     
     do {
 
@@ -95,7 +76,7 @@ int main()
             std::cout << "Where would you like to move to?" << std::endl;
             
 
-            //world->findLocation(player.getCurrentLocation())->outputConnectedLocations();
+
             world->outputLocationConnections(player.getCurrentLocation());
             
             std::cout << std::endl;
@@ -128,12 +109,3 @@ int main()
     } while (true);
 
 }
-
-// DO: output possible move locations done by world class directly
-// DO: proper commments like talked about
-//        e.g how to properly add a location
-// DO: removing need for locationOutputMap
-// DO?: changing it such that world has connected locations data instead
-// DO: other github comment recommendations
-
-//Outside of scope of story: refactoring OBJECT stuff
