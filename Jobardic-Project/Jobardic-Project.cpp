@@ -10,13 +10,12 @@
 
 int main()
 {
-    //Initializing the game world & player
     World* world = new World();
-    Character player(World::HOME_BEDROOM);
+    Character player(World::INITIAL_LOCATION);
 
 
-    //Test Code. Entering "e" exits the testing loop and begins main program
-    /*while (true) {
+
+    while (true) {
         std::string playerInput;
         std::getline(std::cin, playerInput);
         if (playerInput == "e") {
@@ -28,12 +27,10 @@ int main()
         if (world->isValidLocation(foundLocation)) {
             std::cout << world->findLocation(foundLocation)->getDescription() << std::endl;
         }
-    }*/
+    }
 
 
 
-    //Main Program Loop
-    //=============================================================================================
     
     do {
 
@@ -97,27 +94,20 @@ int main()
             std::cout << std::endl;
             std::cout << "Where would you like to move to?" << std::endl;
             
-            /*for (Location* possibleLocation : world->findLocation(player.getCurrentLocation())->getConnectedLocations()) {
-                std::cout << "==== " << possibleLocation->getName() << std::endl;
-            }*/
-            world->findLocation(player.getCurrentLocation())->outputConnectedLocations();
 
+            //world->findLocation(player.getCurrentLocation())->outputConnectedLocations();
+            world->outputLocationConnections(player.getCurrentLocation());
+            
             std::cout << std::endl;
             
             validInput = false;
             while (validInput == false) { //asks user where they want to go and if they input a valid location their location is set to it
                 std::getline(std::cin, playerInput);
-                World::LOCATION_ENUMS inputLocationEnum = world->findLocation(playerInput);
+                World::LOCATION_ENUMS inputLocation = world->findLocation(playerInput);
 
-                /*for (Location* loc : world->findLocation(player.getCurrentLocation())->getConnectedLocations()) {
-                    if (playerInput == loc->getName()) {
-                        validInput = true;
-                        player.setCurrentLocation(loc);
-                    }
-                }*/
-                if (world->isLocationConnected(player.getCurrentLocation(), inputLocationEnum)) {
+                if (world->isLocationConnected(player.getCurrentLocation(), inputLocation)) {
                     validInput = true;
-                    player.setCurrentLocation(inputLocationEnum);
+                    player.setCurrentLocation(inputLocation);
                 }
 
                 if (validInput == false)
@@ -136,18 +126,14 @@ int main()
 			break;
 		}
     } while (true);
-    //=======================================================================================
+
 }
 
+// DO: output possible move locations done by world class directly
+// DO: proper commments like talked about
+//        e.g how to properly add a location
+// DO: removing need for locationOutputMap
+// DO?: changing it such that world has connected locations data instead
+// DO: other github comment recommendations
 
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+//Outside of scope of story: refactoring OBJECT stuff
