@@ -23,8 +23,15 @@ Location::Location(std::string name, std::string description, std::vector<Locati
 	for (Location* loc : connectedLocations) {
 		loc->addConnectedLocation(this);
 	}
-
 }
+Location::Location(std::string name, std::string description, bool canSleep) {
+	Location::name = name;
+	Location::description = description;
+	Location::connectedLocations = {};
+	Location::locationObjects = {};
+	allowsSleep = canSleep;
+}
+
 void Location::addConnectedLocation(Location* location) {
 	if (isNearbyLocation(location) == false) {
 		connectedLocations.push_back(location);
@@ -78,6 +85,10 @@ std::vector<std::string> Location::getConnectedLocationNames() {
 	return connectedLocationNames;
 }
 
+bool Location::canPlayerSleepHere() {
+	return allowsSleep;
+}
+
 //For Testing Only
 
 void Location::printConnectedLocationNames() {
@@ -95,4 +106,5 @@ void Location::printConnectedLocationNames() {
 		std::cout << locName << ", ";
 	}
 	std::cout << std::endl;
+
 }

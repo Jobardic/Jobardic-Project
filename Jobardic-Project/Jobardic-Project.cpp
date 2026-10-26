@@ -5,20 +5,21 @@
 #include <string>
 #include "Location.h"
 #include "Character.h"
+#include "Time.h"
 
 
 int main()
 {
     //Initializing the game world
     //===============================================================================================
-    Location homeBedroom("Home Bedroom", "You are now in your bedroom.");
-    Location homeKitchen("Home Kitchen", "You are now in your kitchen.");
-    Location homeLivingRoom("Home Living Room", "You are now in your living room.");
-    Location homeBathroom("Home Bathroom", "You are now in your bathroom.");
-    Location homeFrontDoor("Home Front Door", "You are now at the front door to your home from the inside");
-    Location homeFrontPorch("Home Front Porch", "You are now outside on your front porch");
-    Location homeBackDoor("Home Back Door", "You are now at the back door to your home from the inside");
-    Location homeBackyard("Home Backyard", "You are now outside in your backyard"); //renaming name argument from "Home Back Porch" to "Home Backyard" to match the description argument and variable name
+    Location homeBedroom("Home Bedroom", "You are now in your bedroom.", true);
+    Location homeKitchen("Home Kitchen", "You are now in your kitchen.", false);
+    Location homeLivingRoom("Home Living Room", "You are now in your living room.", false);
+    Location homeBathroom("Home Bathroom", "You are now in your bathroom.", false);
+    Location homeFrontDoor("Home Front Door", "You are now at the front door to your home from the inside", false);
+    Location homeFrontPorch("Home Front Porch", "You are now outside on your front porch", false);
+    Location homeBackDoor("Home Back Door", "You are now at the back door to your home from the inside", false);
+    Location homeBackyard("Home Backyard", "You are now outside in your backyard", false); //renaming name argument from "Home Back Porch" to "Home Backyard" to match the description argument and variable name
 
     Object chewtoy("Chewtoy", "It is your dog's favorite chewtoy, which reminds you that you haven't seen your dog all morning");
     Object burger("Burger", "A delicious burger is waiting in the oven.");
@@ -35,9 +36,8 @@ int main()
     homeBackDoor.addLocationObject(&chewtoy);
     homeKitchen.addLocationObject(&burger);
 
-    Character player(&homeBedroom);
+    Character player(&homeBedroom, 20);
 
-    
 
     //===================================================================================================
 
@@ -77,6 +77,7 @@ int main()
         system("cls");
         std::cout << std::endl;
 
+        std::cout << Time::timeDisplay() << std::endl;
         std::cout << "Energy: " << player.getEnergy() << " / " << player.getMaxEnergy(); //substitute for energy bar
         std::cout << "\nFood: " << player.getFood() << " / " << player.getMaxFood(); // substitute for food bar
         std::cout << "\n\n-------------------------------------\n\n";
@@ -98,11 +99,14 @@ int main()
         std::cout << "==== Look" << std::endl;
         std::cout << "==== Move" << std::endl;
         std::cout << "==== Inventory" << std::endl;
+		if (player.getCurrentLocation()->canPlayerSleepHere()) {
+            std::cout << "==== Sleep" << std::endl;
+		}
         std::cout << std::endl;
 
         while (validInput == false) {
             std::getline(std::cin, playerInput);
-            if (playerInput != "Look" && playerInput != "Move" && playerInput != "Inventory") {
+            if (playerInput != "Look" && playerInput != "Move" && playerInput != "Inventory" && playerInput != "Sleep") {
                 std::cout << "I don't know what you mean! Try again" << std::endl;
             }
             else {
@@ -190,7 +194,12 @@ int main()
             }
         }
 
-
+		else if (playerInput == "Sleep") {
+            std::cout << player.Sleep(player.getCurrentLocation()->canPlayerSleepHere());
+            std::cout << "\nPress enter to continue";   // To-Do: figure out better way to handle clearing screen after inputs
+            std::getline(std::cin, playerInput);
+		}
+        
         else {
 
             std::cout << std::endl;
@@ -217,7 +226,7 @@ int main()
                 }
                 else
                 {
-                    player.decreaseEnergy();
+                    player.changeEnergy(-1);
                 }
             }
             

@@ -1,11 +1,12 @@
 #include "Character.h"
 #include "Object.h"
-#include <iostream>
+#include "Time.h"
+#include <string>
 
-Character::Character(Location* startingLocation) {
+Character::Character(Location* startingLocation, int startingEnergy) {
 	Character::currentLocation = startingLocation;
 	Character::inventory = {};
-	characterEnergy = MAX_ENERGY;
+	characterEnergy = startingEnergy;
 	characterFood = START_FOOD;
 }
 
@@ -33,9 +34,13 @@ int Character::getMaxEnergy() {
 	return MAX_ENERGY;
 }
 
-void Character::decreaseEnergy() {
-	if (characterEnergy > MIN_ENERGY) {
-		characterEnergy--;
+void Character::changeEnergy(int amount) {
+	characterEnergy += amount;
+	if (characterEnergy > MAX_ENERGY) {
+		characterEnergy = MAX_ENERGY;
+	}
+	if (characterEnergy < MIN_ENERGY) {
+		characterEnergy = MIN_ENERGY;
 	}
 }
 
@@ -43,6 +48,16 @@ bool Character::isCharacterExhausted() {
 	return characterEnergy <= MIN_ENERGY; // returns true if 0 or less
 }
 
+std::string Character::Sleep(bool canSleep) {
+	if (!canSleep) {
+		return "You can't sleep here.";
+	}
+	else {
+		Time::passTime(SLEEP_HOURS);
+		changeEnergy(SLEEP_HOURS * SLEEP_ENERGY_RATE); 
+		return "You sleep for " + std::to_string(SLEEP_HOURS) + " hours and wake up feeling refreshed.";
+	}
+}
 
 int Character::getFood() {
 	return characterFood;
