@@ -53,9 +53,14 @@ World::World() {
     createLocation(HOME_BACKDOOR, "Home Back Door", "You are now at the back door to your home from the inside");
     createLocation(HOME_BACKYARD, "Home Backyard", "You are now outside in your backyard");
     createLocation(SOUTHERN_FOREST_EDGE, "Southern Forest Edge", "You are now standing at the edge of the forest behind your backyard, which is the southern-most area of the forest.");
+    createLocation(INNER_WOODS, "Inner Woods", "You are now standing in the middle of the forest. It is eerie and quiet.");
+    createLocation(WESTERN_FOREST_EDGE, "Western Forest Edge", "You are now standing at the western edge of the forest.");
+    createLocation(EASTERN_FOREST_EDGE, "Eastern Forest Edge", "You are now standing at the eastern edge of the forest.");
+    createLocation(NORTHERN_FOREST_EDGE, "Northern Forest Edge", "You are now standing at the northern edge of the forest.");
 
     Object* chewtoy = new Object("Chewtoy", "It is your dog's favorite chewtoy, which reminds you that you haven't seen your dog all morning");
     Object* burger = new Object("Burger", "A delicious burger is waiting in the oven.");
+    Object* dog = new Object("Your Dog", "Your beloved bet you've had for years! His favorite toy is his chewtoy.");
 
 
     //ToDo: combine the connected location adding & item adding w/ createLocation() function
@@ -87,9 +92,22 @@ World::World() {
     addConnectedLocation(HOME_BACKYARD, SOUTHERN_FOREST_EDGE);
     addConnectedLocation(SOUTHERN_FOREST_EDGE, HOME_BACKYARD);
 
+    addConnectedLocation(INNER_WOODS, SOUTHERN_FOREST_EDGE);
+    addConnectedLocation(SOUTHERN_FOREST_EDGE, INNER_WOODS);
+
+    addConnectedLocation(INNER_WOODS, WESTERN_FOREST_EDGE);
+    addConnectedLocation(WESTERN_FOREST_EDGE, INNER_WOODS);
+
+    addConnectedLocation(INNER_WOODS, EASTERN_FOREST_EDGE);
+    addConnectedLocation(EASTERN_FOREST_EDGE, INNER_WOODS);
+
+    addConnectedLocation(INNER_WOODS, NORTHERN_FOREST_EDGE);
+    addConnectedLocation(NORTHERN_FOREST_EDGE, INNER_WOODS);
+
 
     findLocation(HOME_BACKDOOR)->addLocationObject(chewtoy);
     findLocation(HOME_KITCHEN)->addLocationObject(burger);
+    findLocation(EASTERN_FOREST_EDGE)->addLocationObject(dog);
 }
 
 void World::createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description) {
@@ -106,9 +124,8 @@ bool World::isValidLocation(LOCATION_ENUMS loc_enum) {
         return true;
     }
 }
+
 World::LOCATION_ENUMS World::findLocation(std::string name) {
-    
-    
     //Erase white spaces in the beginning 
     for (int i = 0; i < name.length(); i++) {
         if (name[i] == ' ') {
@@ -143,6 +160,7 @@ World::LOCATION_ENUMS World::findLocation(std::string name) {
     return INVALID_LOCATION;
 
 }
+
 std::string World::locationString(LOCATION_ENUMS loc_enum) {
     if (findLocation(loc_enum) != nullptr) {
         return findLocation(loc_enum)->getName();

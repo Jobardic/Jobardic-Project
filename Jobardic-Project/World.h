@@ -39,6 +39,10 @@ public:
 		HOME_BACKDOOR,
 		HOME_BACKYARD,
 		SOUTHERN_FOREST_EDGE,
+		INNER_WOODS,
+		WESTERN_FOREST_EDGE,
+		EASTERN_FOREST_EDGE,
+		NORTHERN_FOREST_EDGE,
 
 		INVALID_LOCATION
 	};
@@ -64,7 +68,11 @@ private:
 		{"home front porch", HOME_FRONTPORCH},
 		{"home back door", HOME_BACKDOOR},
 		{"home backyard", HOME_BACKYARD},
-		{"southern forest edge", SOUTHERN_FOREST_EDGE}
+		{"southern forest edge", SOUTHERN_FOREST_EDGE },
+		{"inner woods", INNER_WOODS },
+		{"western forest edge", WESTERN_FOREST_EDGE },
+		{"eastern forest edge", EASTERN_FOREST_EDGE },
+		{"northern forest edge", NORTHERN_FOREST_EDGE },
 
 	};
 

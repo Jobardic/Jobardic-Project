@@ -61,28 +61,28 @@ int main()
         if (playerInput == "Look"){
             validInput = false;
             std::cout << std::endl << "You look around and find..." << std::endl;
-            if (world->findLocation(player.getCurrentLocation())->getLocationObjects().size() == 0) {
-                std::cout << "...Nothing!" << std::endl << "Press enter to return to menu";
+            if (world->findLocation(player.getCurrentLocation())->getLocationObjects().size() == 0) { //checks to see if the location has objects
+                std::cout << "...Nothing!" << std::endl << "Press enter to return to menu"; //if not, present nothing
                 std::getline(std::cin, playerInput);
             } else {
-                for (Object* ob : world->findLocation(player.getCurrentLocation())->getLocationObjects()) { // gets all the objects in the location to loop through
+                for (Object* ob : world->findLocation(player.getCurrentLocation())->getLocationObjects()) { // loops through all the objects in the location to print
                     std::cout << ob->getName() << ": " << ob->getDescription() << std::endl;
                 }
                 std::cout << std::endl;
                 std::cout << "What would you like to take?" << std::endl;
                 while (validInput == false) {
                     std::getline(std::cin, playerInput);
-                    for (int i = 0; i < world->findLocation(player.getCurrentLocation())->getLocationObjects().size(); i++) {
-                        if (playerInput == world->findLocation(player.getCurrentLocation())->getLocationObjects()[i]->getName()) {
+                    for (int i = 0; i < world->findLocation(player.getCurrentLocation())->getLocationObjects().size(); i++) { // searches for the typed object in the location inventory
+                        if (playerInput == world->findLocation(player.getCurrentLocation())->getLocationObjects()[i]->getName()) { // if that object is there
                             validInput = true;
-                            player.pickUpObject(world->findLocation(player.getCurrentLocation())->getLocationObjects()[i]);
-                            world->findLocation(player.getCurrentLocation())->removeLocationObject(i);
+                            player.pickUpObject(world->findLocation(player.getCurrentLocation())->getLocationObjects()[i]); // put it in the player's inventory
+                            world->findLocation(player.getCurrentLocation())->removeLocationObject(i); // and remove it from the location inventory
                         }
-                        else if (playerInput == "") {
+                        else if (playerInput == "") { // exit without taking anything
                             validInput = true;
                         }
                     }
-                    if (validInput == false)
+                    if (validInput == false) // if object was not found they can try again
                     {
                         std::cout << "This object doesn't exist here! Try again" << std::endl;
                     }
@@ -107,7 +107,7 @@ int main()
                     std::cout << "==== " << item->getName() << "\n";
                 }
 
-                std::cout << "\nType 'Eat Burger' to eat the burger.";
+                std::cout << "\nType 'Eat [Food]' to eat food."; //Man cannot live off burger alone
                 std::cout << "\nPress Enter to return.\n";
 
                 std::getline(std::cin, playerInput);
