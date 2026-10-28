@@ -31,3 +31,6 @@ std::string Location::getDescription() {
 std::vector<Object*> Location::getLocationObjects() {
 	return locationObjects;
 }
+bool Location::canPlayerSleepHere() {
+	return allowsSleep;
+}

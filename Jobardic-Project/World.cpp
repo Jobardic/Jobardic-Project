@@ -55,6 +55,7 @@ World::World() {
     createLocation(SOUTHERN_FOREST_EDGE, "Southern Forest Edge", "You are now standing at the edge of the forest behind your backyard, which is the southern-most area of the forest.");
 
     Object* chewtoy = new Object("Chewtoy", "It is your dog's favorite chewtoy, which reminds you that you haven't seen your dog all morning");
+    Object* burger = new Object("Burger", "A delicious burger is waiting in the oven.");
 
 
     //ToDo: combine the connected location adding & item adding w/ createLocation() function
@@ -88,6 +89,7 @@ World::World() {
 
 
     findLocation(HOME_BACKDOOR)->addLocationObject(chewtoy);
+    findLocation(HOME_KITCHEN)->addLocationObject(burger);
 }
 
 void World::createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description) {

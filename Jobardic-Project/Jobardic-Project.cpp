@@ -6,12 +6,12 @@
 #include "Location.h"
 #include "Character.h"
 #include "World.h"
-
+#include "Time.h"
 
 int main()
 {
     World* world = new World();
-    Character player(World::INITIAL_LOCATION);
+    Character player(World::INITIAL_LOCATION,100);
     
     do {
 
@@ -21,17 +21,36 @@ int main()
         system("cls");
         std::cout << std::endl;
 
+        std::cout << Time::timeDisplay() << std::endl;
         std::cout << "Energy: " << player.getEnergy() << " / " << player.getMaxEnergy(); //substitute for energy bar
+        std::cout << "\nFood: " << player.getFood() << " / " << player.getMaxFood(); // substitute for food bar
         std::cout << "\n\n-------------------------------------\n\n";
+
+
+        if (player.getCurrentLocation() == World::HOME_KITCHEN) {
+            for (Object* item : world->findLocation(player.getCurrentLocation())->getLocationObjects()) {
+                if (item->getName() == "Burger") {
+                    std::cout << "There is a burger waiting in the oven!"
+                        << std::endl << std::endl;
+                    break;
+                }
+            }
+        }
+
 
         std::cout << world->findLocation(player.getCurrentLocation())->getDescription() << std::endl << std::endl;
         std::cout << "What would you like to do now?" << std::endl;
         std::cout << "==== Look" << std::endl;
-        std::cout << "==== Move" << std::endl << std::endl;
+        std::cout << "==== Move" << std::endl;
+        std::cout << "==== Inventory" << std::endl;
+		if (world->findLocation(player.getCurrentLocation())->canPlayerSleepHere()) {
+            std::cout << "==== Sleep" << std::endl;
+		}
+        std::cout << std::endl;
 
         while (validInput == false) {
             std::getline(std::cin, playerInput);
-            if (playerInput != "Look" && playerInput != "Move") {
+            if (playerInput != "Look" && playerInput != "Move" && playerInput != "Inventory" && playerInput != "Sleep") {
                 std::cout << "I don't know what you mean! Try again" << std::endl;
             }
             else {
@@ -70,7 +89,61 @@ int main()
                 }
             }
         }
-        else { //shows player the locations they can go
+
+
+        else if (playerInput == "Inventory") {
+
+            std::cout << "\nYour Inventory:\n";
+
+            std::vector<Object*> items = player.getInventory();
+
+            if (items.empty()) {
+                std::cout << "Your inventory is empty.\n";
+                std::cout << "\nPress Enter to continue:";
+                std::getline(std::cin, playerInput);
+            }
+            else {
+                for (Object* item : items) {
+                    std::cout << "==== " << item->getName() << "\n";
+                }
+
+                std::cout << "\nType 'Eat Burger' to eat the burger.";
+                std::cout << "\nPress Enter to return.\n";
+
+                std::getline(std::cin, playerInput);
+
+                if (playerInput == "Eat Burger") {
+                    bool burgerFound = false;
+
+                    for (int i = 0; i < static_cast<int>(items.size()); i++) {
+                        if (items[i]->getName() == "Burger") {
+
+                            player.increaseFood(25);
+                            player.removeInventoryObject(i);
+
+                            std::cout << "\nYou ate the burger!\n";
+                            burgerFound = true;
+                            break;
+                        }
+                    }
+
+                    if (!burgerFound) {
+                        std::cout << "You don't have a burger.\n";
+                    }
+
+                    std::cout << "Press Enter to continue...";
+                    std::getline(std::cin, playerInput);
+                }
+            }
+        }
+
+		else if (playerInput == "Sleep") {
+            std::cout << player.Sleep(world->findLocation(player.getCurrentLocation())->canPlayerSleepHere());
+            std::cout << "\nPress enter to continue";   // To-Do: figure out better way to handle clearing screen after inputs
+            std::getline(std::cin, playerInput);
+		}
+        
+        else {
 
             std::cout << std::endl;
             std::cout << "Where would you like to move to?" << std::endl;
@@ -97,7 +170,7 @@ int main()
                 }
                 else
                 {
-                    player.decreaseEnergy();
+                    player.changeEnergy(-1);
                 }
             }
             
