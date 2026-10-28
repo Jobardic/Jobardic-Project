@@ -4,20 +4,30 @@
 #include <string>
 #include "Location.h"
 #include "Object.h"
-#include "Time.h"
+#include "World.h"
 
 /// @file Character.h
 /// @brief Character class, with location, energy, inventory, and food
 /// @authors Matthew, Paul
+/// @date 2026-10-07
+/// 
+/// @internal public methods
+///		Character(Location*)					
+///		setCurrentLocation(Location*)
+/// 	getCurrentLocation()
+/// 	getEnergy() - returns current energy
+///		getMaxEnergy () - returns max energy, a constant
+///		decreaseEnergy() - decreases energy by 1 (hard code, can be changed later)
+///		isCharacterExhausted() - returns true if energy is 0 or less, currently leads to game over
 
 class Character
 {
 public:
-    Character(Location* startingLocation);
-    Character(Location* startingLocation, int startingEnergy);
+    Character(World::LOCATION_ENUMS startingLocation);
+    Character(World::LOCATION_ENUMS startingLocation, int startingEnergy);
 
-    void setCurrentLocation(Location* location);
-    Location* getCurrentLocation();
+    void setCurrentLocation(World::LOCATION_ENUMS);
+	World::LOCATION_ENUMS getCurrentLocation();
 
     std::vector<Object*> getInventory();
     void pickUpObject(Object* item);
@@ -35,7 +45,7 @@ public:
 
 	std::string Sleep(bool canSleep);
 private:
-    Location* currentLocation;
+	World::LOCATION_ENUMS currentLocation;
     std::vector<Object*> inventory;
 
     // NEW: Food resource

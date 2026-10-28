@@ -1,16 +1,18 @@
 #include "Character.h"
 #include "Object.h"
+#include "World.h"
 #include "Time.h"
 #include <string>
+#include <iostream>
 
-Character::Character(Location* startingLocation, int startingEnergy) {
+Character::Character(World::LOCATION_ENUMS startingLocation, int startingEnergy) {
 	Character::currentLocation = startingLocation;
 	Character::inventory = {};
 	characterEnergy = startingEnergy;
 	characterFood = START_FOOD;
 }
 
-Location* Character::getCurrentLocation() {
+World::LOCATION_ENUMS Character::getCurrentLocation() {
 	return currentLocation;
 }
 
@@ -22,7 +24,7 @@ void Character::pickUpObject(Object* item) {
 	Character::inventory.push_back(item);
 }
 
-void Character::setCurrentLocation(Location* location) {
+void Character::setCurrentLocation(World::LOCATION_ENUMS location) {
 	currentLocation = location;
 }
 
