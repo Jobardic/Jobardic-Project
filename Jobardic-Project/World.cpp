@@ -44,19 +44,19 @@
 //World Constructor
 //initializes all locations and objects with their intended data.
 World::World() {
-    createLocation(HOME_BEDROOM, "Home Bedroom", "You are now in your bedroom.");
-    createLocation(HOME_KITCHEN, "Home Kitchen", "You are now in your kitchen.");
-    createLocation(HOME_LIVINGROOM, "Home Living Room", "You are now in your living room.");
-    createLocation(HOME_BATHROOM, "Home Bathroom", "You are now in your bathroom.");
-    createLocation(HOME_FRONTDOOR, "Home Front Door", "You are now at the front door to your home from the inside");
-    createLocation(HOME_FRONTPORCH, "Home Front Porch", "You are now outside on your front porch");
-    createLocation(HOME_BACKDOOR, "Home Back Door", "You are now at the back door to your home from the inside");
-    createLocation(HOME_BACKYARD, "Home Backyard", "You are now outside in your backyard");
-    createLocation(SOUTHERN_FOREST_EDGE, "Southern Forest Edge", "You are now standing at the edge of the forest behind your backyard, which is the southern-most area of the forest.");
-    createLocation(INNER_WOODS, "Inner Woods", "You are now standing in the middle of the forest. It is eerie and quiet.");
-    createLocation(WESTERN_FOREST_EDGE, "Western Forest Edge", "You are now standing at the western edge of the forest.");
-    createLocation(EASTERN_FOREST_EDGE, "Eastern Forest Edge", "You are now standing at the eastern edge of the forest.");
-    createLocation(NORTHERN_FOREST_EDGE, "Northern Forest Edge", "You are now standing at the northern edge of the forest.");
+    createLocation(HOME_BEDROOM, "Home Bedroom", "You are now in your bedroom.", true);
+    createLocation(HOME_KITCHEN, "Home Kitchen", "You are now in your kitchen.", false);
+    createLocation(HOME_LIVINGROOM, "Home Living Room", "You are now in your living room.", false);
+    createLocation(HOME_BATHROOM, "Home Bathroom", "You are now in your bathroom.", false);
+    createLocation(HOME_FRONTDOOR, "Home Front Door", "You are now at the front door to your home from the inside", false);
+    createLocation(HOME_FRONTPORCH, "Home Front Porch", "You are now outside on your front porch", false);
+    createLocation(HOME_BACKDOOR, "Home Back Door", "You are now at the back door to your home from the inside", false);
+    createLocation(HOME_BACKYARD, "Home Backyard", "You are now outside in your backyard", false);
+    createLocation(SOUTHERN_FOREST_EDGE, "Southern Forest Edge", "You are now standing at the edge of the forest behind your backyard, which is the southern-most area of the forest.", false);
+    createLocation(INNER_WOODS, "Inner Woods", "You are now standing in the middle of the forest. It is eerie and quiet.", false);
+    createLocation(WESTERN_FOREST_EDGE, "Western Forest Edge", "You are now standing at the western edge of the forest.", false);
+    createLocation(EASTERN_FOREST_EDGE, "Eastern Forest Edge", "You are now standing at the eastern edge of the forest.", false);
+    createLocation(NORTHERN_FOREST_EDGE, "Northern Forest Edge", "You are now standing at the northern edge of the forest.", false);
 
     Object* chewtoy = new Object("Chewtoy", "It is your dog's favorite chewtoy, which reminds you that you haven't seen your dog all morning");
     Object* burger = new Object("Burger", "A delicious burger is waiting in the oven.");
@@ -110,8 +110,8 @@ World::World() {
     findLocation(EASTERN_FOREST_EDGE)->addLocationObject(dog);
 }
 
-void World::createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description) {
-    Location* newLocation = new Location(name, description);
+void World::createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep) {
+    Location* newLocation = new Location(name, description, allowsSleep);
     locationEnumToPointer.insert_or_assign(location_enum, newLocation);
 }
 

@@ -3,12 +3,11 @@
 #include "World.h"
 #include "Time.h"
 #include <string>
-#include <iostream>
 
-Character::Character(World::LOCATION_ENUMS startingLocation, int startingEnergy) {
+Character::Character(World::LOCATION_ENUMS startingLocation) {
 	Character::currentLocation = startingLocation;
 	Character::inventory = {};
-	characterEnergy = startingEnergy;
+	characterEnergy = START_ENERGY;
 	characterFood = START_FOOD;
 }
 
@@ -59,6 +58,12 @@ std::string Character::Sleep(bool canSleep) {
 		changeEnergy(SLEEP_HOURS * SLEEP_ENERGY_RATE); 
 		return "You sleep for " + std::to_string(SLEEP_HOURS) + " hours and wake up feeling refreshed.";
 	}
+}
+
+std::string Character::Wait() {
+	Time::passTime(WAIT_HOURS);
+	changeEnergy(WAIT_HOURS * WAKE_ENERGY_RATE);
+	return "You wait for " + std::to_string(WAIT_HOURS) + " hours...";
 }
 
 int Character::getFood() {

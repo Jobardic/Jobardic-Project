@@ -57,7 +57,7 @@ public:
 	
 
 private:
-	void createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description);
+	void createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep); // adding new parameter to fix bedroom not being detected as viable sleep location
 	void addConnectedLocation(LOCATION_ENUMS loc_enum1, LOCATION_ENUMS loc_enum2);
 	std::unordered_map<std::string, LOCATION_ENUMS> locationInputMap = {
 		{"home bedroom", HOME_BEDROOM},

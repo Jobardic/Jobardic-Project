@@ -2,10 +2,11 @@
 #include "Object.h"
 #include <iostream>
 
-Location::Location(std::string name, std::string description) {
+Location::Location(std::string name, std::string description, bool allowsSleep) {
 	Location::name = name;
 	Location::description = description;
 	Location::locationObjects = {};
+	Location::allowsSleep = allowsSleep;
 }
 Location::Location(std::string name, std::string description, std::vector<Object*> lbs) {
 	Location::name = name;

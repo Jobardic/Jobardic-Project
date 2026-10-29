@@ -6,9 +6,8 @@
 class Location
 {
 public:
-	Location(std::string name,std::string description);
+	Location(std::string name, std::string description, bool allowsSleep); // adding new parameter to fix bedroom not being detected as viable sleep location
 	Location(std::string name, std::string description, std::vector<Object*> locationObjects);
-	Location(std::string name, std::string description, bool canSleep);
 	std::string getName();
 	std::string getDescription();
 	std::vector<Object*> getLocationObjects();

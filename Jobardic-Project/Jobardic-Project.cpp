@@ -11,7 +11,7 @@
 int main()
 {
     World* world = new World();
-    Character player(World::INITIAL_LOCATION,100);
+    Character player(World::INITIAL_LOCATION);
     
     do {
 
@@ -43,6 +43,7 @@ int main()
         std::cout << "==== Look" << std::endl;
         std::cout << "==== Move" << std::endl;
         std::cout << "==== Inventory" << std::endl;
+		std::cout << "==== Wait" << std::endl;  // new player action: waiting
 		if (world->findLocation(player.getCurrentLocation())->canPlayerSleepHere()) {
             std::cout << "==== Sleep" << std::endl;
 		}
@@ -50,7 +51,7 @@ int main()
 
         while (validInput == false) {
             std::getline(std::cin, playerInput);
-            if (playerInput != "Look" && playerInput != "Move" && playerInput != "Inventory" && playerInput != "Sleep") {
+            if (playerInput != "Look" && playerInput != "Move" && playerInput != "Inventory" && playerInput != "Wait" && playerInput != "Sleep") {
                 std::cout << "I don't know what you mean! Try again" << std::endl;
             }
             else {
@@ -135,6 +136,12 @@ int main()
                     std::getline(std::cin, playerInput);
                 }
             }
+        }
+
+        else if (playerInput == "Wait") {
+			std::cout << player.Wait();
+			std::cout << "\nPress enter to continue";
+			std::getline(std::cin, playerInput);
         }
 
 		else if (playerInput == "Sleep") {

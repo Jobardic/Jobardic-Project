@@ -24,7 +24,7 @@ class Character
 {
 public:
     Character(World::LOCATION_ENUMS startingLocation);
-    Character(World::LOCATION_ENUMS startingLocation, int startingEnergy);
+    Character(World::LOCATION_ENUMS startingLocation, int startingEnergy); // I changed starting energy to a constant defined in this class, so this may not be necessary anymore
 
     void setCurrentLocation(World::LOCATION_ENUMS);
 	World::LOCATION_ENUMS getCurrentLocation();
@@ -44,6 +44,7 @@ public:
     void removeInventoryObject(int index);
 
 	std::string Sleep(bool canSleep);
+	std::string Wait();
 private:
 	World::LOCATION_ENUMS currentLocation;
     std::vector<Object*> inventory;
@@ -54,12 +55,13 @@ private:
     const int START_FOOD = 50;
 	
 	int characterEnergy;
-	std::string sleepMessage;
-	const int MAX_ENERGY = 100; ///< Maximum energy a character can have
-	const int MIN_ENERGY = 0;  ///< Minimum energy a character can have
-	const int SLEEP_HOURS = 8; ///< Number of hours a character sleeps at a time
-	const int SLEEP_ENERGY_RATE = 10;
-	const int WAKE_ENERGY_RATE = -3;
+	const int MAX_ENERGY = 100;			///< Maximum energy a character can have
+	const int MIN_ENERGY = 0;			///< Minimum energy a character can have
+	const int START_ENERGY = 20;		///< Arbitrary starting energy for a character
+	const int SLEEP_HOURS = 8;			///< Number of hours a character sleeps at a time
+	const int WAIT_HOURS = 2;			///< Number of hours a character waits at a time
+	const int SLEEP_ENERGY_RATE = 10;	///< Energy gained per hour of sleep
+	const int WAKE_ENERGY_RATE = -3;	///< Energy lost per hour of being awake
 };
 
 
