@@ -1,0 +1,59 @@
+\doxysection{World.\+h}
+\hypertarget{_world_8h_source}{}\label{_world_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Location.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }World}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ World();}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{enum}\ LOCATION\_ENUMS\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ HOME\_BEDROOM,}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ HOME\_KITCHEN,}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ HOME\_LIVINGROOM,}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ HOME\_BATHROOM,}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ HOME\_FRONTDOOR,}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ HOME\_FRONTPORCH,}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ HOME\_BACKDOOR,}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ HOME\_BACKYARD,}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ SOURHTERN\_FOREST\_EDGE,}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ INVALID\_LOCATION}
+\DoxyCodeLine{00022\ \ \ \ \ \};}
+\DoxyCodeLine{00023\ \ \ \ \ LOCATION\_ENUMS\ findLocation(std::string\ name);}
+\DoxyCodeLine{00024\ \ \ \ \ \doxymbox{\hyperlink{class_location}{Location}}*\ findLocation(LOCATION\_ENUMS\ loc\_enum);}
+\DoxyCodeLine{00025\ \ \ \ \ std::string\ locationString(LOCATION\_ENUMS\ loc\_enum);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00028\ \ \ \ \ std::unordered\_map<std::string,\ LOCATION\_ENUMS>\ locationInputMap\ =\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}home\ bedroom"{}},\ HOME\_BEDROOM\},}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}home\ kitchen"{}},\ HOME\_KITCHEN\},}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}home\ living\ room"{}},\ HOME\_LIVINGROOM\},\{\textcolor{stringliteral}{"{}living\ room"{}},\ HOME\_LIVINGROOM\},\{\textcolor{stringliteral}{"{}lr"{}},\ HOME\_LIVINGROOM\},\{\textcolor{stringliteral}{"{}home\ lr"{}},\ HOME\_LIVINGROOM\},\{\textcolor{stringliteral}{"{}hlr"{}},\ HOME\_LIVINGROOM\},}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}home\ bathroom"{}},\ HOME\_BATHROOM\},}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}home\ front\ door"{}},\ HOME\_FRONTDOOR\},}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}home\ front\ porch"{}},\ HOME\_FRONTPORCH\},}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}home\ back\ door"{}},\ HOME\_BACKDOOR\},}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}home\ backyard"{}},\ HOME\_BACKYARD\},}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}southern\ forest\ edge"{}},\ SOURHTERN\_FOREST\_EDGE\}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \};}
+\DoxyCodeLine{00040\ \ \ \ \ std::unordered\_map<LOCATION\_ENUMS,\ std::string>\ locationOutputMap\ =\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \{HOME\_BEDROOM,\textcolor{stringliteral}{"{}Home\ Bedroom"{}}\},}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \{HOME\_KITCHEN,\ \textcolor{stringliteral}{"{}Home\ Kitchen"{}}\},}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \{HOME\_LIVINGROOM,\textcolor{stringliteral}{"{}Home\ Living\ Room"{}}\},}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \{HOME\_BATHROOM,\textcolor{stringliteral}{"{}Home\ Bathroom"{}}\},}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \{HOME\_FRONTDOOR,\textcolor{stringliteral}{"{}Home\ Front\ Door"{}}\},}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \{HOME\_FRONTPORCH,\textcolor{stringliteral}{"{}Home\ Front\ Porch"{}}\},}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \{HOME\_BACKDOOR,\textcolor{stringliteral}{"{}Home\ Back\ Door"{}}\},}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \{HOME\_BACKYARD,\textcolor{stringliteral}{"{}Home\ Backyard"{}}\},}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \{SOURHTERN\_FOREST\_EDGE,\textcolor{stringliteral}{"{}Southern\ Forest\ Edge"{}}\}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \};}
+\DoxyCodeLine{00052\ \ \ \ \ std::vector<Location*>\ allLocations;}
+\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00054\ }
+
+\end{DoxyCode}

@@ -1,0 +1,27 @@
+\doxysection{Character.\+h File Reference}
+\hypertarget{_character_8h}{}\label{_character_8h}\index{Character.h@{Character.h}}
+
+
+\doxylink{class_character}{Character} class, with location and energy/\+time implemented.  
+
+
+{\ttfamily \+\#include "{}Location.\+h"{}}\newline
+{\ttfamily \+\#include "{}Object.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{class_character}{Character}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{class_character}{Character} class, with location and energy/\+time implemented. 
+
+\begin{DoxyAuthor}{Authors}
+Matthew, Paul 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2026-\/10-\/07
+\end{DoxyDate}
+public methods \doxylink{class_character}{Character(\+Location\texorpdfstring{$\ast$}{*})} ~\newline
+ set\+Current\+Location(\+Location\texorpdfstring{$\ast$}{*}) get\+Current\+Location() get\+Energy() -\/ returns current energy get\+Max\+Energy () -\/ returns max energy, a constant decrease\+Energy() -\/ decreases energy by 1 (hard code, can be changed later) is\+Character\+Exhausted() -\/ returns true if energy is 0 or less, currently leads to game over 

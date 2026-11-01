@@ -1,0 +1,98 @@
+\doxysection{World Class Reference}
+\hypertarget{class_world}{}\label{class_world}\index{World@{World}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_world_a8f92d0ea9e8cb26c7e602f45f20a811a}\label{class_world_a8f92d0ea9e8cb26c7e602f45f20a811a} 
+enum {\bfseries LOCATION\+\_\+\+ENUMS} \{ \newline
+{\bfseries HOME\+\_\+\+BEDROOM}
+, {\bfseries HOME\+\_\+\+KITCHEN}
+, {\bfseries HOME\+\_\+\+LIVINGROOM}
+, {\bfseries HOME\+\_\+\+BATHROOM}
+, \newline
+{\bfseries HOME\+\_\+\+FRONTDOOR}
+, {\bfseries HOME\+\_\+\+FRONTPORCH}
+, {\bfseries HOME\+\_\+\+BACKDOOR}
+, {\bfseries HOME\+\_\+\+BACKYARD}
+, \newline
+{\bfseries SOURHTERN\+\_\+\+FOREST\+\_\+\+EDGE}
+, {\bfseries INVALID\+\_\+\+LOCATION}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_world_a07535b9793a163a34977ebeea5854419}\label{class_world_a07535b9793a163a34977ebeea5854419} 
+LOCATION\+\_\+\+ENUMS {\bfseries find\+Location} (std::\+string name)
+\item 
+\Hypertarget{class_world_a67ebf23c08669ba46deee9c7fa2557dc}\label{class_world_a67ebf23c08669ba46deee9c7fa2557dc} 
+\doxymbox{\hyperlink{class_location}{Location}} \texorpdfstring{$\ast$}{*} {\bfseries find\+Location} (LOCATION\+\_\+\+ENUMS loc\+\_\+enum)
+\item 
+\Hypertarget{class_world_ab2e0eec106ebbe2adb7d322d73e60303}\label{class_world_ab2e0eec106ebbe2adb7d322d73e60303} 
+std::\+string {\bfseries location\+String} (LOCATION\+\_\+\+ENUMS loc\+\_\+enum)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::\+unordered\+\_\+map$<$ std::\+string, LOCATION\+\_\+\+ENUMS $>$ \doxymbox{\hyperlink{class_world_a5c06cdeec1c0cda7092962fbbc438b45}{location\+Input\+Map}}
+\item 
+std::\+unordered\+\_\+map$<$ LOCATION\+\_\+\+ENUMS, std::\+string $>$ \doxymbox{\hyperlink{class_world_a5190ba6801f8a097ac1cef0bc73adb1a}{location\+Output\+Map}}
+\item 
+\Hypertarget{class_world_a65a22cfd9fa544caa87aa9607176655f}\label{class_world_a65a22cfd9fa544caa87aa9607176655f} 
+std::\+vector$<$ \doxymbox{\hyperlink{class_location}{Location}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries all\+Locations}
+\end{DoxyCompactItemize}
+
+
+\label{class_world_doc-variable-members}
+\Hypertarget{class_world_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_world_a5c06cdeec1c0cda7092962fbbc438b45}\index{World@{World}!locationInputMap@{locationInputMap}}
+\index{locationInputMap@{locationInputMap}!World@{World}}
+\doxysubsubsection{\texorpdfstring{locationInputMap}{locationInputMap}}
+{\footnotesize\ttfamily \label{class_world_a5c06cdeec1c0cda7092962fbbc438b45} 
+std::\+unordered\+\_\+map$<$std::\+string, LOCATION\+\_\+\+ENUMS$>$ World::\+location\+Input\+Map\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \{}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}home\ bedroom"{}},\ HOME\_BEDROOM\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}home\ kitchen"{}},\ HOME\_KITCHEN\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}home\ living\ room"{}},\ HOME\_LIVINGROOM\},\{\textcolor{stringliteral}{"{}living\ room"{}},\ HOME\_LIVINGROOM\},\{\textcolor{stringliteral}{"{}lr"{}},\ HOME\_LIVINGROOM\},\{\textcolor{stringliteral}{"{}home\ lr"{}},\ HOME\_LIVINGROOM\},\{\textcolor{stringliteral}{"{}hlr"{}},\ HOME\_LIVINGROOM\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}home\ bathroom"{}},\ HOME\_BATHROOM\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}home\ front\ door"{}},\ HOME\_FRONTDOOR\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}home\ front\ porch"{}},\ HOME\_FRONTPORCH\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}home\ back\ door"{}},\ HOME\_BACKDOOR\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}home\ backyard"{}},\ HOME\_BACKYARD\},}
+\DoxyCodeLine{\ \ \ \ \{\textcolor{stringliteral}{"{}southern\ forest\ edge"{}},\ SOURHTERN\_FOREST\_EDGE\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{class_world_a5190ba6801f8a097ac1cef0bc73adb1a}\index{World@{World}!locationOutputMap@{locationOutputMap}}
+\index{locationOutputMap@{locationOutputMap}!World@{World}}
+\doxysubsubsection{\texorpdfstring{locationOutputMap}{locationOutputMap}}
+{\footnotesize\ttfamily \label{class_world_a5190ba6801f8a097ac1cef0bc73adb1a} 
+std::\+unordered\+\_\+map$<$LOCATION\+\_\+\+ENUMS, std::\+string$>$ World::\+location\+Output\+Map\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \{}
+\DoxyCodeLine{\ \ \ \ \{HOME\_BEDROOM,\textcolor{stringliteral}{"{}Home\ Bedroom"{}}\},}
+\DoxyCodeLine{\ \ \ \ \{HOME\_KITCHEN,\ \textcolor{stringliteral}{"{}Home\ Kitchen"{}}\},}
+\DoxyCodeLine{\ \ \ \ \{HOME\_LIVINGROOM,\textcolor{stringliteral}{"{}Home\ Living\ Room"{}}\},}
+\DoxyCodeLine{\ \ \ \ \{HOME\_BATHROOM,\textcolor{stringliteral}{"{}Home\ Bathroom"{}}\},}
+\DoxyCodeLine{\ \ \ \ \{HOME\_FRONTDOOR,\textcolor{stringliteral}{"{}Home\ Front\ Door"{}}\},}
+\DoxyCodeLine{\ \ \ \ \{HOME\_FRONTPORCH,\textcolor{stringliteral}{"{}Home\ Front\ Porch"{}}\},}
+\DoxyCodeLine{\ \ \ \ \{HOME\_BACKDOOR,\textcolor{stringliteral}{"{}Home\ Back\ Door"{}}\},}
+\DoxyCodeLine{\ \ \ \ \{HOME\_BACKYARD,\textcolor{stringliteral}{"{}Home\ Backyard"{}}\},}
+\DoxyCodeLine{\ \ \ \ \{SOURHTERN\_FOREST\_EDGE,\textcolor{stringliteral}{"{}Southern\ Forest\ Edge"{}}\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+World.\+h\item 
+World.\+cpp\end{DoxyCompactItemize}

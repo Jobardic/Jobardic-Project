@@ -1,0 +1,41 @@
+\doxysection{Character.\+h}
+\hypertarget{_character_8h_source}{}\label{_character_8h_source}\doxymbox{\hyperlink{_character_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Location.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}Object.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }Character}
+\DoxyCodeLine{00021\ \{}
+\DoxyCodeLine{00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \ \ Character(\doxymbox{\hyperlink{class_location}{Location}}*\ startingLocation);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ setCurrentLocation(\doxymbox{\hyperlink{class_location}{Location}}*\ location);}
+\DoxyCodeLine{00025\ \ \ \ \ \doxymbox{\hyperlink{class_location}{Location}}*\ getCurrentLocation();}
+\DoxyCodeLine{00026\ \ \ \ \ std::vector<Object*>\ getInventory();}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ pickUpObject(\doxymbox{\hyperlink{class_object}{Object}}*\ item);}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{int}\ getEnergy();}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ getMaxEnergy();}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ decreaseEnergy();}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ isCharacterExhausted();}
+\DoxyCodeLine{00032\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00033\ \ \ \ \ \doxymbox{\hyperlink{class_location}{Location}}*\ currentLocation;}
+\DoxyCodeLine{00034\ \ \ \ \ std::vector<Object*>\ inventory;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{int}\ characterEnergy;}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_character_ab7ed4f317e6f06f639fc9ea77530c54f}{MAX\_ENERGY}}\ =\ 20;\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_character_a88364f662590c1d59d7174b9c294c224}{MIN\_ENERGY}}\ =\ 0;\ \ }
+\DoxyCodeLine{00038\ \};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00041\ \textcolor{comment}{}}
+\DoxyCodeLine{00042\ \textcolor{comment}{<from\ high\ level\ design\ (exhaustion)>}}
+\DoxyCodeLine{00043\ \textcolor{comment}{character\ object:}}
+\DoxyCodeLine{00044\ \textcolor{comment}{\ \ \ \ new\ class\ variable:\ energy\ (private)}}
+\DoxyCodeLine{00045\ \textcolor{comment}{\ \ \ \ set\ health\ to\ 20\ in\ constructor}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ \ \ \ int\ getEnergy\ (0-\/20)}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ void\ decreaseEnergy\ (by\ 1)}}
+\DoxyCodeLine{00048\ \textcolor{comment}{}}
+\DoxyCodeLine{00049\ \textcolor{comment}{*/}}
+
+\end{DoxyCode}

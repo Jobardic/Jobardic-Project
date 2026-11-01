@@ -1,0 +1,34 @@
+\doxysection{Location.\+h}
+\hypertarget{_location_8h_source}{}\label{_location_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Object.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }Location}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ Location(std::string\ name,std::string\ description);}
+\DoxyCodeLine{00010\ \ \ \ \ Location(std::string\ name,\ std::string\ description,\ std::vector<Location*>\ connectedLocations,\ std::vector<Object*>\ locationObjects);}
+\DoxyCodeLine{00011\ \ \ \ \ std::string\ getName();}
+\DoxyCodeLine{00012\ \ \ \ \ std::string\ getDescription();}
+\DoxyCodeLine{00013\ \ \ \ \ std::vector<std::string>\ getConnectedLocationNames();}
+\DoxyCodeLine{00014\ \ \ \ \ std::vector<Location*>\ getConnectedLocations();}
+\DoxyCodeLine{00015\ \ \ \ \ std::vector<Object*>\ getLocationObjects();}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{void}\ addConnectedLocation(Location*\ location);}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ addLocationObject(\doxymbox{\hyperlink{class_object}{Object}}*\ obj);}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ removeLocationObject(\textcolor{keywordtype}{int}\ index);}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{bool}\ isNearbyLocation(Location*\ location);}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//For\ Testing\ Only}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ printConnectedLocationNames();}
+\DoxyCodeLine{00023\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00024\ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{00025\ \ \ \ \ std::string\ description;}
+\DoxyCodeLine{00026\ \ \ \ \ std::vector<Location*>\ connectedLocations;}
+\DoxyCodeLine{00027\ \ \ \ \ std::vector<Object*>\ locationObjects;}
+\DoxyCodeLine{00028\ \};}
+\DoxyCodeLine{00029\ }
+
+\end{DoxyCode}

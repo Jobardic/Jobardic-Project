@@ -1,0 +1,21 @@
+var NAVTREEINDEX0 =
+{
+"_character_8h.html":[1,0,0],
+"_character_8h_source.html":[1,0,0],
+"_location_8h_source.html":[1,0,1],
+"_object_8h_source.html":[1,0,2],
+"_world_8h_source.html":[1,0,3],
+"annotated.html":[0,0],
+"class_character.html":[0,0,0],
+"class_character.html#a88364f662590c1d59d7174b9c294c224":[0,0,0,1],
+"class_character.html#ab7ed4f317e6f06f639fc9ea77530c54f":[0,0,0,0],
+"class_location.html":[0,0,1],
+"class_object.html":[0,0,2],
+"class_world.html":[0,0,3],
+"classes.html":[0,1],
+"files.html":[1,0],
+"functions.html":[0,2,0],
+"functions_vars.html":[0,2,1],
+"index.html":[],
+"pages.html":[]
+};
