@@ -2,6 +2,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include <cctype>
 
 /*
 * 
@@ -128,7 +129,7 @@ bool World::isValidLocation(LOCATION_ENUMS loc_enum) {
 World::LOCATION_ENUMS World::findLocation(std::string name) {
     //Erase white spaces in the beginning 
     for (int i = 0; i < name.length(); i++) {
-        if (name[i] == ' ') {
+        if (std::isspace(name[i])) {
             name.erase(i,1);
             i--;
         }
@@ -138,7 +139,7 @@ World::LOCATION_ENUMS World::findLocation(std::string name) {
     }
     //Erase white spaces in the end
     for (int i = name.length() - 1; i >= 0; i--) {
-        if (name[i] == ' ') {
+        if (std::isspace(name[i])) {
             name.erase(i, 1);
         }
         else {
