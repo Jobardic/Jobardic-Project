@@ -19,9 +19,14 @@ int main()
     Location homeFrontPorch("Home Front Porch", "You are now outside on your front porch");
     Location homeBackDoor("Home Back Door", "You are now at the back door to your home from the inside");
     Location homeBackyard("Home Backyard", "You are now outside in your backyard"); //renaming name argument from "Home Back Porch" to "Home Backyard" to match the description argument and variable name
+    Location waterWell("Water Well", "You are standing beside an old water well.");
 
     Object chewtoy("Chewtoy", "It is your dog's favorite chewtoy, which reminds you that you haven't seen your dog all morning");
     Object burger("Burger", "A delicious burger is waiting in the oven.");
+    Object bucket("Bucket", "An empty bucket that can hold water.");
+    
+    bool wellDry = false;
+    bool bucketFilled = false;
 
     homeBedroom.addConnectedLocation(&homeLivingRoom);
     homeBedroom.addConnectedLocation(&homeBathroom);
@@ -29,11 +34,13 @@ int main()
     homeLivingRoom.addConnectedLocation(&homeBathroom);
     homeLivingRoom.addConnectedLocation(&homeBackDoor);
     homeBackDoor.addConnectedLocation(&homeBackyard);
+    homeBackyard.addConnectedLocation(&waterWell);
     homeKitchen.addConnectedLocation(&homeFrontDoor);
     homeFrontDoor.addConnectedLocation(&homeFrontPorch);
 
     homeBackDoor.addLocationObject(&chewtoy);
     homeKitchen.addLocationObject(&burger);
+    homeBathroom.addLocationObject(&bucket);
 
     Character player(&homeBedroom);
 
@@ -79,6 +86,7 @@ int main()
 
         std::cout << "Energy: " << player.getEnergy() << " / " << player.getMaxEnergy(); //substitute for energy bar
         std::cout << "Food: " << player.getFood() << " / " << player.getMaxFood(); // substitute for food bar
+        std::cout << "Thirst: " << player.getThirst() << " / " << player.getMaxThirst(); // substitute for thirst bar
         std::cout << "\n\n-------------------------------------\n\n";
 
 
@@ -92,12 +100,43 @@ int main()
             }
         }
 
+        // NEW: Water well description
+        if (player.getCurrentLocation() == &waterWell) {
+
+            if (wellDry) {
+                std::cout << "The well has dried up. "
+                    << "There is no water left.\n\n";
+            }
+            else {
+                bool hasBucket = false;
+
+                for (Object* item : player.getInventory()) {
+                    if (item->getName() == "Bucket") {
+                        hasBucket = true;
+                        break;
+                    }
+                }
+
+                if (hasBucket) {
+                    std::cout << "You can fill your bucket "
+                        << "with water here!\n\n";
+                }
+                else {
+                    std::cout << "You see a well full of water. "
+                        << "Bring a bucket to collect some!\n\n";
+                }
+            }
+        }
 
         std::cout << player.getCurrentLocation()->getDescription() << std::endl << std::endl;
         std::cout << "What would you like to do now?" << std::endl;
         std::cout << "==== Look" << std::endl;
         std::cout << "==== Move" << std::endl << std::endl;
 		std::cout << "==== Inventory" << std::endl << std::endl;
+
+        if (player.getCurrentLocation() == &waterWell) {
+            std::cout << "==== Fill Bucket" << std::endl;
+        }
 
         while (validInput == false) {
             std::getline(std::cin, playerInput);
@@ -143,6 +182,48 @@ int main()
         }
 
 
+        else if (playerInput == "Fill Bucket") {
+
+            if (player.getCurrentLocation() != &waterWell) {
+                std::cout << "There is no well here.\n";
+            }
+            else if (wellDry) {
+                std::cout << "The well has dried up!\n";
+            }
+            else {
+                bool hasBucket = false;
+
+                for (Object* item : player.getInventory()) {
+                    if (item->getName() == "Bucket") {
+                        hasBucket = true;
+                        break;
+                    }
+                }
+
+                if (!hasBucket) {
+                    std::cout << "You need to bring a bucket "
+                        << "to collect water.\n";
+                }
+                else if (bucketFilled) {
+                    std::cout << "Your bucket is already full!\n";
+                }
+                else {
+                    bucketFilled = true;
+                    wellDry = true;
+
+                    std::cout << "You filled your bucket "
+                        << "with fresh water!\n";
+
+                    std::cout << "The well has now dried up!\n";
+                }
+            }
+
+            std::cout << "Press Enter to continue...";
+            std::getline(std::cin, playerInput);
+        }
+
+
+
         else if (playerInput == "Inventory") {
 
             std::cout << "\nYour Inventory:\n";
@@ -158,6 +239,7 @@ int main()
                 }
 
                 std::cout << "\nType 'Eat Burger' to eat the burger.";
+                std::cout << "\nType 'Drink Water' to drink from your bucket.";
                 std::cout << "\nPress Enter to return.\n";
 
                 std::getline(std::cin, playerInput);
@@ -188,6 +270,36 @@ int main()
         }
 
 
+        else if (playerInput == "Drink Water") {
+
+            bool hasBucket = false;
+
+            for (Object* item : player.getInventory() ) {
+                if (item->getName() == "Bucket") {
+                    hasBucket = true;
+                    break;
+                }
+            }
+
+            if (!hasBucket) {
+                std::cout << "\nYou do not have a bucket!\n";
+            }
+            else if (!bucketFilled) {
+                std::cout << "\nYour bucket is empty!\n";
+            }
+            else {
+                player.increaseThirst(40);
+                bucketFilled = false;
+
+                std::cout << "\nYou drank the water!\n";
+                std::cout << "Your thirst has been restored!\n";
+            }
+
+            std::cout << "Press Enter to continue...";
+            std::getline(std::cin, playerInput);
+            }
+
+
         else {
 
             std::cout << std::endl;
@@ -215,6 +327,7 @@ int main()
                 else
                 {
                     player.decreaseEnergy();
+                    player.decreaseThirst();
                 }
             }
             
@@ -226,7 +339,24 @@ int main()
     } while (true);
     //=======================================================================================
 
-    std::cout << "Hello World!\n";
+
+   /* void PrintDeathScreen(std::string reason) {
+        system("cls");
+
+        std::cout << "\n";
+        std::cout << "====================================\n";
+        std::cout << "             GAME OVER              \n";
+        std::cout << "====================================\n\n";
+
+        std::cout << "You have died!\n\n";
+        std::cout << "Cause of death: " << reason << "\n\n";
+
+        std::cout << "====================================\n";
+        std::cout << "         Press R to Restart         \n";
+        std::cout << "         Press Q to Quit            \n";
+        std::cout << "====================================\n\n";
+    }*/
+
 }
 
 
