@@ -51,7 +51,7 @@ int main()
 
         while (validInput == false) {
             std::getline(std::cin, playerInput);
-            if (playerInput != "Look" && playerInput != "Move" && playerInput != "Inventory" && playerInput != "Wait" && playerInput != "Sleep") {
+            if (playerInput != "Look" && playerInput != "Move" && playerInput != "Inventory" && playerInput != "Wait" && playerInput != "Sleep" && playerInput != "look" && playerInput != "move" && playerInput != "inventory" && playerInput != "wait" && playerInput != "sleep") { //not case sensitive anymore
                 std::cout << "I don't know what you mean! Try again" << std::endl;
             }
             else {
@@ -59,7 +59,7 @@ int main()
             }
         }
 
-        if (playerInput == "Look"){
+        if (playerInput == "Look" || playerInput == "look"){
             validInput = false;
             std::cout << std::endl << "You look around and find..." << std::endl;
             if (world->findLocation(player.getCurrentLocation())->getLocationObjects().size() == 0) { //checks to see if the location has objects
@@ -92,7 +92,7 @@ int main()
         }
 
 
-        else if (playerInput == "Inventory") {
+        else if (playerInput == "Inventory" || playerInput == "inventory") {
 
             std::cout << "\nYour Inventory:\n";
 
@@ -138,19 +138,19 @@ int main()
             }
         }
 
-        else if (playerInput == "Wait") {
+        else if (playerInput == "Wait" || playerInput == "wait") {
 			std::cout << player.Wait();
 			std::cout << "\nPress enter to continue";
 			std::getline(std::cin, playerInput);
         }
 
-		else if (playerInput == "Sleep") {
+		else if (playerInput == "Sleep" || playerInput == "sleep") {
             std::cout << player.Sleep(world->findLocation(player.getCurrentLocation())->canPlayerSleepHere());
             std::cout << "\nPress enter to continue";   // To-Do: figure out better way to handle clearing screen after inputs
             std::getline(std::cin, playerInput);
 		}
         
-        else {
+        else { //Move Command
 
             std::cout << std::endl;
             std::cout << "Where would you like to move to?" << std::endl;
@@ -163,15 +163,24 @@ int main()
             
             validInput = false;
             while (validInput == false) { //asks user where they want to go and if they input a valid location their location is set to it
+                bool customFlag = false;
                 std::getline(std::cin, playerInput);
                 World::LOCATION_ENUMS inputLocation = world->findLocation(playerInput);
 
                 if (world->isLocationConnected(player.getCurrentLocation(), inputLocation)) {
-                    validInput = true;
-                    player.setCurrentLocation(inputLocation);
+                    if (inputLocation == World::THREE_HUESTON_AVE_LIVING_ROOM && !player.hasItem("Silver key")) { //if they dont have the silver key
+                        std::cout << "You have to unlock this door to access this location, try again" << std::endl;
+                        customFlag = true;
+                    } else if (inputLocation == World::CONSTRUCTION_DEPOT_INTERIOR && Time::getDay() < 10) { //if it's not day 10 yet
+                        std::cout << "The construction depot isn't open yet, try again" << std::endl;
+                        customFlag = true;
+                    } else {
+                        validInput = true;
+                        player.setCurrentLocation(inputLocation);
+                    }
                 }
 
-                if (validInput == false)
+                if (validInput == false && customFlag == false)
                 {
                     std::cout << "That location doesn't exist here! Try again" << std::endl;
                 }
@@ -179,6 +188,7 @@ int main()
                 {
                     player.changeEnergy(-1);
                 }
+
             }
             
         }

@@ -5,6 +5,7 @@
 #include "Location.h"
 #include "Object.h"
 #include "World.h"
+#include <string>
 
 /// @file Character.h
 /// @brief Character class, with location, energy, inventory, and food
@@ -29,7 +30,8 @@ public:
     void setCurrentLocation(World::LOCATION_ENUMS);
 	World::LOCATION_ENUMS getCurrentLocation();
 
-    std::vector<Object*> getInventory();
+	std::vector<Object*> getInventory();
+	bool hasItem(std::string object);
     void pickUpObject(Object* item);
 
     int getEnergy();
