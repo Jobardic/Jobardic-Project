@@ -13,7 +13,7 @@ public:
 	std::vector<Object*> getLocationObjects();
 	void addConnectedLocation(Location* location);
 	void addLocationObject(Object* obj);
-	void removeLocationObject(int index);
+	void removeLocationObject(std::string objectName);
 	bool isNearbyLocation(Location* location);
 	bool canPlayerSleepHere();  // Getter for allowsSleep
 

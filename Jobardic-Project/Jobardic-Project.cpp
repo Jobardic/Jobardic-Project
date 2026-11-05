@@ -74,10 +74,11 @@ int main()
                 while (validInput == false) {
                     std::getline(std::cin, playerInput);
                     for (int i = 0; i < world->findLocation(player.getCurrentLocation())->getLocationObjects().size(); i++) { // searches for the typed object in the location inventory
-                        if (playerInput == world->findLocation(player.getCurrentLocation())->getLocationObjects()[i]->getName()) { // if that object is there
+                        std::string objectName = world->findLocation(player.getCurrentLocation())->getLocationObjects()[i]->getName();
+                        if (playerInput == objectName) { // if that object is there
                             validInput = true;
                             player.pickUpObject(world->findLocation(player.getCurrentLocation())->getLocationObjects()[i]); // put it in the player's inventory
-                            world->findLocation(player.getCurrentLocation())->removeLocationObject(i); // and remove it from the location inventory
+                            world->findLocation(player.getCurrentLocation())->removeLocationObject(objectName); // and remove it from the location inventory
                         }
                         else if (playerInput == "") { // exit without taking anything
                             validInput = true;

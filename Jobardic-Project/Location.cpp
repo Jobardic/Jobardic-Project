@@ -18,8 +18,17 @@ void Location::addLocationObject(Object* obj) {
 	locationObjects.push_back(obj);
 }
 
-void Location::removeLocationObject(int index) {
-	locationObjects.erase(locationObjects.begin() + index);
+void Location::removeLocationObject(std::string objectName) {
+	auto indexOfObject = std::find_if(
+		locationObjects.begin(), 
+		locationObjects.end(), 
+		[objectName](Object* obj) {
+			return obj->getName() == objectName;
+		}
+	);
+	if (indexOfObject != locationObjects.end()) {
+		locationObjects.erase(indexOfObject);
+	}
 }
 
 std::string Location::getName() {

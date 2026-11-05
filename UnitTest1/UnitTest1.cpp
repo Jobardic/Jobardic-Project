@@ -46,29 +46,24 @@ namespace UnitTest1
 			room.addLocationObject(&object_A);
 			room.addLocationObject(&object_B);
 			room.addLocationObject(&object_C);
-
-			Assert::IsTrue(room.getLocationObjects().size() == expectedThreeObjects.size(), L"addLocationObject() not behaving as expected: expected size of vector incorrect"); //checks to make sure the sizes are the same first so the following code functions properly
-			for (size_t i = 0; i < expectedThreeObjects.size(); i++) {
-				Assert::IsTrue(room.getLocationObjects()[i] == expectedThreeObjects[i], L"addLocationObject() not behaving as expected: unexpected object vector contents");
-			}
-
+			
+			Assert::IsTrue(room.getLocationObjects() == expectedThreeObjects, L"addLocationObject() not behaving as expected: unexpected object vector contents");
 
 			std::vector<Object*> expectedTwoObjects = { &object_A,&object_C };
-			room.removeLocationObject(1); //removes object of second position, object_B
+			room.removeLocationObject("B name"); //removes object of second position, object_B
 
-
-
-			Assert::IsTrue(room.getLocationObjects().size() == expectedTwoObjects.size(),L"removeLocationObject() not behaving as expected: expected size of remaining vector incorrect"); //checks to make sure the sizes are the same first so the following code functions properly
-			for (size_t i = 0; i < expectedTwoObjects.size(); i++) {
-				Assert::IsTrue(room.getLocationObjects()[i] == expectedTwoObjects[i], L"removeLocationObject() not behaving as expected: unexpected remaining object vector contents");
-			}
+			Assert::IsTrue(room.getLocationObjects() == expectedTwoObjects, L"removeLocationObject() not behaving as expected: unexpected remaining object vector contents");
 
 		}
 		TEST_METHOD(LOCATION_OBJECT_REMOVAL_WITH_EMPTY_INVENTORY) 
 		{
+			Object object("name", "description");
 			Location room("room name", "room description", false);
+			auto initialObjects = room.getLocationObjects();
+	
 			try {
-				room.removeLocationObject(1);
+				room.removeLocationObject("name");
+				Assert::IsTrue(initialObjects == room.getLocationObjects(),L"Location's stored objects were changed when no change was expected");
 			}
 			catch (...) {
 				Assert::Fail(L"removeLocationObject() throws an exception when attempting to remove an object when the inventory is empty");
