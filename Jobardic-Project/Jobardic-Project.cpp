@@ -3,8 +3,14 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Location.h"
 #include "Character.h"
+#include "InputPrompts.h"
+#include "InputChoice.h"
+#include "StoryEvent.h"
+#include "Commands.h"
+#include "UI.h"
 #include "World.h"
 #include "Time.h"
 
@@ -13,9 +19,53 @@ int main()
     World* world = new World();
     Character player(World::INITIAL_LOCATION);
 
-	bool wellDry = false;
-	bool bucketFilled = false;
-    
+
+
+    InputChoice progress("==>");
+    std::vector<InputChoice*> choices = { &progress };
+    InputPrompts opening(choices);
+    std::string openingDesc = "You wake in your bedroom ready to start the day.\nYou turn on your radio to listen to the news while you get dressed.\n\"Breaking News : There has been an explosion on the moon.It is as of yet unknown how this event came to be but\nscientists warn that the resulting loss in velocity will cause the moon to descend to earth.Astrophysicists and \nastronauts   across the world are working hard to prevent what could be a modern day Chickulub.Now for the\nweather…\"\nYou turn off the radio and stand in disbelief.After the shock has washed over you you decide to get moving.If the moon is\nreally falling you should probably prepare.";
+    std::string cat = "cat";
+
+    StoryEvent openingSequence(cat, World::INITIAL_LOCATION, opening);
+
+    //===================================================================================================
+
+
+
+
+
+    //Opening Secuence with basic game loop
+    //===================================================================================================
+    bool quit = false;
+    do {
+        UI::displayOutput(openingSequence);
+        std::string userInput;
+        std::cin >> userInput;
+        if (UI::parseUserInput(userInput) == Commands::Progress) {
+            quit = true;
+        }
+        else {
+            std::cout << "Unrecognized Command. Please try again." << "\n";
+        }
+    } while (quit == false);
+
+    //===================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     do {
 
         std::string playerInput;
