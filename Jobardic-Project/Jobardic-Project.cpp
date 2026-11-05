@@ -3,8 +3,15 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Location.h"
 #include "Character.h"
+#include "InputPrompts.h"
+#include "InputChoice.h"
+#include "StoryEvent.h"
+#include "Commands.h"
+#include "UI.h"
+using namespace std; //<-- we can use this if we don't want to type "std::" every time
 
 
 int main()
@@ -37,7 +44,13 @@ int main()
 
     Character player(&homeBedroom);
 
-    
+    InputChoice progress("==>");
+    vector<InputChoice*> choices = { &progress };
+    InputPrompts opening(choices);
+    string openingDesc = "You wake in your bedroom ready to start the day.\nYou turn on your radio to listen to the news while you get dressed.\n\"Breaking News : There has been an explosion on the moon.It is as of yet unknown how this event came to be but\nscientists warn that the resulting loss in velocity will cause the moon to descend to earth.Astrophysicists and \nastronauts   across the world are working hard to prevent what could be a modern day Chickulub.Now for the\nweather…\"\nYou turn off the radio and stand in disbelief.After the shock has washed over you you decide to get moving.If the moon is\nreally falling you should probably prepare.";
+    string cat = "cat";
+
+    StoryEvent openingSequence(cat, homeBedroom, opening);
 
     //===================================================================================================
 
@@ -45,12 +58,22 @@ int main()
 
 
 
+    //Opening Secuence with basic game loop
+    //===================================================================================================
+    bool quit = false;
+    do {
+        UI::displayOutput(openingSequence);
+        string userInput;
+        cin >> userInput;
+        if (UI::parseUserInput(userInput) == Commands::Progress) {
+            quit = true;
+        }
+        else {
+            cout << "Unrecognized Command. Please try again." << "\n";
+        }
+    } while (quit == false);
 
-
-
-
-
-
+    //===================================================================================================
 
 
 
