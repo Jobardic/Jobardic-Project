@@ -77,10 +77,10 @@ int main()
 		if (world->findLocation(player.getCurrentLocation())->canPlayerSleepHere()) {
             std::cout << "==== Sleep" << std::endl;
 		}
-
         if (world->findLocation(player.getCurrentLocation()) == world->findLocation(World::WATER_WELL)) {
             std::cout << "==== Fill Bucket" << std::endl;
         }
+        std::cout << std::endl;
 
         while (validInput == false) {
             std::getline(std::cin, playerInput);
