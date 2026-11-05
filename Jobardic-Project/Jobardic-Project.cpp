@@ -142,7 +142,7 @@ int main()
 
         while (validInput == false) {
             std::getline(std::cin, playerInput);
-            if (playerInput != "Look" && playerInput != "Move" && playerInput != "Inventory") {
+            if (playerInput != "Look" && playerInput != "Move" && playerInput != "Inventory" && playerInput != "Fill Bucket") {
                 std::cout << "I don't know what you mean! Try again" << std::endl;
             }
             else {
@@ -270,39 +270,37 @@ int main()
                     std::cout << "Press Enter to continue...";
                     std::getline(std::cin, playerInput);
                 }
-            }
-        }
 
+                else if (playerInput == "Drink Water") {
 
-        else if (playerInput == "Drink Water") {
+                    bool hasBucket = false;
 
-            bool hasBucket = false;
+                    for (Object* item : player.getInventory()) {
+                        if (item->getName() == "Bucket") {
+                            hasBucket = true;
+                            break;
+                        }
+                    }
 
-            for (Object* item : player.getInventory() ) {
-                if (item->getName() == "Bucket") {
-                    hasBucket = true;
-                    break;
+                    if (!hasBucket) {
+                        std::cout << "\nYou do not have a bucket!\n";
+                    }
+                    else if (!bucketFilled) {
+                        std::cout << "\nYour bucket is empty!\n";
+                    }
+                    else {
+                        player.increaseThirst(40);
+                        bucketFilled = false;
+
+                        std::cout << "\nYou drank the water!\n";
+                        std::cout << "Your thirst has been restored!\n";
+                    }
+
+                    std::cout << "Press Enter to continue...";
+                    std::getline(std::cin, playerInput);
                 }
             }
-
-            if (!hasBucket) {
-                std::cout << "\nYou do not have a bucket!\n";
-            }
-            else if (!bucketFilled) {
-                std::cout << "\nYour bucket is empty!\n";
-            }
-            else {
-                player.increaseThirst(40);
-                bucketFilled = false;
-
-                std::cout << "\nYou drank the water!\n";
-                std::cout << "Your thirst has been restored!\n";
-            }
-
-            std::cout << "Press Enter to continue...";
-            std::getline(std::cin, playerInput);
-            }
-
+        }
 
         else {
 
