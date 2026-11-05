@@ -58,10 +58,12 @@ World::World() {
     createLocation(WESTERN_FOREST_EDGE, "Western Forest Edge", "You are now standing at the western edge of the forest.", false);
     createLocation(EASTERN_FOREST_EDGE, "Eastern Forest Edge", "You are now standing at the eastern edge of the forest.", false);
     createLocation(NORTHERN_FOREST_EDGE, "Northern Forest Edge", "You are now standing at the northern edge of the forest.", false);
+	createLocation(WATER_WELL, "Water Well", "You are now standing at a water well. You can fill your bucket with fresh water here.", false);
 
     Object* chewtoy = new Object("Chewtoy", "It is your dog's favorite chewtoy, which reminds you that you haven't seen your dog all morning");
     Object* burger = new Object("Burger", "A delicious burger is waiting in the oven.");
     Object* dog = new Object("Your Dog", "Your beloved bet you've had for years! His favorite toy is his chewtoy.");
+	Object* bucket = new Object("Bucket", "A bucket which can be used to collect water from the well.");
 
 
     //ToDo: combine the connected location adding & item adding w/ createLocation() function
@@ -105,10 +107,14 @@ World::World() {
     addConnectedLocation(INNER_WOODS, NORTHERN_FOREST_EDGE);
     addConnectedLocation(NORTHERN_FOREST_EDGE, INNER_WOODS);
 
+	addConnectedLocation(HOME_BACKYARD, WATER_WELL);
+	addConnectedLocation(WATER_WELL, HOME_BACKYARD);
+
 
     findLocation(HOME_BACKDOOR)->addLocationObject(chewtoy);
     findLocation(HOME_KITCHEN)->addLocationObject(burger);
     findLocation(EASTERN_FOREST_EDGE)->addLocationObject(dog);
+    findLocation(HOME_BATHROOM)->addLocationObject(bucket);
 }
 
 void World::createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep) {

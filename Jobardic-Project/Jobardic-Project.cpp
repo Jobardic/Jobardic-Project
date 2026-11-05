@@ -12,6 +12,9 @@ int main()
 {
     World* world = new World();
     Character player(World::INITIAL_LOCATION);
+
+	bool wellDry = false;
+	bool bucketFilled = false;
     
     do {
 
@@ -38,7 +41,7 @@ int main()
         }
 
         // NEW: Water well description
-        if (player.getCurrentLocation() == &waterWell) {
+        if (world->findLocation(player.getCurrentLocation()) == world->findLocation(World::WATER_WELL)) {
 
             if (wellDry) {
                 std::cout << "The well has dried up. "
@@ -74,9 +77,8 @@ int main()
 		if (world->findLocation(player.getCurrentLocation())->canPlayerSleepHere()) {
             std::cout << "==== Sleep" << std::endl;
 		}
-        std::cout << std::endl;
 
-        if (player.getCurrentLocation() == &waterWell) {
+        if (world->findLocation(player.getCurrentLocation()) == world->findLocation(World::WATER_WELL)) {
             std::cout << "==== Fill Bucket" << std::endl;
         }
 
@@ -125,7 +127,7 @@ int main()
 
         else if (playerInput == "Fill Bucket") {
 
-            if (player.getCurrentLocation() != &waterWell) {
+            if (world->findLocation(player.getCurrentLocation()) != world->findLocation(World::WATER_WELL)) {
                 std::cout << "There is no well here.\n";
             }
             else if (wellDry) {

@@ -43,6 +43,7 @@ public:
 		WESTERN_FOREST_EDGE,
 		EASTERN_FOREST_EDGE,
 		NORTHERN_FOREST_EDGE,
+		WATER_WELL,
 
 		INVALID_LOCATION
 	};
@@ -73,7 +74,7 @@ private:
 		{"western forest edge", WESTERN_FOREST_EDGE },
 		{"eastern forest edge", EASTERN_FOREST_EDGE },
 		{"northern forest edge", NORTHERN_FOREST_EDGE },
-
+		{"water well", WATER_WELL }, { "well", WATER_WELL }, {"water", WATER_WELL }, {"ww", WATER_WELL }
 	};
 
 	std::unordered_map<LOCATION_ENUMS, std::vector<LOCATION_ENUMS>> locationConnectionsMap;
