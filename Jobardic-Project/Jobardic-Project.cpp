@@ -19,7 +19,8 @@ int main()
     World* world = new World();
     Character player(World::INITIAL_LOCATION);
 
-
+    bool wellDry = false;
+    bool bucketFilled = false;
 
     InputChoice progress("==>");
     std::vector<InputChoice*> choices = { &progress };
