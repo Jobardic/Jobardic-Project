@@ -29,6 +29,16 @@ public:
     int getMaxFood();
     void increaseFood(int amount);
     void removeInventoryObject(int index);
+	/*void decreaseFood(int amount);
+	bool isCharacterStarving();
+	bool isCharacterDehydrated();*/
+
+
+    // NEW: Water well / thirst functionality
+    int getThirst();
+    int getMaxThirst();
+    void decreaseThirst();
+    void increaseThirst(int amount);
 
 private:
     Location* currentLocation;
@@ -42,6 +52,13 @@ private:
     int characterFood;
     const int MAX_FOOD = 100;
     const int START_FOOD = 50;
+
+
+    // NEW: Thirst resource
+    int characterThirst;
+    const int MAX_THIRST = 100;
+    const int MIN_THIRST = 0;
+
 };
 
 
