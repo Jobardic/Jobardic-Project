@@ -2,7 +2,7 @@
 
 #include "Location.h"
 #include "InputPrompts.h"
-#include<string>
+#include <string>
 
 class StoryEvent {
 

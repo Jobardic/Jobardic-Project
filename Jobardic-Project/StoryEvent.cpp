@@ -1,7 +1,7 @@
 #include "InputPrompts.h"
 #include "InputChoice.h"
 #include "Location.h"
-#include<string>
+#include <string>
 #include "StoryEvent.h"
 
 StoryEvent::StoryEvent(std::string desc, Location* location, InputPrompts* inputPrompt) {
