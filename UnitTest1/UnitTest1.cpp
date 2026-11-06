@@ -57,12 +57,11 @@ namespace UnitTest1
 		}
 		TEST_METHOD(LOCATION_OBJECT_REMOVAL_WITH_EMPTY_INVENTORY) 
 		{
-			Object object("name", "description");
 			Location room("room name", "room description", false);
 			auto initialObjects = room.getLocationObjects();
 	
 			try {
-				room.removeLocationObject("name");
+				room.removeLocationObject("nonexistent_object");
 				Assert::IsTrue(initialObjects == room.getLocationObjects(),L"Location's stored objects were changed when no change was expected");
 			}
 			catch (...) {
