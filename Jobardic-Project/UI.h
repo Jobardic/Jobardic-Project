@@ -9,7 +9,7 @@
 class UI {
 
 public:
-	static void displayOutput(StoryEvent);
+	static void displayOutput(StoryEvent* storyEvent);
 	static Commands parseUserInput(std::string userInput);
 	//std::string getInputPrompt(std::string userInput);
 

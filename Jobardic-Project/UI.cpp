@@ -7,14 +7,14 @@
 #include<string>
 #include<iostream>
 #include<cctype>
-using namespace std;
+
 
 
 void displayOutput(StoryEvent* storyEvent) {
-	cout << storyEvent->getDescription() << "\n";
+	std::cout << storyEvent->getDescription() << "\n";
 	int numberOfPrompts = storyEvent->getInputPrompt()->getNumberOfPrompts();
 	for (int i = 0; i < numberOfPrompts; i++) {
-		cout << storyEvent->getInputPrompt()->getChoice(i) << "\n";
+		std::cout << storyEvent->getInputPrompt()->getChoice(i) << "\n";
 	}
 }
 
