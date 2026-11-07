@@ -12,8 +12,10 @@ public:
 	std::string getDescription();
 	std::vector<Object*> getLocationObjects();
 	void addLocationObject(Object* obj);
-	void removeLocationObject(int index);
+	void removeLocationObject(std::string objectName);
 	bool canPlayerSleepHere();  // Getter for allowsSleep
+	Object* findLocationObject(std::string objectName);
+	bool hasObject(std::string objectName);
 
 private:
 	std::string name;

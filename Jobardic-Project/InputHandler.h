@@ -29,7 +29,7 @@ public:
 	static void waitForUser();
 	static std::string normalizeInput(std::string input);
 
-	//potentially deferrable:
+	//ToDo: implement helper functions for main and use the following method to super simplify main() even further
 	static void executeForInput(std::string input, bool(*helper_func));
 };
 
