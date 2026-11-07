@@ -52,19 +52,19 @@ bool Character::isCharacterExhausted() {
 
 std::string Character::Sleep(bool canSleep) {
 	if (!canSleep) {
-		return "You can't sleep here.";
+		return "You can't sleep here.\n";
 	}
 	else {
 		Time::passTime(SLEEP_HOURS);
 		changeEnergy(SLEEP_HOURS * SLEEP_ENERGY_RATE); 
-		return "You sleep for " + std::to_string(SLEEP_HOURS) + " hours and wake up feeling refreshed.";
+		return "You sleep for " + std::to_string(SLEEP_HOURS) + " hours and wake up feeling refreshed.\n";
 	}
 }
 
 std::string Character::Wait() {
 	Time::passTime(WAIT_HOURS);
 	changeEnergy(WAIT_HOURS * WAKE_ENERGY_RATE);
-	return "You wait for " + std::to_string(WAIT_HOURS) + " hours...";
+	return "You wait for " + std::to_string(WAIT_HOURS) + " hours...\n";
 }
 
 int Character::getFood() {

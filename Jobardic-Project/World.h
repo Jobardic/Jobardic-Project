@@ -48,7 +48,8 @@ public:
 
 		INVALID_LOCATION
 	};
-	static const LOCATION_ENUMS INITIAL_LOCATION = HOME_BEDROOM;
+	//static const LOCATION_ENUMS INITIAL_LOCATION = HOME_BEDROOM;
+	static const LOCATION_ENUMS INITIAL_LOCATION = HOME_KITCHEN; // testing only
 	World();
 	LOCATION_ENUMS findLocation(std::string name);
 	Location* findLocation(LOCATION_ENUMS loc_enum);
