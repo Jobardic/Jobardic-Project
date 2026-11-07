@@ -1,6 +1,6 @@
 #include "InputHandler.h"
 
-std::string normalizeInput(std::string input) {
+std::string InputHandler::normalizeInput(std::string input) {
     //Erase white spaces in the beginning 
     for (int i = 0; i < input.length(); i++) {
         if (std::isspace(input[i])) {
