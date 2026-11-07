@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include "Location.h"
+#include "InputHandler.h"
 
 //Manages all locations and the program's ability to reference locations using enumerators
 class World

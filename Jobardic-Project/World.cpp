@@ -133,30 +133,8 @@ bool World::isValidLocation(LOCATION_ENUMS loc_enum) {
 }
 
 World::LOCATION_ENUMS World::findLocation(std::string name) {
-    //Erase white spaces in the beginning 
-    for (int i = 0; i < name.length(); i++) {
-        if (std::isspace(name[i])) {
-            name.erase(i,1);
-            i--;
-        }
-        else {
-            break;
-        }
-    }
-    //Erase white spaces in the end
-    for (int i = name.length() - 1; i >= 0; i--) {
-        if (std::isspace(name[i])) {
-            name.erase(i, 1);
-        }
-        else {
-            break;
-        }
-    }
-    //remove capitalization
-    for (int i = 0; i < name.length(); i++) {
-        name[i] = std::tolower(name[i]);
-    }
-
+    
+    name = InputHandler::normalizeInput(name);
 
     //search the possible inputs mapping for the location enum which matches the provided name after having been input corrected for spaces & capitalization
     for (const auto& mapping : locationInputMap) {
