@@ -17,8 +17,9 @@ class World
 	*   outputLocationConnections(LOCATION_ENUMS)            - prints the names of the connected locations of the  location class instance which maps to the passed enum
 	* 
 	* private methods
-	*	createLocation(LOCATION_ENUMS,string,string)         - creates a new location class instance, mapped to the provided enum & initialized with the name (first string) and description (second string) provided.
-	*   addConnectedLocation(LOCATION_ENUMS, LOCATION_ENUMS) - connects the second location to the first location (e.g enables the player to move from location1 -> location2)
+	*	createLocation(LOCATION_ENUMS,string,string,bool,bool)	- creates a new location class instance, mapped to the provided enum & initialized with the name (first string) and description (second string) provided, 
+																	plus if the location allwos sleep (first bool) and if it's indoors (second bool)
+	*   addConnectedLocation(LOCATION_ENUMS, LOCATION_ENUMS)	- connects the second location to the first location (e.g enables the player to move from location1 -> location2)
 	* 
 	* public data
 	*	enum LOCATION_ENUMS                   - an enum type with a possible value for every location the world class constructor will initialize
@@ -59,7 +60,7 @@ public:
 	
 
 private:
-	void createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep); // adding new parameter to fix bedroom not being detected as viable sleep location
+	void createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep, bool isIndoors); // two bool values are for if the player can sleep, and if the location is indoors
 	void addConnectedLocation(LOCATION_ENUMS loc_enum1, LOCATION_ENUMS loc_enum2);
 	std::unordered_map<std::string, LOCATION_ENUMS> locationInputMap = {
 		{"home bedroom", HOME_BEDROOM},

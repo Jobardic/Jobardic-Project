@@ -22,6 +22,7 @@
          1) add a new enum value to the LOCATION_ENUMS initialization in World.h. 
          2) add a new "createLocation()" function call in the constructor function "World()"
               provide it the new enum value, as well as a name and description strings.
+              additionally, add two bool values: the first is for if the player can sleep, the second for if the location is indoors
          3) add new "addConnectedLocations()" function calls to the constructor to allow traversal to/from the location by the player
                e.g if we want the player to be able to be able to traverse NEWLOCATION -> OTHERLOCATION,
                            addConnectedLocations(NEWLOCATION, OTHERLOCATION)
@@ -45,20 +46,20 @@
 //World Constructor
 //initializes all locations and objects with their intended data.
 World::World() {
-    createLocation(HOME_BEDROOM, "Home Bedroom", "You are now in your bedroom.", true);
-    createLocation(HOME_KITCHEN, "Home Kitchen", "You are now in your kitchen.", false);
-    createLocation(HOME_LIVINGROOM, "Home Living Room", "You are now in your living room.", false);
-    createLocation(HOME_BATHROOM, "Home Bathroom", "You are now in your bathroom.", false);
-    createLocation(HOME_FRONTDOOR, "Home Front Door", "You are now at the front door to your home from the inside", false);
-    createLocation(HOME_FRONTPORCH, "Home Front Porch", "You are now outside on your front porch", false);
-    createLocation(HOME_BACKDOOR, "Home Back Door", "You are now at the back door to your home from the inside", false);
-    createLocation(HOME_BACKYARD, "Home Backyard", "You are now outside in your backyard", false);
-    createLocation(SOUTHERN_FOREST_EDGE, "Southern Forest Edge", "You are now standing at the edge of the forest behind your backyard, which is the southern-most area of the forest.", false);
-    createLocation(INNER_WOODS, "Inner Woods", "You are now standing in the middle of the forest. It is eerie and quiet.", false);
-    createLocation(WESTERN_FOREST_EDGE, "Western Forest Edge", "You are now standing at the western edge of the forest.", false);
-    createLocation(EASTERN_FOREST_EDGE, "Eastern Forest Edge", "You are now standing at the eastern edge of the forest.", false);
-    createLocation(NORTHERN_FOREST_EDGE, "Northern Forest Edge", "You are now standing at the northern edge of the forest.", false);
-	createLocation(WATER_WELL, "Water Well", "You are now standing at a water well. You can fill your bucket with fresh water here.", false);
+    createLocation(HOME_BEDROOM, "Home Bedroom", "You are now in your bedroom.", true, true);
+    createLocation(HOME_KITCHEN, "Home Kitchen", "You are now in your kitchen.", false, true);
+    createLocation(HOME_LIVINGROOM, "Home Living Room", "You are now in your living room.", false, true);
+    createLocation(HOME_BATHROOM, "Home Bathroom", "You are now in your bathroom.", false, true);
+    createLocation(HOME_FRONTDOOR, "Home Front Door", "You are now at the front door to your home from the inside", false, true);
+    createLocation(HOME_FRONTPORCH, "Home Front Porch", "You are now outside on your front porch", false, false);
+    createLocation(HOME_BACKDOOR, "Home Back Door", "You are now at the back door to your home from the inside", false, true);
+    createLocation(HOME_BACKYARD, "Home Backyard", "You are now outside in your backyard", false, false);
+    createLocation(SOUTHERN_FOREST_EDGE, "Southern Forest Edge", "You are now standing at the edge of the forest behind your backyard, which is the southern-most area of the forest.", false, false);
+    createLocation(INNER_WOODS, "Inner Woods", "You are now standing in the middle of the forest. It is eerie and quiet.", false, false);
+    createLocation(WESTERN_FOREST_EDGE, "Western Forest Edge", "You are now standing at the western edge of the forest.", false, false);
+    createLocation(EASTERN_FOREST_EDGE, "Eastern Forest Edge", "You are now standing at the eastern edge of the forest.", false, false);
+    createLocation(NORTHERN_FOREST_EDGE, "Northern Forest Edge", "You are now standing at the northern edge of the forest.", false, false);
+	createLocation(WATER_WELL, "Water Well", "You are now standing at a water well. You can fill your bucket with fresh water here.", false, false);
 
     Object* chewtoy = new Object("Chewtoy", "It is your dog's favorite chewtoy, which reminds you that you haven't seen your dog all morning");
     Object* burger = new Object("Burger", "A delicious burger is waiting in the oven.");
@@ -117,8 +118,8 @@ World::World() {
     findLocation(HOME_BATHROOM)->addLocationObject(bucket);
 }
 
-void World::createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep) {
-    Location* newLocation = new Location(name, description, allowsSleep);
+void World::createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep, bool isIndoors) {
+    Location* newLocation = new Location(name, description, allowsSleep, isIndoors);
     locationEnumToPointer.insert_or_assign(location_enum, newLocation);
 }
 

@@ -42,7 +42,7 @@ bool InputHandler::getAndCompareUserInput(std::string comparison) {
 void InputHandler::waitForUser() {  
     std::string any_input;
     std::cout << "Press Enter to continue..."; // Note: this text does not automatically go to new line, character action functions
-                                               // should have \n at the end if necessary.
+                                               //           should have \n at the end if necessary.
     std::getline(std::cin, any_input);
 }
 

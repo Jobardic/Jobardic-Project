@@ -2,32 +2,47 @@
 #include "Character.h"
 
 int Time::day = START_DAY;
-float Time::hour = START_HOUR;
+int Time::hour = START_HOUR;
+int Time::minute = START_MINUTE;
 
 int Time::getDay() {
 	return day;
 }
 
-float Time::getHour() {
+int Time::getHour() {
 	return hour;
 }
 
-void Time::passTime(int hours) {
+int Time::getMinute() {
+	return minute;
+}
+
+void Time::passTime(int hours, int minutes) {
+	minute += minutes;
+	while (minute >= 60) {
+		minute -= 60;
+		hour++;
+	}
 	hour += hours;
 	while (hour >= 24) {
 		hour -= 24;
 		day++;
 	}
-	/*if (sleeping) {
-		character.changeEnergy(SLEEP_ENERGY_RATE * hours);
+}
+
+std::string Time::clockString(int unit) {
+	int initalClockValue = unit;
+	if (unit < 10) {
+		return "0" + std::to_string(unit);
 	}
 	else {
-		character.changeEnergy(WAKE_ENERGY_RATE * hours);
-	}*/
+		return std::to_string(unit);
+	}
 }
 
 std::string Time::timeDisplay() {
-	return "Day " + std::to_string(day) + "     " + std::to_string(static_cast<int>(hour)) + ":00"; //currently doesn't work for non integer values for hour
+	bool lessThanTen = (minute < 10);
+	return "Day " + std::to_string(day) + "     " + clockString(hour) + ":" + clockString(minute); //currently doesn't work for non integer values for hour
 }
 
 /*
