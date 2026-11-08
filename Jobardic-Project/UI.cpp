@@ -3,6 +3,7 @@
 #include "Location.h"
 #include "StoryEvent.h"
 #include "Commands.h"
+#include "UI.h"
 #include<algorithm>
 #include<string>
 #include<iostream>
@@ -11,7 +12,7 @@
 
 
 
-void displayOutput(StoryEvent* storyEvent) {
+void UI::displayOutput(StoryEvent* storyEvent) {
 	std::cout << storyEvent->getDescription() << "\n";
 	int numberOfPrompts = storyEvent->getInputPrompt()->getNumberOfPrompts();
 	for (int i = 0; i < numberOfPrompts; i++) {
@@ -19,7 +20,7 @@ void displayOutput(StoryEvent* storyEvent) {
 	}
 }
 
-Commands parseUserInput(std::string userInput) {
+Commands UI::parseUserInput(std::string userInput) {
 	
 	Commands input = Commands::Null;
 	userInput.erase(remove_if(userInput.begin(), userInput.end(), [](unsigned char ch) {
