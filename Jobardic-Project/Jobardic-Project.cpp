@@ -268,10 +268,16 @@ int main()
                 World::LOCATION_ENUMS inputLocation = world->findLocation(InputHandler::getUserInput());
 
                 if (world->isLocationConnected(player.getCurrentLocation(), inputLocation)) {
-                    player.setCurrentLocation(inputLocation);
-                    loop = false;
-                    player.decreaseThirst();
-                    player.changeEnergy(-1);
+                    if (inputLocation == World::THREE_HUESTON_AVE_LIVING_ROOM && !player.hasItem("Silver key")) { //if they dont have the silver key
+                        std::cout << "You have to unlock this door to access this location, try again" << std::endl;
+                    } else if (inputLocation == World::CONSTRUCTION_DEPOT_INTERIOR && Time::getDay() < 10) { //if it's not day 10 yet
+                        std::cout << "The construction depot isn't open yet, try again" << std::endl;
+                    } else {
+                        player.setCurrentLocation(inputLocation);
+                        loop = false;
+                        player.decreaseThirst();
+                        player.changeEnergy(-1);
+                    }
                 }
                 else {
                     std::cout << "That location doesn't exist here! Try again" << std::endl;

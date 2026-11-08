@@ -20,6 +20,15 @@ std::vector<Object*> Character::getInventory() {
 	return inventory;
 }
 
+bool Character::hasItem(std::string object) {
+	for (Object* item : inventory) {
+		if (object == item->getName()) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void Character::pickUpObject(Object* item) {
 	Character::inventory.push_back(item);
 }
