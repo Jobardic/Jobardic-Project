@@ -81,16 +81,6 @@ int main()
             std::cout << "==== Fill Bucket" << std::endl;
         }
         std::cout << std::endl;
-        /*
-        while (validInput == false) {
-            std::getline(std::cin, playerInput);
-            if (playerInput != "Look" && playerInput != "Move" && playerInput != "Inventory" && playerInput != "Wait" && playerInput != "Sleep" && playerInput != "Fill Bucket") {
-                std::cout << "I don't know what you mean! Try again" << std::endl;
-            }
-            else {
-                validInput = true;
-            }
-        }*/
 
         std::string playerAction = InputHandler::getUserInput();
 
@@ -122,9 +112,9 @@ int main()
                     else {
                         std::cout << "This object doesn't exist here! Try again" << std::endl;
                     }
-                } 
-                
+                }    
             }
+			player.lookTime(world->findLocation(player.getCurrentLocation())->getIndoors()); // passes time for looking action
         }
 
 
@@ -185,7 +175,7 @@ int main()
                 }
 
                 std::cout << "\nType 'Drink Water' to drink from your bucket.";
-                std::cout << "\nType 'Eat [Food]' to eat food."; //Man cannot live off burger alone
+                std::cout << "\nType 'Eat [Food]' to eat food."; 
                 std::cout << "\nPress Enter to return.\n";
 
                 std::string playerInventoryAction = InputHandler::getUserInput();
@@ -198,7 +188,7 @@ int main()
 
                             player.increaseFood(25);
                             player.removeInventoryObject(i);
-
+                            player.eatTime();   // passes time for eating action
                             std::cout << "\nYou ate the burger!\n";
                             burgerFound = true;
                             break;
@@ -232,6 +222,7 @@ int main()
                     else {
                         player.increaseThirst(40);
                         bucketFilled = false;
+						player.drinkTime();   // passes time for drinking action
 
                         std::cout << "\nYou drank the water!\n";
                         std::cout << "Your thirst has been restored!\n";
@@ -273,6 +264,7 @@ int main()
                     } else if (inputLocation == World::CONSTRUCTION_DEPOT_INTERIOR && Time::getDay() < 10) { //if it's not day 10 yet
                         std::cout << "The construction depot isn't open yet, try again" << std::endl;
                     } else {
+                        player.moveTime(world->findLocation(player.getCurrentLocation())->getIndoors()); // passes time for moving action, indoors determined by INITIAL location
                         player.setCurrentLocation(inputLocation);
                         loop = false;
                         player.decreaseThirst();
@@ -282,16 +274,14 @@ int main()
                 else {
                     std::cout << "That location doesn't exist here! Try again" << std::endl;
                 }
-
-            }
-
-            
-            
+            }            
         }
+
         else if (playerAction != "") {
             std::cout << "I don't know what you mean! Try again" << std::endl;
             InputHandler::waitForUser();
         }
+
 		if (player.isCharacterExhausted()) {
 			std::cout << "You have run out of energy and can no longer continue your journey." << std::endl;
 			break;

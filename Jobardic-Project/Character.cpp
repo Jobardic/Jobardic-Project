@@ -59,19 +59,35 @@ bool Character::isCharacterExhausted() {
 	return characterEnergy <= MIN_ENERGY; // returns true if 0 or less
 }
 
+void Character::moveTime(bool fromIndoors) {
+	Time::passTime(0, fromIndoors ? I_MOVE_MINUTES : O_MOVE_MINUTES);
+}
+
+void Character::lookTime(bool indoors) {
+	Time::passTime(0, indoors ? I_LOOK_MINUTES : O_LOOK_MINUTES);
+}
+
+void Character::eatTime() {
+	Time::passTime(0, EAT_MINUTES);
+}
+
+void Character::drinkTime() {
+	Time::passTime(0, DRINK_MINUTES);
+}
+
 std::string Character::Sleep(bool canSleep) {
 	if (!canSleep) {
 		return "You can't sleep here.\n";
 	}
 	else {
-		Time::passTime(SLEEP_HOURS);
+		Time::passTime(SLEEP_HOURS, 0);
 		changeEnergy(SLEEP_HOURS * SLEEP_ENERGY_RATE); 
 		return "You sleep for " + std::to_string(SLEEP_HOURS) + " hours and wake up feeling refreshed.\n";
 	}
 }
 
 std::string Character::Wait() {
-	Time::passTime(WAIT_HOURS);
+	Time::passTime(WAIT_HOURS, 0);
 	changeEnergy(WAIT_HOURS * WAKE_ENERGY_RATE);
 	return "You wait for " + std::to_string(WAIT_HOURS) + " hours...\n";
 }

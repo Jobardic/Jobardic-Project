@@ -20,6 +20,9 @@
 ///		getMaxEnergy () - returns max energy, a constant
 ///		decreaseEnergy() - decreases energy by 1 (hard code, can be changed later)
 ///		isCharacterExhausted() - returns true if energy is 0 or less, currently leads to game over
+/// 
+///		Sleep() - checks if player can sleep and if so, passes time and increase energy. returns string indicating what happened
+///		Wait() - passes time and decreases energy. returns string indicating what happened
 
 class Character
 {
@@ -55,6 +58,12 @@ public:
     void decreaseThirst();
     void increaseThirst(int amount);
 
+	//Moving player action logic from main to character class
+	void moveTime(bool fromIndoors);
+	void lookTime(bool indoors);
+	void eatTime();
+	void drinkTime();
+
 	std::string Sleep(bool canSleep);
 	std::string Wait();
 private:
@@ -63,14 +72,14 @@ private:
 
     // NEW: Food resource
     int characterFood;
-    const int MAX_FOOD = 100;
-    const int START_FOOD = 50;
+	const int MAX_FOOD = 100;	///< Maximum food a character can have
+	const int START_FOOD = 50;	///< Arbitrary starting food for a character
 
 
     // NEW: Thirst resource
     int characterThirst;
-    const int MAX_THIRST = 100;
-    const int MIN_THIRST = 0;
+	const int MAX_THIRST = 100;	///< Maximum thirst a character can have
+	const int MIN_THIRST = 0;   ///< Minimum thirst a character can have
 
 	
 	int characterEnergy;
@@ -81,6 +90,14 @@ private:
 	const int WAIT_HOURS = 2;			///< Number of hours a character waits at a time
 	const int SLEEP_ENERGY_RATE = 10;	///< Energy gained per hour of sleep
 	const int WAKE_ENERGY_RATE = -3;	///< Energy lost per hour of being awake
+
+
+	const int I_MOVE_MINUTES = 1;   ///< Number of minutes it takes to move indoors
+	const int O_MOVE_MINUTES = 5;	///< Number of minutes it takes to move outdoors
+	const int I_LOOK_MINUTES = 1;	///< Number of minutes it takes to look around indoors
+	const int O_LOOK_MINUTES = 5;	///< Number of minutes it takes to look around outdoors
+	const int EAT_MINUTES = 10;		///< Number of minutes it takes to eat
+	const int DRINK_MINUTES = 5;	///< Number of minutes it takes to drink
 };
 
 

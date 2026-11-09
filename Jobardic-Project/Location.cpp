@@ -4,11 +4,12 @@
 #include <iostream>
 #include <string>
 
-Location::Location(std::string name, std::string description, bool allowsSleep) {
+Location::Location(std::string name, std::string description, bool allowsSleep, bool isIndoors) {
 	Location::name = name;
 	Location::description = description;
 	Location::locationObjects = {};
 	Location::allowsSleep = allowsSleep;
+	Location::indoors = isIndoors;
 }
 Location::Location(std::string name, std::string description, std::vector<Object*> lbs) {
 	Location::name = name;
@@ -47,6 +48,9 @@ std::vector<Object*> Location::getLocationObjects() {
 }
 bool Location::canPlayerSleepHere() {
 	return allowsSleep;
+}
+bool Location::getIndoors() {
+	return indoors;
 }
 
 Object* Location::findLocationObject(std::string objectName) {

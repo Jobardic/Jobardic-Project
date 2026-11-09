@@ -22,6 +22,7 @@
          1) add a new enum value to the LOCATION_ENUMS initialization in World.h. 
          2) add a new "createLocation()" function call in the constructor function "World()"
               provide it the new enum value, as well as a name and description strings.
+              additionally, add two bool values: the first is for if the player can sleep, the second for if the location is indoors
          3) add new "addConnectedLocations()" function calls to the constructor to allow traversal to/from the location by the player
                e.g if we want the player to be able to be able to traverse NEWLOCATION -> OTHERLOCATION,
                            addConnectedLocations(NEWLOCATION, OTHERLOCATION)
@@ -45,49 +46,49 @@
 //World Constructor
 //initializes all locations and objects with their intended data.
 World::World() {
-    createLocation(HOME_BEDROOM, "Home Bedroom", "You are now in your bedroom.", true);
-    createLocation(HOME_KITCHEN, "Home Kitchen", "You are now in your kitchen.", false);
-    createLocation(HOME_LIVINGROOM, "Home Living Room", "You are now in your living room.", false);
-    createLocation(HOME_BATHROOM, "Home Bathroom", "You are now in your bathroom.", false);
-    createLocation(HOME_FRONTDOOR, "Home Front Door", "You are now at the front door to your home from the inside", false);
-    createLocation(HOME_FRONTPORCH, "Home Front Porch", "You are now outside on your front porch", false);
-    createLocation(HOME_BACKDOOR, "Home Back Door", "You are now at the back door to your home from the inside", false);
-    createLocation(HOME_BACKYARD, "Home Backyard", "You are now outside in your backyard", false);
-    createLocation(SOUTHERN_FOREST_EDGE, "Southern Forest Edge", "You are now standing at the edge of the forest behind your backyard, which is the southern-most area of the forest.", false);
-    createLocation(INNER_WOODS, "Inner Woods", "You are now standing in the middle of the forest. It is eerie and quiet.", false);
-    createLocation(WESTERN_FOREST_EDGE, "Western Forest Edge", "You are now standing at the western edge of the forest.", false);
-    createLocation(EASTERN_FOREST_EDGE, "Eastern Forest Edge", "You are now standing at the eastern edge of the forest.", false);
-    createLocation(NORTHERN_FOREST_EDGE, "Northern Forest Edge", "You are now standing at the northern edge of the forest.", false);
-    createLocation(HOME_LAWN, "Home Lawn", "The front lawn of your home. You haven't mowed it in a few weeks.", false);
-    createLocation(LINCOLN_COURT, "Lincoln Court", "The street you live on. There are a few abandoned houses on it.", false);
-    createLocation(THREE_LINCOLN_COURT_FRONT_DOOR, "3 Lincoln Court Front Door", "The front door of one of the abandoned houses on your street.", false);
-    createLocation(FOUR_LINCOLN_COURT_FRONT_DOOR, "4 Lincoln Court Front Door", "The front door of one of the abandoned houses on your street.", false);
-    createLocation(NORTH_HUESTON_AVE, "North Hueston Ave", "The northern section of the distributary road connected to your street. There are some more abandonded houses here.", false);
-    createLocation(TWELVE_HUESTON_AVE_FRONT_DOOR, "12 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false);
-    createLocation(FOURTEEN_HUESTON_AVE_FRONT_DOOR, "14 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false);
-    createLocation(SOUTH_HUESTON_AVE, "South Hueston Ave", "The northern section of the distributary road connected to your street. There are some more abandonded houses here.", false);
-    createLocation(FIVE_HUESTON_AVE_FRONT_DOOR, "5 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false);
-    createLocation(THREE_HUESTON_AVE_FRONT_DOOR, "3 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave. It has a silver lock.", false);
-    createLocation(THREE_HUESTON_AVE_LIVING_ROOM, "3 Hueston Ave Living Room", "The interior of one of the abandoned houses on Hueston Ave. It is dusty and barren.", false);
+    createLocation(HOME_BEDROOM, "Home Bedroom", "You are now in your bedroom.", true, true);
+    createLocation(HOME_KITCHEN, "Home Kitchen", "You are now in your kitchen.", false, true);
+    createLocation(HOME_LIVINGROOM, "Home Living Room", "You are now in your living room.", false, true);
+    createLocation(HOME_BATHROOM, "Home Bathroom", "You are now in your bathroom.", false, true);
+    createLocation(HOME_FRONTDOOR, "Home Front Door", "You are now at the front door to your home from the inside", false, true);
+    createLocation(HOME_FRONTPORCH, "Home Front Porch", "You are now outside on your front porch", false, false);
+    createLocation(HOME_BACKDOOR, "Home Back Door", "You are now at the back door to your home from the inside", false, true);
+    createLocation(HOME_BACKYARD, "Home Backyard", "You are now outside in your backyard", false, false);
+    createLocation(SOUTHERN_FOREST_EDGE, "Southern Forest Edge", "You are now standing at the edge of the forest behind your backyard, which is the southern-most area of the forest.", false, false);
+    createLocation(INNER_WOODS, "Inner Woods", "You are now standing in the middle of the forest. It is eerie and quiet.", false, false);
+    createLocation(WESTERN_FOREST_EDGE, "Western Forest Edge", "You are now standing at the western edge of the forest.", false, false);
+    createLocation(EASTERN_FOREST_EDGE, "Eastern Forest Edge", "You are now standing at the eastern edge of the forest.", false, false);
+    createLocation(NORTHERN_FOREST_EDGE, "Northern Forest Edge", "You are now standing at the northern edge of the forest.", false, false);
+    createLocation(HOME_LAWN, "Home Lawn", "The front lawn of your home. You haven't mowed it in a few weeks.", false, false);
+    createLocation(LINCOLN_COURT, "Lincoln Court", "The street you live on. There are a few abandoned houses on it.", false, false);
+    createLocation(THREE_LINCOLN_COURT_FRONT_DOOR, "3 Lincoln Court Front Door", "The front door of one of the abandoned houses on your street.", false, false);
+    createLocation(FOUR_LINCOLN_COURT_FRONT_DOOR, "4 Lincoln Court Front Door", "The front door of one of the abandoned houses on your street.", false, false);
+    createLocation(NORTH_HUESTON_AVE, "North Hueston Ave", "The northern section of the distributary road connected to your street. There are some more abandonded houses here.", false, false);
+    createLocation(TWELVE_HUESTON_AVE_FRONT_DOOR, "12 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false, false);
+    createLocation(FOURTEEN_HUESTON_AVE_FRONT_DOOR, "14 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false, false);
+    createLocation(SOUTH_HUESTON_AVE, "South Hueston Ave", "The northern section of the distributary road connected to your street. There are some more abandonded houses here.", false, false);
+    createLocation(FIVE_HUESTON_AVE_FRONT_DOOR, "5 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false, false);
+    createLocation(THREE_HUESTON_AVE_FRONT_DOOR, "3 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave. It has a silver lock.", false, false);
+    createLocation(THREE_HUESTON_AVE_LIVING_ROOM, "3 Hueston Ave Living Room", "The interior of one of the abandoned houses on Hueston Ave. It is dusty and barren.", false, true);
     // ^ This location opens up after you find the silver key
-    createLocation(SIX_HUESTON_AVE_FRONT_DOOR, "6 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false);
-    createLocation(ONE_HUESTON_AVE_FRONT_DOOR, "1 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false);
-    createLocation(EAST_MAIN_STREET, "East Main Street", "The eastern part of the Main Street in your town.", false);
-    createLocation(ONE_TWELVE_MAIN_STREET_FRONT_DOOR, "112 Main Street Front Door", "The front door of one of the abandoned houses on Main Street.", false);
-    createLocation(ONE_TWELVE_MAIN_STREET_SIDE_DOOR, "112 Main Street Side Door", "The side door of one of the abandoned houses on Main Street.", false);
-    createLocation(TOWN_DINER_ENTRANCE, "Town Diner Entrance", "The entrance of the most notable diner in your town.", false);
-    createLocation(TOWN_DINER_BACKLOT, "Town Diner Backlot", "The backlot of your town diner. It has parking spaces and a dumpster", false);
-    createLocation(WEST_MAIN_STREET, "West Main Street", "The western part of the Main Street in your town.", false);
-    createLocation(GROCERY_STORE_ENTRANCE, "Grocery Store Entrance", "The entrance of the main grocery store in your town. It is closed for repairs.", false);
-    createLocation(GROCERY_STORE_BACKLOT, "Grocery Store Backlot", "The back of the main grocery store in your town. It has parking spaces and a dumpster", false);
-    createLocation(CONSTRUCTION_DEPOT_ENTRANCE, "Construction Depot Entrance", "The entrance to the construction store in your town. It says it should open within the week.", false);
-    createLocation(CONSTRUCTION_DEPOT_INTERIOR, "Construction Depot Interior", "The inside of the construction store in your town. It has many useful tools and materials", false);
+    createLocation(SIX_HUESTON_AVE_FRONT_DOOR, "6 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false, false);
+    createLocation(ONE_HUESTON_AVE_FRONT_DOOR, "1 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false, false);
+    createLocation(EAST_MAIN_STREET, "East Main Street", "The eastern part of the Main Street in your town.", false, false);
+    createLocation(ONE_TWELVE_MAIN_STREET_FRONT_DOOR, "112 Main Street Front Door", "The front door of one of the abandoned houses on Main Street.", false, false);
+    createLocation(ONE_TWELVE_MAIN_STREET_SIDE_DOOR, "112 Main Street Side Door", "The side door of one of the abandoned houses on Main Street.", false, false);
+    createLocation(TOWN_DINER_ENTRANCE, "Town Diner Entrance", "The entrance of the most notable diner in your town.", false, false);
+    createLocation(TOWN_DINER_BACKLOT, "Town Diner Backlot", "The backlot of your town diner. It has parking spaces and a dumpster", false, false);
+    createLocation(WEST_MAIN_STREET, "West Main Street", "The western part of the Main Street in your town.", false, false);
+    createLocation(GROCERY_STORE_ENTRANCE, "Grocery Store Entrance", "The entrance of the main grocery store in your town. It is closed for repairs.", false, false);
+    createLocation(GROCERY_STORE_BACKLOT, "Grocery Store Backlot", "The back of the main grocery store in your town. It has parking spaces and a dumpster", false, false);
+    createLocation(CONSTRUCTION_DEPOT_ENTRANCE, "Construction Depot Entrance", "The entrance to the construction store in your town. It says it should open within the week.", false, false);
+    createLocation(CONSTRUCTION_DEPOT_INTERIOR, "Construction Depot Interior", "The inside of the construction store in your town. It has many useful tools and materials", false, true);
     // ^ This location opens after 10 days
-    createLocation(ARCADE_ENTRANCE, "Arcade Entrance", "The entrance of the arcade in your town. You have no desire to go in.", false);
-    createLocation(ARCADE_ALLEY, "Arcade Alley", "The alley on the side of the arcade. It is dark and long.", false);
-    createLocation(TOWN_PARK, "Town Park", "The main park in your town. It has a playground, garden, and a lot of grass to walk your dog on.", false);
-    createLocation(TOWN_GARDEN, "Town Garden", "The town garden has many freshly grown vegetables and fruits, but many are no in season right now.", false);
-	createLocation(WATER_WELL, "Water Well", "You are now standing at a water well. You can fill your bucket with fresh water here.", false);
+    createLocation(ARCADE_ENTRANCE, "Arcade Entrance", "The entrance of the arcade in your town. You have no desire to go in.", false, false);
+    createLocation(ARCADE_ALLEY, "Arcade Alley", "The alley on the side of the arcade. It is dark and long.", false, false);
+    createLocation(TOWN_PARK, "Town Park", "The main park in your town. It has a playground, garden, and a lot of grass to walk your dog on.", false, false);
+    createLocation(TOWN_GARDEN, "Town Garden", "The town garden has many freshly grown vegetables and fruits, but many are no in season right now.", false, false);
+	createLocation(WATER_WELL, "Water Well", "You are now standing at a water well. You can fill your bucket with fresh water here.", false, false);
 
 
     Object* chewtoy = new Object("Chewtoy", "It is your dog's favorite chewtoy, which reminds you that you haven't seen your dog all morning");
@@ -260,8 +261,8 @@ World::World() {
     findLocation(HOME_BATHROOM)->addLocationObject(bucket);
 }
 
-void World::createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep) {
-    Location* newLocation = new Location(name, description, allowsSleep);
+void World::createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep, bool isIndoors) {
+    Location* newLocation = new Location(name, description, allowsSleep, isIndoors);
     locationEnumToPointer.insert_or_assign(location_enum, newLocation);
 }
 
