@@ -8,15 +8,24 @@
 #include "World.h"
 #include "Time.h"
 
+void PrintDeathScreen(std::string reason);
+
 int main()
 {
-    World* world = new World();
-    Character player(World::INITIAL_LOCATION);
 
-	bool wellDry = false;
-	bool bucketFilled = false;
+	bool restartGame = true;
+
+    while (restartGame){
+        restartGame = false;
+        World* world = new World();
+        Character player(World::INITIAL_LOCATION);
+
+        bool wellDry = false;
+        bool bucketFilled = false;
     
-    do {
+    
+    do 
+    {
 
         //std::string playerInput;
         //bool validInput = false;
@@ -282,14 +291,64 @@ int main()
             InputHandler::waitForUser();
         }
 
+		//New Death Functionality
+		if (player.isCharacterDead()) {
+			std::cout << "You have died due to starvation or dehydration." << std::endl;
+			break;
+		}
+
 		if (player.isCharacterExhausted()) {
 			std::cout << "You have run out of energy and can no longer continue your journey." << std::endl;
 			break;
 		}
     } while (true);
 
+    if (player.isCharacterDead()) {
 
-   /* void PrintDeathScreen(std::string reason) {
+        std::string reason;
+
+        if (player.getFood() <= 0) {
+            reason = "Starvation";
+        }
+		else if (player.getThirst() <= 0) {
+			reason = "Dehydration";
+		}
+        else if (player.getEnergy() <= 0) {
+            reason = "Exhaustion";
+        }
+
+        PrintDeathScreen(reason);
+
+        std::string choice;
+
+        while (true) {
+            std::cout << "Enter your choice: ";
+            std::cin >> choice;
+
+            if (choice == "r" || choice == "R") {
+                restartGame = true;
+                break;
+            }
+            else if (choice == "q" || choice == "Q") {
+                restartGame = false;
+                break;
+            }
+            else {
+                std::cout << "Invalid choice. Press R or Q.\n";
+            }
+        }
+    }
+
+    delete world;
+
+    } // End restart loop
+
+    return 0;
+}
+
+
+    void PrintDeathScreen(std::string reason)
+    {
         system("cls");
 
         std::cout << "\n";
@@ -304,6 +363,6 @@ int main()
         std::cout << "         Press R to Restart         \n";
         std::cout << "         Press Q to Quit            \n";
         std::cout << "====================================\n\n";
-    }*/
+    }
 
-}
+

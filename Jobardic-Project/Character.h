@@ -58,6 +58,9 @@ public:
     void decreaseThirst();
     void increaseThirst(int amount);
 
+	//New Death Functionality
+	bool isCharacterDead();
+
 	//Moving player action logic from main to character class
 	void moveTime(bool fromIndoors);
 	void lookTime(bool indoors);

@@ -145,20 +145,7 @@ void Character::increaseThirst(int amount) {
 	}
 }
 
-
-	/*void Character::decreaseFood(int amount) {
-		if (amount > 0 && characterFood > 0) {
-			characterFood -= amount;
-			if (characterFood < 0) {
-				characterFood = 0;
-			}
-		}
-	}//
-
-	bool Character::isCharacterStarving() {
-		return characterFood <= 0;
-	}
-
-	bool Character::isCharacterDehydrated() {
-		return characterThirst <= 0;
-	}*/
+bool Character::isCharacterDead() 
+{
+	return characterFood <= 0 || characterThirst <= 0 || characterEnergy <= 0;
+}
