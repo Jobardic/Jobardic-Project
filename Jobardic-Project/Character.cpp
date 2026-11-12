@@ -3,13 +3,14 @@
 #include "World.h"
 #include "Time.h"
 #include <string>
+#include <cmath>
 
 Character::Character(World::LOCATION_ENUMS startingLocation) {
 	Character::currentLocation = startingLocation;
 	Character::inventory = {};
 	characterEnergy = START_ENERGY;
 	characterFood = START_FOOD;
-	characterThirst = MAX_THIRST;
+	characterWater = MAX_WATER;
 }
 
 World::LOCATION_ENUMS Character::getCurrentLocation() {
@@ -65,10 +66,12 @@ void Character::setCurrentLocation(World::LOCATION_ENUMS location) {
 	currentLocation = location;
 }
 
-int Character::getEnergy() {
+float Character::getEnergy() {
 	return characterEnergy;
 }
-
+int Character::getEnergyCeiling() {
+	return std::ceil(characterEnergy); // returns energy rounded up to integer for display purposes
+}
 int Character::getMaxEnergy() {
 	return MAX_ENERGY;
 }
@@ -88,19 +91,19 @@ bool Character::isCharacterExhausted() {
 }
 
 void Character::moveTime(bool fromIndoors) {
-	Time::passTime(0, fromIndoors ? I_MOVE_MINUTES : O_MOVE_MINUTES);
+	passTime(0, fromIndoors ? I_MOVE_MINUTES : O_MOVE_MINUTES, false);
 }
 
 void Character::lookTime(bool indoors) {
-	Time::passTime(0, indoors ? I_LOOK_MINUTES : O_LOOK_MINUTES);
+	passTime(0, indoors ? I_LOOK_MINUTES : O_LOOK_MINUTES, false);
 }
 
 void Character::eatTime() {
-	Time::passTime(0, EAT_MINUTES);
+	passTime(0, EAT_MINUTES, false);
 }
 
 void Character::drinkTime() {
-	Time::passTime(0, DRINK_MINUTES);
+	passTime(0, DRINK_MINUTES, false);
 }
 
 std::string Character::Sleep(bool canSleep) {
@@ -108,33 +111,49 @@ std::string Character::Sleep(bool canSleep) {
 		return "You can't sleep here.\n";
 	}
 	else {
-		Time::passTime(SLEEP_HOURS, 0);
-		changeEnergy(SLEEP_HOURS * SLEEP_ENERGY_RATE); 
+		passTime(SLEEP_HOURS, 0, true);
 		return "You sleep for " + std::to_string(SLEEP_HOURS) + " hours and wake up feeling refreshed.\n";
 	}
 }
 
 std::string Character::Wait() {
-	Time::passTime(WAIT_HOURS, 0);
-	changeEnergy(WAIT_HOURS * WAKE_ENERGY_RATE);
+	passTime(WAIT_HOURS, 0, false);
 	return "You wait for " + std::to_string(WAIT_HOURS) + " hours...\n";
 }
 
-int Character::getFood() {
-	return characterFood;
+void Character::passTime(int hours, int minutes, bool sleeping) {
+	Time::passTime(hours, minutes);
+	float timeInHours = hours + minutes / 60.0;
+
+	if (sleeping) {
+		changeEnergy(SLEEP_ENERGY_RATE * timeInHours);
+		changeFood(FOOD_RATE * SLEEP_MOD * timeInHours); 
+		changeWater(WATER_RATE * SLEEP_MOD * timeInHours); 
+	}
+	else {
+		changeEnergy(WAKE_ENERGY_RATE * timeInHours);
+		changeFood(FOOD_RATE * timeInHours); 
+		changeWater(WATER_RATE * timeInHours);
+	}
 }
 
+float Character::getFood() {
+	return characterFood;
+}
+int Character::getFoodCeiling() {
+	return std::ceil(characterFood); // returns food rounded up to integer for display purposes
+}
 int Character::getMaxFood() {
 	return MAX_FOOD;
 }
 
-void Character::increaseFood(int amount) {
-	if (amount > 0) {
-		characterFood += amount;
-
-		if (characterFood > MAX_FOOD) {
-			characterFood = MAX_FOOD;
-		}
+void Character::changeFood(int amount) {
+	characterFood += amount;
+	if (characterFood > MAX_FOOD) {
+		characterFood = MAX_FOOD;
+	}
+	if (characterFood < MIN_FOOD) {
+		characterFood = MIN_FOOD;
 	}
 }
 
@@ -147,33 +166,33 @@ void Character::removeInventoryObject(int index) {
 
 // NEW: Water Well / Thirst functionality
 
-int Character::getThirst() {
-	return characterThirst;
+float Character::getWater() {
+	return characterWater;
+}
+int Character::getWaterCeiling() {
+	return std::ceil(characterWater); // returns water rounded up to integer for display purposes
+}
+int Character::getMaxWater() {
+	return MAX_WATER;
 }
 
-int Character::getMaxThirst() {
-	return MAX_THIRST;
-}
-
-void Character::decreaseThirst() {
-	if (characterThirst > MIN_THIRST) {
-		characterThirst--;
+void Character::decreaseWater() {
+	if (characterWater > MIN_WATER) {
+		characterWater--;
 	}
 }
 
-void Character::increaseThirst(int amount) {
-	if (amount > 0)
-	{
-		characterThirst += amount;
-
-		if (characterThirst > MAX_THIRST)
-		{
-			characterThirst = MAX_THIRST;
-		}
+void Character::changeWater(int amount) {
+	characterWater += amount;
+	if (characterWater > MAX_WATER) {
+		characterWater = MAX_WATER;
+	}
+	if (characterWater < MIN_WATER) {
+		characterWater = MIN_WATER;
 	}
 }
 
 bool Character::isCharacterDead() 
 {
-	return characterFood <= 0 || characterThirst <= 0 || characterEnergy <= 0;
+	return characterFood <= 0 || characterWater <= 0 || characterEnergy <= 0;
 }
