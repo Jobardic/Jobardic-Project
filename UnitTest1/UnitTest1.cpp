@@ -25,8 +25,8 @@ namespace UnitTest1
 			bool bedroomSleep = true;
 			bool roomSleep = false;
 
-			Location bedroom(bedroomName,bedroomDescription,bedroomSleep);
-			Location room(roomName, roomDescription, roomSleep);
+			Location bedroom(bedroomName,bedroomDescription,bedroomSleep,false);
+			Location room(roomName, roomDescription, roomSleep,false);
 
 			Assert::AreEqual(bedroomName, bedroom.getName(),L"Name constructor argument and name returned by getName() do not match");
 			Assert::AreEqual(bedroomDescription, bedroom.getDescription(), L"Description constructor argument and description returned by getDescription() do not match");
@@ -37,7 +37,7 @@ namespace UnitTest1
 		}
 		TEST_METHOD(LOCATION_OBJECT_MANIPULATION) //implementation may change significantly in the future
 		{
-			Location room("room name", "room description", false);
+			Location room("room name", "room description", false,false);
 			Object object_A("A name","A description");
 			Object object_B("B name", "B description");
 			Object object_C("C name", "C description");
@@ -57,7 +57,7 @@ namespace UnitTest1
 		}
 		TEST_METHOD(LOCATION_OBJECT_REMOVAL_WITH_EMPTY_INVENTORY) 
 		{
-			Location room("room name", "room description", false);
+			Location room("room name", "room description", false,false);
 			auto initialObjects = room.getLocationObjects();
 	
 			try {
