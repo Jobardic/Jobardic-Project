@@ -27,7 +27,7 @@ int main()
     InputChoice progress("==>");
     std::vector<InputChoice*> choices = { &progress };
     InputPrompts opening(choices);
-    std::string openingDesc = "You wake in your bedroom ready to start the day.\nYou turn on your radio to listen to the news while you get dressed.\n\"Breaking News : There has been an explosion on the moon.It is as of yet unknown how this event came to be but\nscientists warn that the resulting loss in velocity will cause the moon to descend to earth.Astrophysicists and \nastronauts   across the world are working hard to prevent what could be a modern day Chickulub.Now for the\nweather…\"\nYou turn off the radio and stand in disbelief.After the shock has washed over you you decide to get moving.If the moon is\nreally falling you should probably prepare.";
+    std::string openingDesc = "You wake in your bedroom ready to start the day.\nYou turn on your radio to listen to the news while you get dressed.\n\"\033[1mBreaking News : There has been an explosion on the moon. It is as of yet unknown how this event came to be but scientists warn that the resulting loss in velocity will cause the moon to descend to earth. Astrophysicists and astronauts across the world are working hard to prevent what could be a modern day Chicxulub. Now for the weather...\033[0m\"\nYou turn off the radio and stand in disbelief.After the shock has washed over you you decide to get moving. If the moon is really falling you should probably prepare.\n\n";
     Location* start = world->World::findLocation(World::LOCATION_ENUMS::HOME_BACKDOOR);
 
     StoryEvent* openingSequence = new StoryEvent(openingDesc, start, &opening);
