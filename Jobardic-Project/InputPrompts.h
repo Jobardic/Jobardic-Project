@@ -8,7 +8,7 @@ class InputPrompts {
 
 public:
 	InputPrompts(std::vector<InputChoice*> inputChoices);
-	InputChoice* getChoice(int choiceIndex);
+	std::string getChoice(int choiceIndex);
 	int getNumberOfPrompts();
 
 private:
