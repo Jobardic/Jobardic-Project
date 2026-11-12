@@ -6,22 +6,24 @@
 class Location
 {
 public:
-	Location(std::string name, std::string description, bool allowsSleep); // adding new parameter to fix bedroom not being detected as viable sleep location
+	Location(std::string name, std::string description, bool allowsSleep, bool isIndoors); // two new parameters for if the player can sleep here, and if the location is indoors
 	Location(std::string name, std::string description, std::vector<Object*> locationObjects);
 	std::string getName();
 	std::string getDescription();
 	std::vector<Object*> getLocationObjects();
-	void addConnectedLocation(Location* location);
 	void addLocationObject(Object* obj);
 	void removeLocationObject(std::string objectName);
-	bool isNearbyLocation(Location* location);
 	bool canPlayerSleepHere();  // Getter for allowsSleep
+	bool getIndoors();			// Getter for indoors
+	Object* findLocationObject(std::string objectName);
+	bool hasObject(std::string objectName);
 
 private:
 	std::string name;
 	std::string description;
 	std::vector<Object*> locationObjects;
 	bool allowsSleep = false; // by default you shouldn't be able to sleep
+	bool indoors;
 };
 
 /*

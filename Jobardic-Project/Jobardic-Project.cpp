@@ -8,23 +8,35 @@
 #include "World.h"
 #include "Time.h"
 
+void PrintDeathScreen(std::string reason);
+
 int main()
 {
-    World* world = new World();
-    Character player(World::INITIAL_LOCATION);
-    
-    do {
 
-        std::string playerInput;
-        bool validInput = false;
+	bool restartGame = true;
+
+    while (restartGame){
+        restartGame = false;
+        World* world = new World();
+        Character player(World::INITIAL_LOCATION);
+
+        bool wellDry = false;
+        bool bucketFilled = false;
+    
+    
+    do 
+    {
+
+        //std::string playerInput;
+        //bool validInput = false;
 
         system("cls");
         std::cout << std::endl;
-
         std::cout << Time::timeDisplay() << std::endl;
-        std::cout << "Energy: " << player.getEnergy() << " / " << player.getMaxEnergy(); //substitute for energy bar
-        std::cout << "\nFood: " << player.getFood() << " / " << player.getMaxFood(); // substitute for food bar
-        std::cout << "\n\n-------------------------------------\n\n";
+        std::cout << "Energy: " << player.getEnergy() << " / " << player.getMaxEnergy() << std::endl; //substitute for energy bar
+        std::cout << "Thirst: " << player.getThirst() << " / " << player.getMaxThirst() << std::endl; // substitute for thirst bar
+        std::cout << "Food: " << player.getFood() << " / " << player.getMaxFood() << std::endl; // substitute for food bar
+        std::cout << "\n-------------------------------------\n\n";
 
 
         if (player.getCurrentLocation() == World::HOME_KITCHEN) {
@@ -37,63 +49,126 @@ int main()
             }
         }
 
+        // NEW: Water well description
+        if (world->findLocation(player.getCurrentLocation()) == world->findLocation(World::WATER_WELL)) {
+
+            if (wellDry) {
+                std::cout << "The well has dried up. "
+                    << "There is no water left.\n\n";
+            }
+            else {
+                bool hasBucket = false;
+
+                for (Object* item : player.getInventory()) {
+                    if (item->getName() == "Bucket") {
+                        hasBucket = true;
+                        break;
+                    }
+                }
+
+                if (hasBucket) {
+                    std::cout << "You can fill your bucket "
+                        << "with water here!\n\n";
+                }
+                else {
+                    std::cout << "You see a well full of water. "
+                        << "Bring a bucket to collect some!\n\n";
+                }
+            }
+        }
 
         std::cout << world->findLocation(player.getCurrentLocation())->getDescription() << std::endl << std::endl;
         std::cout << "What would you like to do now?" << std::endl;
         std::cout << "==== Look" << std::endl;
         std::cout << "==== Move" << std::endl;
         std::cout << "==== Inventory" << std::endl;
-		std::cout << "==== Wait" << std::endl;  // new player action: waiting
+        std::cout << "==== Wait" << std::endl;  // new player action: waiting
+        std::cout << "==== Drop" << std::endl;  // new player action: dropping item
 		if (world->findLocation(player.getCurrentLocation())->canPlayerSleepHere()) {
             std::cout << "==== Sleep" << std::endl;
 		}
+        if (world->findLocation(player.getCurrentLocation()) == world->findLocation(World::WATER_WELL)) {
+            std::cout << "==== Fill Bucket" << std::endl;
+        }
         std::cout << std::endl;
 
-        while (validInput == false) {
-            std::getline(std::cin, playerInput);
-            if (playerInput != "Look" && playerInput != "Move" && playerInput != "Inventory" && playerInput != "Wait" && playerInput != "Sleep") {
-                std::cout << "I don't know what you mean! Try again" << std::endl;
-            }
-            else {
-                validInput = true;
-            }
-        }
+        std::string playerAction = InputHandler::getUserInput();
 
-        if (playerInput == "Look"){
-            validInput = false;
+        if (playerAction == "look"){
             std::cout << std::endl << "You look around and find..." << std::endl;
             if (world->findLocation(player.getCurrentLocation())->getLocationObjects().size() == 0) { //checks to see if the location has objects
-                std::cout << "...Nothing!" << std::endl << "Press enter to return to menu"; //if not, present nothing
-                std::getline(std::cin, playerInput);
+                std::cout << "...Nothing!" << std::endl;
+                InputHandler::waitForUser();
             } else {
                 for (Object* ob : world->findLocation(player.getCurrentLocation())->getLocationObjects()) { // loops through all the objects in the location to print
                     std::cout << ob->getName() << ": " << ob->getDescription() << std::endl;
                 }
                 std::cout << std::endl;
                 std::cout << "What would you like to take?" << std::endl;
-                while (validInput == false) {
-                    std::getline(std::cin, playerInput);
-                    for (int i = 0; i < world->findLocation(player.getCurrentLocation())->getLocationObjects().size(); i++) { // searches for the typed object in the location inventory
-                        std::string objectName = world->findLocation(player.getCurrentLocation())->getLocationObjects()[i]->getName();
-                        if (playerInput == objectName) { // if that object is there
-                            validInput = true;
-                            player.pickUpObject(world->findLocation(player.getCurrentLocation())->getLocationObjects()[i]); // put it in the player's inventory
-                            world->findLocation(player.getCurrentLocation())->removeLocationObject(objectName); // and remove it from the location inventory
-                        }
-                        else if (playerInput == "") { // exit without taking anything
-                            validInput = true;
-                        }
+
+                bool loop = true;
+                while(loop){
+                    std::string objectInput = InputHandler::getUserInput();
+                    if (objectInput == "") {
+                        loop = false;
                     }
-                    if (validInput == false) // if object was not found they can try again
-                    {
+                    else if (world->findLocation(player.getCurrentLocation())->hasObject(objectInput)) {
+                        auto object = world->findLocation(player.getCurrentLocation())->findLocationObject(objectInput);
+                        player.pickUpObject(object);
+                        world->findLocation(player.getCurrentLocation())->removeLocationObject(object->getName());
+                        loop = false;
+
+                    }
+                    else {
                         std::cout << "This object doesn't exist here! Try again" << std::endl;
                     }
+                }    
+            }
+			player.lookTime(world->findLocation(player.getCurrentLocation())->getIndoors()); // passes time for looking action
+        }
+
+        else if (playerAction == "fill bucket") {
+
+            if (world->findLocation(player.getCurrentLocation()) != world->findLocation(World::WATER_WELL)) {
+                std::cout << "There is no well here.\n";
+            }
+            else if (wellDry) {
+                std::cout << "The well has dried up!\n";
+            }
+            else {
+                bool hasBucket = false;
+
+                for (Object* item : player.getInventory()) {
+                    if (item->getName() == "Bucket") {
+                        hasBucket = true;
+                        break;
+                    }
+                }
+
+                if (!hasBucket) {
+                    std::cout << "You need to bring a bucket "
+                        << "to collect water.\n";
+                }
+                else if (bucketFilled) {
+                    std::cout << "Your bucket is already full!\n";
+                }
+                else {
+                    bucketFilled = true;
+                    wellDry = true;
+
+                    std::cout << "You filled your bucket "
+                        << "with fresh water!\n";
+
+                    std::cout << "The well has now dried up!\n";
                 }
             }
+
+            InputHandler::waitForUser();
         }
 
 
-        else if (playerInput == "Inventory") {
+
+        else if (playerAction == "inventory") {
 
             std::cout << "\nYour Inventory:\n";
 
@@ -101,20 +176,20 @@ int main()
 
             if (items.empty()) {
                 std::cout << "Your inventory is empty.\n";
-                std::cout << "\nPress Enter to continue:";
-                std::getline(std::cin, playerInput);
+                InputHandler::waitForUser();
             }
             else {
                 for (Object* item : items) {
                     std::cout << "==== " << item->getName() << "\n";
                 }
 
-                std::cout << "\nType 'Eat [Food]' to eat food."; //Man cannot live off burger alone
+                std::cout << "\nType 'Drink Water' to drink from your bucket.";
+                std::cout << "\nType 'Eat [Food]' to eat food."; 
                 std::cout << "\nPress Enter to return.\n";
 
-                std::getline(std::cin, playerInput);
+                std::string playerInventoryAction = InputHandler::getUserInput();
 
-                if (playerInput == "Eat Burger") {
+                if (playerInventoryAction == "eat burger") {
                     bool burgerFound = false;
 
                     for (int i = 0; i < static_cast<int>(items.size()); i++) {
@@ -122,7 +197,7 @@ int main()
 
                             player.increaseFood(25);
                             player.removeInventoryObject(i);
-
+                            player.eatTime();   // passes time for eating action
                             std::cout << "\nYou ate the burger!\n";
                             burgerFound = true;
                             break;
@@ -133,25 +208,87 @@ int main()
                         std::cout << "You don't have a burger.\n";
                     }
 
-                    std::cout << "Press Enter to continue...";
-                    std::getline(std::cin, playerInput);
+                    InputHandler::waitForUser();
+                }
+
+                else if (playerInventoryAction == "drink water") {
+
+                    bool hasBucket = false;
+
+                    for (Object* item : player.getInventory()) {
+                        if (item->getName() == "Bucket") {
+                            hasBucket = true;
+                            break;
+                        }
+                    }
+
+                    if (!hasBucket) {
+                        std::cout << "\nYou do not have a bucket!\n";
+                    }
+                    else if (!bucketFilled) {
+                        std::cout << "\nYour bucket is empty!\n";
+                    }
+                    else {
+                        player.increaseThirst(40);
+                        bucketFilled = false;
+						player.drinkTime();   // passes time for drinking action
+
+                        std::cout << "\nYou drank the water!\n";
+                        std::cout << "Your thirst has been restored!\n";
+                    }
+
+                    InputHandler::waitForUser();
                 }
             }
         }
 
-        else if (playerInput == "Wait") {
-			std::cout << player.Wait();
-			std::cout << "\nPress enter to continue";
-			std::getline(std::cin, playerInput);
+        else if (playerAction == "wait") {
+            std::cout << player.Wait();
+            InputHandler::waitForUser();
         }
 
-		else if (playerInput == "Sleep") {
+        else if (playerAction == "drop") {
+
+            std::cout << "\nYour Inventory:\n";
+
+            std::vector<Object*> items = player.getInventory();
+
+            if (items.empty()) {
+                std::cout << "You can't drop any items\n";
+                InputHandler::waitForUser();
+            }
+            else {
+                for (Object* item : items) {
+                    std::cout << "==== " << item->getName() << "\n";
+                }
+                std::cout << std::endl << "What Item do you want to drop?" << std::endl;
+                bool loop = true;
+                while (loop) {
+                    std::string objectInput = InputHandler::getUserInput();
+                    if (objectInput == "") {
+                        loop = false;
+                    }
+                    else if (player.hasItem(objectInput)) {
+                        auto object = player.findInventoryObject(objectInput);
+                        world->findLocation(player.getCurrentLocation())->addLocationObject(object);
+                        player.dropInventoryObject(objectInput);
+                        loop = false;
+
+                    }
+                    else {
+                        std::cout << "This object doesn't exist here! Try again" << std::endl;
+                    }
+                }
+
+            }
+        }
+
+        else if (playerAction == "sleep") {
             std::cout << player.Sleep(world->findLocation(player.getCurrentLocation())->canPlayerSleepHere());
-            std::cout << "\nPress enter to continue";   // To-Do: figure out better way to handle clearing screen after inputs
-            std::getline(std::cin, playerInput);
-		}
+            InputHandler::waitForUser();
+        }
         
-        else {
+        else if (playerAction == "move") {
 
             std::cout << std::endl;
             std::cout << "Where would you like to move to?" << std::endl;
@@ -162,31 +299,106 @@ int main()
             
             std::cout << std::endl;
             
-            validInput = false;
-            while (validInput == false) { //asks user where they want to go and if they input a valid location their location is set to it
-                std::getline(std::cin, playerInput);
-                World::LOCATION_ENUMS inputLocation = world->findLocation(playerInput);
+            bool loop = true;
+            while (loop) { //if they input a valid location their location is set to it
+                World::LOCATION_ENUMS inputLocation = world->findLocation(InputHandler::getUserInput());
 
                 if (world->isLocationConnected(player.getCurrentLocation(), inputLocation)) {
-                    validInput = true;
-                    player.setCurrentLocation(inputLocation);
+                    if (inputLocation == World::THREE_HUESTON_AVE_LIVING_ROOM && !player.hasItem("Silver key")) { //if they dont have the silver key
+                        std::cout << "You have to unlock this door to access this location, try again" << std::endl;
+                    } else if (inputLocation == World::CONSTRUCTION_DEPOT_INTERIOR && Time::getDay() < 10) { //if it's not day 10 yet
+                        std::cout << "The construction depot isn't open yet, try again" << std::endl;
+                    } else {
+                        player.moveTime(world->findLocation(player.getCurrentLocation())->getIndoors()); // passes time for moving action, indoors determined by INITIAL location
+                        player.setCurrentLocation(inputLocation);
+                        loop = false;
+                        player.decreaseThirst();
+                        player.changeEnergy(-1);
+                    }
                 }
-
-                if (validInput == false)
-                {
+                else {
                     std::cout << "That location doesn't exist here! Try again" << std::endl;
                 }
-                else
-                {
-                    player.changeEnergy(-1);
-                }
-            }
-            
+            }            
         }
+
+        else if (playerAction != "") {
+            std::cout << "I don't know what you mean! Try again" << std::endl;
+            InputHandler::waitForUser();
+        }
+
+		//New Death Functionality
+		if (player.isCharacterDead()) {
+			std::cout << "You have died due to starvation or dehydration." << std::endl;
+			break;
+		}
+
 		if (player.isCharacterExhausted()) {
 			std::cout << "You have run out of energy and can no longer continue your journey." << std::endl;
 			break;
 		}
     } while (true);
 
+    if (player.isCharacterDead()) {
+
+        std::string reason;
+
+        if (player.getFood() <= 0) {
+            reason = "Starvation";
+        }
+		else if (player.getThirst() <= 0) {
+			reason = "Dehydration";
+		}
+        else if (player.getEnergy() <= 0) {
+            reason = "Exhaustion";
+        }
+
+        PrintDeathScreen(reason);
+
+        std::string choice;
+
+        while (true) {
+            std::cout << "Enter your choice: ";
+            std::cin >> choice;
+
+            if (choice == "r" || choice == "R") {
+                restartGame = true;
+                break;
+            }
+            else if (choice == "q" || choice == "Q") {
+                restartGame = false;
+                break;
+            }
+            else {
+                std::cout << "Invalid choice. Press R or Q.\n";
+            }
+        }
+    }
+
+    delete world;
+
+    } // End restart loop
+
+    return 0;
 }
+
+
+    void PrintDeathScreen(std::string reason)
+    {
+        system("cls");
+
+        std::cout << "\n";
+        std::cout << "====================================\n";
+        std::cout << "             GAME OVER              \n";
+        std::cout << "====================================\n\n";
+
+        std::cout << "You have died!\n\n";
+        std::cout << "Cause of death: " << reason << "\n\n";
+
+        std::cout << "====================================\n";
+        std::cout << "         Press R to Restart         \n";
+        std::cout << "         Press Q to Quit            \n";
+        std::cout << "====================================\n\n";
+    }
+
+

@@ -11,7 +11,9 @@
 ///		Time(int startDay, float startHour) - constructor that sets the starting day and hour
 ///		getDay() - returns the current day
 ///		getHour() - returns the current hour
-///		PassTime(int hours, bool sleeping, Character& character) - adds to hour/day and updates energy based on sleeping or not
+///		getMinute() - returns the current minute
+///		passTime(int hours, int minutes) - accepts an integer number of hours and minutes to pass, and updates time accordingly
+///		string timeDisplay() - returns a string with the current day and time in the format "Day X HH:MM"
 
 class Character;
 
@@ -19,13 +21,17 @@ class Time
 {
 private:
 	static int day;
-	static float hour;
+	static int hour;
+	static int minute;
 	static const int START_HOUR = 22;
 	static const int START_DAY = 1;
+	static const int START_MINUTE = 0;
+	static std::string clockString(int unit); // returns a string with two characters, adding a leading 0 if the unit is less than 10
 public:
 	static int getDay();
-	static float getHour();
-	static void passTime(int hours);
+	static int getHour();
+	static int getMinute();
+	static void passTime(int hours, int minutes);
 	static std::string timeDisplay();
 };
 

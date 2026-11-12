@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include "Location.h"
+#include "InputHandler.h"
 
 //Manages all locations and the program's ability to reference locations using enumerators
 class World
@@ -16,8 +17,9 @@ class World
 	*   outputLocationConnections(LOCATION_ENUMS)            - prints the names of the connected locations of the  location class instance which maps to the passed enum
 	* 
 	* private methods
-	*	createLocation(LOCATION_ENUMS,string,string)         - creates a new location class instance, mapped to the provided enum & initialized with the name (first string) and description (second string) provided.
-	*   addConnectedLocation(LOCATION_ENUMS, LOCATION_ENUMS) - connects the second location to the first location (e.g enables the player to move from location1 -> location2)
+	*	createLocation(LOCATION_ENUMS,string,string,bool,bool)	- creates a new location class instance, mapped to the provided enum & initialized with the name (first string) and description (second string) provided, 
+																	plus if the location allwos sleep (first bool) and if it's indoors (second bool)
+	*   addConnectedLocation(LOCATION_ENUMS, LOCATION_ENUMS)	- connects the second location to the first location (e.g enables the player to move from location1 -> location2)
 	* 
 	* public data
 	*	enum LOCATION_ENUMS                   - an enum type with a possible value for every location the world class constructor will initialize
@@ -43,6 +45,34 @@ public:
 		WESTERN_FOREST_EDGE,
 		EASTERN_FOREST_EDGE,
 		NORTHERN_FOREST_EDGE,
+		HOME_LAWN,
+		LINCOLN_COURT,
+		THREE_LINCOLN_COURT_FRONT_DOOR,
+		FOUR_LINCOLN_COURT_FRONT_DOOR,
+		NORTH_HUESTON_AVE,
+		TWELVE_HUESTON_AVE_FRONT_DOOR,
+		FOURTEEN_HUESTON_AVE_FRONT_DOOR,
+		SOUTH_HUESTON_AVE,
+		FIVE_HUESTON_AVE_FRONT_DOOR,
+		THREE_HUESTON_AVE_FRONT_DOOR,
+		THREE_HUESTON_AVE_LIVING_ROOM,
+		SIX_HUESTON_AVE_FRONT_DOOR,
+		ONE_HUESTON_AVE_FRONT_DOOR,
+		EAST_MAIN_STREET,
+		ONE_TWELVE_MAIN_STREET_FRONT_DOOR,
+		ONE_TWELVE_MAIN_STREET_SIDE_DOOR,
+		TOWN_DINER_ENTRANCE,
+		TOWN_DINER_BACKLOT,
+		WEST_MAIN_STREET,
+		GROCERY_STORE_ENTRANCE,
+		GROCERY_STORE_BACKLOT,
+		CONSTRUCTION_DEPOT_ENTRANCE,
+		CONSTRUCTION_DEPOT_INTERIOR,
+		ARCADE_ENTRANCE,
+		ARCADE_ALLEY,
+		TOWN_PARK,
+		TOWN_GARDEN,
+		WATER_WELL,
 
 		INVALID_LOCATION
 	};
@@ -57,7 +87,7 @@ public:
 	
 
 private:
-	void createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep); // adding new parameter to fix bedroom not being detected as viable sleep location
+	void createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep, bool isIndoors); // two bool values are for if the player can sleep, and if the location is indoors
 	void addConnectedLocation(LOCATION_ENUMS loc_enum1, LOCATION_ENUMS loc_enum2);
 	std::unordered_map<std::string, LOCATION_ENUMS> locationInputMap = {
 		{"home bedroom", HOME_BEDROOM},
@@ -73,7 +103,35 @@ private:
 		{"western forest edge", WESTERN_FOREST_EDGE },
 		{"eastern forest edge", EASTERN_FOREST_EDGE },
 		{"northern forest edge", NORTHERN_FOREST_EDGE },
+		{"home lawn", HOME_LAWN },
+		{"lincoln court", LINCOLN_COURT },
+		{"3 lincoln court front door", THREE_LINCOLN_COURT_FRONT_DOOR },
+		{"4 lincoln court front door", FOUR_LINCOLN_COURT_FRONT_DOOR },
+		{"north hueston ave", NORTH_HUESTON_AVE},
+		{"12 hueston ave front door", TWELVE_HUESTON_AVE_FRONT_DOOR},
+		{"14 hueston ave front door", FOURTEEN_HUESTON_AVE_FRONT_DOOR},
+		{"south hueston ave", SOUTH_HUESTON_AVE},
+		{"5 hueston ave front door", FIVE_HUESTON_AVE_FRONT_DOOR},
+		{"3 hueston ave front door", THREE_HUESTON_AVE_FRONT_DOOR},
+		{"3 hueston ave living room", THREE_HUESTON_AVE_LIVING_ROOM},
+		{"6 hueston ave front door", SIX_HUESTON_AVE_FRONT_DOOR},
+		{"1 hueston ave front door", ONE_HUESTON_AVE_FRONT_DOOR},
+		{"east main street", EAST_MAIN_STREET},
+		{"112 main street front door", ONE_TWELVE_MAIN_STREET_FRONT_DOOR},
+		{"112 main street side door", ONE_TWELVE_MAIN_STREET_SIDE_DOOR},
+		{"town diner entrance", TOWN_DINER_ENTRANCE},
+		{"town diner backlot", TOWN_DINER_BACKLOT},
+		{"west main street", WEST_MAIN_STREET},
+		{"grocery store entrance", GROCERY_STORE_ENTRANCE},
+		{"grocery store backlot", GROCERY_STORE_BACKLOT},
+		{"construction depot entrance", CONSTRUCTION_DEPOT_ENTRANCE},
+		{"construction depot interior", CONSTRUCTION_DEPOT_INTERIOR},
+		{"arcade entrance", ARCADE_ENTRANCE},
+		{"arcade alley", ARCADE_ALLEY},
+		{"town park", TOWN_PARK},
+		{"town garden", TOWN_GARDEN},
 
+		{"water well", WATER_WELL }, { "well", WATER_WELL }, {"water", WATER_WELL }, {"ww", WATER_WELL }
 	};
 
 	std::unordered_map<LOCATION_ENUMS, std::vector<LOCATION_ENUMS>> locationConnectionsMap;
