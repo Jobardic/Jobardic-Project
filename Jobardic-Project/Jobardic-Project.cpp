@@ -31,7 +31,6 @@ int main()
     Location* start = world->World::findLocation(World::LOCATION_ENUMS::HOME_BACKDOOR);
 
     StoryEvent* openingSequence = new StoryEvent(openingDesc, start, &opening);
-    //StoryEvent openingSequence(cat, start, &opening);
 
     //===================================================================================================
 
