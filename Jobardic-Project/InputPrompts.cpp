@@ -6,8 +6,8 @@ InputPrompts::InputPrompts(std::vector<InputChoice*> inputChoices) {
 	InputPrompts::inputChoices = inputChoices;
 }
 
-InputChoice* InputPrompts::getChoice(int choice) {
-	InputChoice* a = inputChoices.at(choice);
+std::string InputPrompts::getChoice(int choice) {
+	std::string a = inputChoices.at(choice)->getDescription();
 	return a;
 }
 
