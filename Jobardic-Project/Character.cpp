@@ -20,17 +20,45 @@ std::vector<Object*> Character::getInventory() {
 	return inventory;
 }
 
-bool Character::hasItem(std::string object) {
-	for (Object* item : inventory) {
-		if (object == item->getName()) {
-			return true;
-		}
-	}
-	return false;
+bool Character::hasItem(std::string objectName) {
+	return (findInventoryObject(objectName) != nullptr);
 }
 
 void Character::pickUpObject(Object* item) {
 	Character::inventory.push_back(item);
+}
+
+void Character::dropInventoryObject(std::string objectName) {
+	std::string normalizedName = InputHandler::normalizeInput(objectName);
+
+	auto indexOfObject = std::find_if(
+		inventory.begin(),
+		inventory.end(),
+		[normalizedName](Object* obj) {
+			return InputHandler::normalizeInput(obj->getName()) == normalizedName;
+		}
+	);
+	if (indexOfObject != inventory.end()) {
+		inventory.erase(indexOfObject);
+	}
+}
+
+Object* Character::findInventoryObject(std::string objectName) {
+	std::string normalizedName = InputHandler::normalizeInput(objectName);
+	auto indexOfObject = std::find_if(
+		inventory.begin(),
+		inventory.end(),
+		[normalizedName](Object* obj) {
+			return InputHandler::normalizeInput(obj->getName()) == normalizedName;
+		}
+	);
+
+	if (indexOfObject != inventory.end()) {
+		return *indexOfObject;
+	}
+	else {
+		return nullptr;
+	}
 }
 
 void Character::setCurrentLocation(World::LOCATION_ENUMS location) {

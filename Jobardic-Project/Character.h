@@ -36,6 +36,8 @@ public:
 	std::vector<Object*> getInventory();
 	bool hasItem(std::string object);
     void pickUpObject(Object* item);
+	void dropInventoryObject(std::string objectName);
+	Object* findInventoryObject(std::string objectName);
 
     int getEnergy();
     int getMaxEnergy();

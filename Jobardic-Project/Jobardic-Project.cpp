@@ -82,7 +82,8 @@ int main()
         std::cout << "==== Look" << std::endl;
         std::cout << "==== Move" << std::endl;
         std::cout << "==== Inventory" << std::endl;
-		std::cout << "==== Wait" << std::endl;  // new player action: waiting
+        std::cout << "==== Wait" << std::endl;  // new player action: waiting
+        std::cout << "==== Drop" << std::endl;  // new player action: dropping item
 		if (world->findLocation(player.getCurrentLocation())->canPlayerSleepHere()) {
             std::cout << "==== Sleep" << std::endl;
 		}
@@ -125,7 +126,6 @@ int main()
             }
 			player.lookTime(world->findLocation(player.getCurrentLocation())->getIndoors()); // passes time for looking action
         }
-
 
         else if (playerAction == "fill bucket") {
 
@@ -245,6 +245,42 @@ int main()
         else if (playerAction == "wait") {
             std::cout << player.Wait();
             InputHandler::waitForUser();
+        }
+
+        else if (playerAction == "drop") {
+
+            std::cout << "\nYour Inventory:\n";
+
+            std::vector<Object*> items = player.getInventory();
+
+            if (items.empty()) {
+                std::cout << "You can't drop any items\n";
+                InputHandler::waitForUser();
+            }
+            else {
+                for (Object* item : items) {
+                    std::cout << "==== " << item->getName() << "\n";
+                }
+                std::cout << std::endl << "What Item do you want to drop?" << std::endl;
+                bool loop = true;
+                while (loop) {
+                    std::string objectInput = InputHandler::getUserInput();
+                    if (objectInput == "") {
+                        loop = false;
+                    }
+                    else if (player.hasItem(objectInput)) {
+                        auto object = player.findInventoryObject(objectInput);
+                        world->findLocation(player.getCurrentLocation())->addLocationObject(object);
+                        player.dropInventoryObject(objectInput);
+                        loop = false;
+
+                    }
+                    else {
+                        std::cout << "This object doesn't exist here! Try again" << std::endl;
+                    }
+                }
+
+            }
         }
 
         else if (playerAction == "sleep") {
