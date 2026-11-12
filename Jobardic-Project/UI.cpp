@@ -4,17 +4,18 @@
 #include "StoryEvent.h"
 #include "Commands.h"
 #include "UI.h"
-#include<algorithm>
-#include<string>
-#include<iostream>
-#include<cctype>
+#include <algorithm>
+#include <string>
+#include <iostream>
+#include <cctype>
 
 
 
 
 void UI::displayOutput(StoryEvent* storyEvent) {
 	std::cout << storyEvent->getDescription() << "\n";
-	int numberOfPrompts = storyEvent->getInputPrompt()->getNumberOfPrompts();
+	InputPrompts* prompts = storyEvent->getInputPrompt();
+	int numberOfPrompts = prompts->getNumberOfPrompts();
 	for (int i = 0; i < numberOfPrompts; i++) {
 		std::cout << storyEvent->getInputPrompt()->getChoice(i) << "\n";
 	}
