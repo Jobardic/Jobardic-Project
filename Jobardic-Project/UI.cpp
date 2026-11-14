@@ -33,7 +33,7 @@ Commands UI::parseUserInput(std::string userInput) {
 	}
 
 	else {
-		input = Commands::Null;
+		input = Commands::Progress;
 	}
 
 	return input;
