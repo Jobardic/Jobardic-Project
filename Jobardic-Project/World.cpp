@@ -3,6 +3,8 @@
 #include <unordered_map>
 #include <string>
 #include <cctype>
+#include "StoryEvent.h"
+#include "EventManager.h"
 
 /*
 * 
@@ -107,6 +109,14 @@ World::World() {
     Object* dog_food_bag = new Object("Dog Food Bag", "A bag of food for your dog!");
 	Object* bucket = new Object("Bucket", "A bucket which can be used to collect water from the well.");
 
+
+    Object* weather_report_letter = new Object("Wheather Report", "storm letter test");
+    int weather_report_time[3] = { 2,0,0 };
+    std::unordered_map<World::LOCATION_ENUMS, std::vector<Object*>> weather_report_objects = { 
+        {HOME_FRONTPORCH,{weather_report_letter}}
+    };
+    StoryEvent* addWeatherReportToMailboxEvent = new StoryEvent(weather_report_time,weather_report_objects, this);
+    EventManager::addEvent(addWeatherReportToMailboxEvent);
 
     //ToDo: combine the connected location adding & item adding w/ createLocation() function
 
@@ -259,6 +269,8 @@ World::World() {
     findLocation(ARCADE_ALLEY)->addLocationObject(wallet);
     findLocation(TOWN_GARDEN)->addLocationObject(cabbage);
     findLocation(HOME_BATHROOM)->addLocationObject(bucket);
+
+
 }
 
 void World::createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep, bool isIndoors) {
