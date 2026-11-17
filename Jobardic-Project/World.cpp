@@ -253,11 +253,11 @@ World::World() {
     addConnectedLocation(NORTHERN_FOREST_EDGE, TOWN_PARK);
     addConnectedLocation(TOWN_PARK, NORTHERN_FOREST_EDGE);
 
-
-    //findLocation(HOME_BACKDOOR)->addLocationObject(chewtoy);
+    // NEW: Place objects in the world by calling placeObjects()
+    
     placeObjects(chewtoy, { HOME_BACKDOOR }, 1, false);
     placeObjects(burger, { HOME_KITCHEN }, 1, false);
-    placeObjects(dog, { EASTERN_FOREST_EDGE, WESTERN_FOREST_EDGE, NORTHERN_FOREST_EDGE, SOUTHERN_FOREST_EDGE }, 1, false);
+    placeObjects(dog, { EASTERN_FOREST_EDGE, WESTERN_FOREST_EDGE, NORTHERN_FOREST_EDGE, SOUTHERN_FOREST_EDGE, INNER_WOODS }, 1, false);
     placeObjects(firewood, { FOUR_LINCOLN_COURT_FRONT_DOOR, FIVE_HUESTON_AVE_FRONT_DOOR }, 2, false);
     placeObjects(coal, { TWELVE_HUESTON_AVE_FRONT_DOOR }, 1, false);
 	placeObjects(fire_axe, { THREE_HUESTON_AVE_FRONT_DOOR }, 1, false);
