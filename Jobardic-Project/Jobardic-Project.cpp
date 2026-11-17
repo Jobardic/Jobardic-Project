@@ -33,11 +33,11 @@ int main()
         system("cls");
         std::cout << std::endl;
         std::cout << Time::timeDisplay() << std::endl;
-        std::cout << "Energy: " << player.getEnergy() << " / " << player.getMaxEnergy() << std::endl;   //substitute for energy bar
-        std::cout << "Water: " << player.getWater() << " / " << player.getMaxWater() << std::endl;      // substitute for water bar
-        std::cout << "Food: " << player.getFood() << " / " << player.getMaxFood() << std::endl;         // substitute for food bar
-        std::cout << "\n-------------------------------------\n\n";  // currently calling player.get[Resource]() instead of player.get[Resource]Ceiling() to test if floats are changing properly, which doesn't seem the case now
-		                                                                // but eventually we should call player.get[Resource]Ceiling() to round up the float values to integers and make display cleaner
+        std::cout << "Energy: " << player.getEnergyCeiling() << " / " << player.getMaxEnergy() << std::endl;   //substitute for energy bar
+        std::cout << "Water: " << player.getWaterCeiling() << " / " << player.getMaxWater() << std::endl;      // substitute for water bar
+        std::cout << "Food: " << player.getFoodCeiling() << " / " << player.getMaxFood() << std::endl;         // substitute for food bar
+        std::cout << "\n-------------------------------------\n\n";  
+		                                                                
         if (player.getCurrentLocation() == World::HOME_KITCHEN) {
             for (Object* item : world->findLocation(player.getCurrentLocation())->getLocationObjects()) {
                 if (item->getName() == "Burger") {

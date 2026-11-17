@@ -76,7 +76,7 @@ int Character::getMaxEnergy() {
 	return MAX_ENERGY;
 }
 
-void Character::changeEnergy(int amount) {
+void Character::changeEnergy(float amount) {
 	characterEnergy += amount;
 	if (characterEnergy > MAX_ENERGY) {
 		characterEnergy = MAX_ENERGY;
@@ -147,7 +147,7 @@ int Character::getMaxFood() {
 	return MAX_FOOD;
 }
 
-void Character::changeFood(int amount) {
+void Character::changeFood(float amount) {
 	characterFood += amount;
 	if (characterFood > MAX_FOOD) {
 		characterFood = MAX_FOOD;
@@ -182,7 +182,7 @@ void Character::decreaseWater() {
 	}
 }
 
-void Character::changeWater(int amount) {
+void Character::changeWater(float amount) {
 	characterWater += amount;
 	if (characterWater > MAX_WATER) {
 		characterWater = MAX_WATER;

@@ -42,14 +42,14 @@ public:
     float getEnergy();
 	int getEnergyCeiling();
     int getMaxEnergy();
-    void changeEnergy(int amount);
+    void changeEnergy(float amount);
     bool isCharacterExhausted();
 
     // NEW: Burger / food functionality
     float getFood();
 	int getFoodCeiling();
     int getMaxFood();
-    void changeFood(int amount);	// replacing increaseFood with changeFood as there is no decreaseFood function and it's also consistent with energy
+    void changeFood(float amount);	// replacing increaseFood with changeFood as there is no decreaseFood function and it's also consistent with energy
     void removeInventoryObject(int index);
 	/*
 	bool isCharacterStarving();
@@ -61,7 +61,7 @@ public:
 	int getWaterCeiling();
     int getMaxWater();
 	void decreaseWater();	// replacing decreaseThirst with decreaseWater as there is no increaseThirst function that accepts an amountand it's also consistent with energy
-    void changeWater(int amount);
+    void changeWater(float amount);
 
 	//New Death Functionality
 	bool isCharacterDead();
