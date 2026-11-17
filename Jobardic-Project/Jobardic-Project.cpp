@@ -71,12 +71,11 @@ int main()
         system("cls");
         std::cout << std::endl;
         std::cout << Time::timeDisplay() << std::endl;
-        std::cout << "Energy: " << player.getEnergy() << " / " << player.getMaxEnergy() << std::endl; //substitute for energy bar
-        std::cout << "Thirst: " << player.getThirst() << " / " << player.getMaxThirst() << std::endl; // substitute for thirst bar
-        std::cout << "Food: " << player.getFood() << " / " << player.getMaxFood() << std::endl; // substitute for food bar
-        std::cout << "\n-------------------------------------\n\n";
-
-
+        std::cout << "Energy: " << player.getEnergyCeiling() << " / " << player.getMaxEnergy() << std::endl;   //substitute for energy bar
+        std::cout << "Water: " << player.getWaterCeiling() << " / " << player.getMaxWater() << std::endl;      // substitute for water bar
+        std::cout << "Food: " << player.getFoodCeiling() << " / " << player.getMaxFood() << std::endl;         // substitute for food bar
+        std::cout << "\n-------------------------------------\n\n";  
+		                                                                
         if (player.getCurrentLocation() == World::HOME_KITCHEN) {
             for (Object* item : world->findLocation(player.getCurrentLocation())->getLocationObjects()) {
                 if (item->getName() == "Burger") {
@@ -233,7 +232,7 @@ int main()
                     for (int i = 0; i < static_cast<int>(items.size()); i++) {
                         if (items[i]->getName() == "Burger") {
 
-                            player.increaseFood(25);
+                            player.changeFood(25);
                             player.removeInventoryObject(i);
                             player.eatTime();   // passes time for eating action
                             std::cout << "\nYou ate the burger!\n";
@@ -267,7 +266,7 @@ int main()
                         std::cout << "\nYour bucket is empty!\n";
                     }
                     else {
-                        player.increaseThirst(40);
+                        player.changeWater(40);
                         bucketFilled = false;
 						player.drinkTime();   // passes time for drinking action
 
@@ -350,7 +349,7 @@ int main()
                         player.moveTime(world->findLocation(player.getCurrentLocation())->getIndoors()); // passes time for moving action, indoors determined by INITIAL location
                         player.setCurrentLocation(inputLocation);
                         loop = false;
-                        player.decreaseThirst();
+                        player.decreaseWater();
                         player.changeEnergy(-1);
                     }
                 }
@@ -384,7 +383,7 @@ int main()
         if (player.getFood() <= 0) {
             reason = "Starvation";
         }
-		else if (player.getThirst() <= 0) {
+		else if (player.getWater() <= 0) {
 			reason = "Dehydration";
 		}
         else if (player.getEnergy() <= 0) {
