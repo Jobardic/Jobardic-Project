@@ -325,39 +325,69 @@ int main()
             InputHandler::waitForUser();
         }
         
+
         else if (playerAction == "move") {
 
             std::cout << std::endl;
             std::cout << "Where would you like to move to?" << std::endl;
-            
-
 
             world->outputLocationConnections(player.getCurrentLocation());
-            
-            std::cout << std::endl;
-            
-            bool loop = true;
-            while (loop) { //if they input a valid location their location is set to it
-                World::LOCATION_ENUMS inputLocation = world->findLocation(InputHandler::getUserInput());
 
-                if (world->isLocationConnected(player.getCurrentLocation(), inputLocation)) {
-                    if (inputLocation == World::THREE_HUESTON_AVE_LIVING_ROOM && !player.hasItem("Silver key")) { //if they dont have the silver key
-                        std::cout << "You have to unlock this door to access this location, try again" << std::endl;
-                    } else if (inputLocation == World::CONSTRUCTION_DEPOT_INTERIOR && Time::getDay() < 10) { //if it's not day 10 yet
-                        std::cout << "The construction depot isn't open yet, try again" << std::endl;
-                    } else {
-                        player.moveTime(world->findLocation(player.getCurrentLocation())->getIndoors()); // passes time for moving action, indoors determined by INITIAL location
-                        player.setCurrentLocation(inputLocation);
-                        loop = false;
-                        player.decreaseWater();
-                        player.changeEnergy(-1);
-                    }
+            // Display the cancellation option
+            std::cout << "\n==== Cancel" << std::endl;
+            std::cout << "Type 'Cancel' to return to the main menu.\n";
+            std::cout << std::endl;
+
+            bool loop = true;
+
+            while (loop) {
+
+                std::string locationInput = InputHandler::getUserInput();
+
+                // Cancel movement and return to main menu
+                if (locationInput == "cancel") {
+                    std::cout << "\nMovement cancelled. Returning to main menu.\n";
+                    loop = false;
                 }
                 else {
-                    std::cout << "That location doesn't exist here! Try again" << std::endl;
+                    World::LOCATION_ENUMS inputLocation =
+                        world->findLocation(locationInput);
+
+                    if (world->isLocationConnected(player.getCurrentLocation(), inputLocation)) {
+
+                        if (inputLocation == World::THREE_HUESTON_AVE_LIVING_ROOM &&
+                            !player.hasItem("Silver key")) {
+
+                            std::cout << "You have to unlock this door to access this location, try again"
+                                << std::endl;
+                        }
+                        else if (inputLocation == World::CONSTRUCTION_DEPOT_INTERIOR &&
+                            Time::getDay() < 10) {
+
+                            std::cout << "The construction depot isn't open yet, try again"
+                                << std::endl;
+                        }
+                        else {
+                            player.moveTime(
+                                world->findLocation(player.getCurrentLocation())->getIndoors()
+                            );
+
+                            player.setCurrentLocation(inputLocation);
+                            player.decreaseWater();
+                            player.changeEnergy(-1);
+                            player.changeFood(-1);
+
+                            loop = false;
+                        }
+                    }
+                    else {
+                        std::cout << "That location doesn't exist here! Try again, or type 'Cancel' to return."
+                            << std::endl;
+                    }
                 }
-            }            
-        }
+            }
+            }
+
 
         else if (playerAction != "") {
             std::cout << "I don't know what you mean! Try again" << std::endl;
