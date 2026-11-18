@@ -67,14 +67,14 @@ World::World() {
     createLocation(FOUR_LINCOLN_COURT_FRONT_DOOR, "4 Lincoln Court Front Door", "The front door of one of the abandoned houses on your street.", false, false, 0.4);
     createLocation(NORTH_HUESTON_AVE, "North Hueston Ave", "The northern section of the distributary road connected to your street. There are some more abandonded houses here.", false, false, 0.0);
     createLocation(TWELVE_HUESTON_AVE_FRONT_DOOR, "12 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false, false, 0.3);
-    createLocation(FOURTEEN_HUESTON_AVE_FRONT_DOOR, "14 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false, false, 0.4);
+    createLocation(FOURTEEN_HUESTON_AVE_FRONT_DOOR, "14 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false, false, 0.5);
     createLocation(SOUTH_HUESTON_AVE, "South Hueston Ave", "The northern section of the distributary road connected to your street. There are some more abandonded houses here.", false, false, 0.0);
     createLocation(FIVE_HUESTON_AVE_FRONT_DOOR, "5 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false, false, 0.4);
     createLocation(THREE_HUESTON_AVE_FRONT_DOOR, "3 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave. It has a silver lock.", false, false, 0.1);
     createLocation(THREE_HUESTON_AVE_LIVING_ROOM, "3 Hueston Ave Living Room", "The interior of one of the abandoned houses on Hueston Ave. It is dusty and barren.", false, true, 0.2);
     // ^ This location opens up after you find the silver key
     createLocation(SIX_HUESTON_AVE_FRONT_DOOR, "6 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false, false, 0.4);
-    createLocation(ONE_HUESTON_AVE_FRONT_DOOR, "1 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false, false, 0.4);
+    createLocation(ONE_HUESTON_AVE_FRONT_DOOR, "1 Hueston Ave Front Door", "The front door of one of the abandoned houses on Hueston Ave.", false, false, 0.5);
     createLocation(EAST_MAIN_STREET, "East Main Street", "The eastern part of the Main Street in your town.", false, false, 0.0);
     createLocation(ONE_TWELVE_MAIN_STREET_FRONT_DOOR, "112 Main Street Front Door", "The front door of one of the abandoned houses on Main Street.", false, false, 0.2);
     createLocation(ONE_TWELVE_MAIN_STREET_SIDE_DOOR, "112 Main Street Side Door", "The side door of one of the abandoned houses on Main Street.", false, false, 0.2);
@@ -378,7 +378,7 @@ void World::randomizeFood(Object** lootArray) { // Iterates over all the locatio
     for (int fooInt = HOME_BEDROOM; fooInt != INVALID_LOCATION; fooInt++) { //Invalid Location must be the last location for this to work
         LOCATION_ENUMS foo = static_cast<LOCATION_ENUMS>(fooInt); //turns the "index" into the enum
         if (rand()%101 < ((findLocation(foo)->getLootChance())*100)) { //if random chance is within the % chance of the location, put food there
-            findLocation(foo)->addLocationObject(lootArray[rand() % 10]); //assigns a random food to the location
+            findLocation(foo)->addLocationObject(new Object(lootArray[rand() % 10]->getName(), lootArray[rand() % 10]->getDescription())); //assigns a random food to the location
         }
     }
 }
