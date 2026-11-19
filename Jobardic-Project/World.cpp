@@ -105,7 +105,7 @@ World::World() {
     Object* half_generator = new Object("\033[4mGenerator\033[0m", "A half full generator that can burn fuel for warmth for multiple days. It smells like diesel.");
     Object* burger_bag = new Object("\033[4mBag of Burgers\033[0m", "A large bag of food that can last you multiple days... \033[1mWho put all these burgers in a bag?\033[0m");
     Object* cabbage = new Object("\033[4mCabbage\033[0m", "A delicious leafy vegetable you can eat, it's high in vitamin C!");
-    Object* potato_sack = new Object("\033[4mSack of Potatoes\033[0m", "A sack of brown starchy plants you can eat for multiple days! They don't taste very good raw though.");
+    Object* potato_sack = new Object("\033[4mBag of Potatoes\033[0m", "A bag of brown starchy plants you can eat for multiple days! They don't taste very good raw though.");
     Object* wallet = new Object("\033[4mWallet\033[0m", "A brown leather wallet with \033[1m$70\033[0m in it! You wonder whose it is but there's no identification inside.");
     Object* dog_food_bag = new Object("\033[4mDog Food Bag\033[0m", "A bag of food for your dog! ... \033[3mIt doesn't taste very good.\033[0m");
 	Object* bucket = new Object("\033[4mBucket\033[0m", "An old metal bucket which can be used to collect water from the well.");
