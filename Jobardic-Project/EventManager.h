@@ -17,6 +17,10 @@ private data:
 
 vector<StoryEvent*> storyEvents - list of all storyEvents
 
+private methods:
+
+bool hasEvent(StoryEvent* event) - returns true if EventManager already managing the passed event in its storyEvents vector.
+
 */
 
 
@@ -26,8 +30,10 @@ static class EventManager
 public:
 	static void enactEvents();
 	static void addEvent(StoryEvent* event);
+	
 
 private:
 	static std::vector<StoryEvent*> storyEvents;
+	static bool hasEvent(StoryEvent* event);
 };
 

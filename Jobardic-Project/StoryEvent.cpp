@@ -33,19 +33,23 @@ InputPrompts* StoryEvent::getInputPrompt() {
 }
 
 void StoryEvent::attemptEvent() {
+	//Potential ToDo:
+	//delegating time calculation to a Time::isAtOrAfter(int[3]) function which returns true if the current time is at or passed the time in the function argument.
+
 	int currentTime = (Time::getDay() * 24 * 60) + (Time::getHour() * 60) + Time::getMinute();
 	int eventTime = (daySchedule * 24 * 60) + (hourSchedule * 60) + minuteSchedule;
 
-	if (currentTime >= eventTime) {
+	if (addsObjectsToLocations() && !executed && currentTime >= eventTime) {
 		for (const auto& mapping : objectsToAddToLocations) {
 			for (const auto& object : mapping.second) {
 				world->findLocation(mapping.first)->addLocationObject(object);
 			}
 		}
+		executed = true;
 	}
 }
 bool StoryEvent::addsObjectsToLocations() {
-	return (objectsToAddToLocations.empty());
+	return (!objectsToAddToLocations.empty());
 }
 bool StoryEvent::hasExecuted() {
 	return executed;

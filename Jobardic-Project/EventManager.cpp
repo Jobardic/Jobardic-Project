@@ -8,5 +8,19 @@ void EventManager::enactEvents() {
 	}
 }
 void EventManager::addEvent(StoryEvent* event) {
-	storyEvents.push_back(event);
+
+	if (!hasEvent(event)) {
+		storyEvents.push_back(event);
+	}
+}
+
+bool EventManager::hasEvent(StoryEvent* event) {
+	auto indexOfEvent = std::find_if(
+		storyEvents.begin(),
+		storyEvents.end(),
+		[event](StoryEvent* ev) {
+			return ev == event;
+		}
+	);
+	return (indexOfEvent != storyEvents.end());
 }

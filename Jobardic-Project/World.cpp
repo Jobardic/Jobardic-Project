@@ -14,6 +14,7 @@
                   placing the objects into specific locations,
 *                 establishing connections between locations which allow player travel between them
 *                 processing and mapping player input to matching locations
+*                 creating story events and adding them to the EventManager
 * 
 * 
 * 
@@ -42,7 +43,21 @@
                 strings must be unique to their entry
                     e.g {"big house", BIG_HOUSE_ONE},{"big house", BIG_HOUSE_TWO} will not work
                     but {"big house", BIG_HOUSE},{"bh", BIG_HOUSE} will work.
+   
+     When adding objects to locations in the world, do not pass the same object instance to multiple locations!
+         e.g      findLocation(HOME_KITCHEN)->addLocationObject(burger);
+                  findLocation(HOME_LIVINGROOM)->addLocationObject(burger); <--- don't do this! make a new object instance with the same information and assign that new object's pointer if you need duplicate objects.
+               
+                  ToDo: function to instantiate a new duplicate object, perhaps like the following example:
+                     findLocation(HOME_LIVINGROOM)->addLocationObject(burger->duplicate());
 
+
+    To add new story events:
+           1) create new story event in World() constructor by adding a new line initalizing it. More details on its parameters in StoryEvent.cpp
+              e.g       StoryEvent* event = new StoryEvent(event_time,event_objects, this);
+          2) add the story event to the EventManager by calling EventManager's addEvent method in the World() constructor
+              e.g        EventManager::addEvent(event);
+                         
 */
 
 //World Constructor
@@ -53,7 +68,7 @@ World::World() {
     createLocation(HOME_LIVINGROOM, "Home Living Room", "You are now in your living room.", false, true);
     createLocation(HOME_BATHROOM, "Home Bathroom", "You are now in your bathroom.", false, true);
     createLocation(HOME_FRONTDOOR, "Home Front Door", "You are now at the front door to your home from the inside", false, true);
-    createLocation(HOME_FRONTPORCH, "Home Front Porch", "You are now outside on your front porch", false, false);
+    createLocation(HOME_FRONTPORCH, "Home Front Porch", "You are now outside on your front porch. Your mailbox is mounted just right of your doorbell.", false, false);
     createLocation(HOME_BACKDOOR, "Home Back Door", "You are now at the back door to your home from the inside", false, true);
     createLocation(HOME_BACKYARD, "Home Backyard", "You are now outside in your backyard", false, false);
     createLocation(SOUTHERN_FOREST_EDGE, "Southern Forest Edge", "You are now standing at the edge of the forest behind your backyard, which is the southern-most area of the forest.", false, false);
@@ -110,10 +125,10 @@ World::World() {
 	Object* bucket = new Object("Bucket", "A bucket which can be used to collect water from the well.");
 
 
-    Object* weather_report_letter = new Object("Wheather Report", "storm letter test");
-    int weather_report_time[3] = { 2,0,0 };
+    Object* weather_report_letter = new Object("NOAA Report Letter", "\"WEATHER ADVISORY:\n   Residents are advised to stay indoors and exercise caution for the next 48 hours\n   due to predicted incoming heavy rainfall and thunder\"");
+    int weather_report_time[3] = { 0,0,1 }; //Day 2, Hour 0, Minute 0
     std::unordered_map<World::LOCATION_ENUMS, std::vector<Object*>> weather_report_objects = { 
-        {HOME_FRONTPORCH,{weather_report_letter}}
+        {HOME_BEDROOM,{weather_report_letter}}
     };
     StoryEvent* addWeatherReportToMailboxEvent = new StoryEvent(weather_report_time,weather_report_objects, this);
     EventManager::addEvent(addWeatherReportToMailboxEvent);
