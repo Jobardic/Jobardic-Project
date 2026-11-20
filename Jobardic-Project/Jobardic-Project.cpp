@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <ctime>
+#include <random>
 #include "Location.h"
 #include "Character.h"
 #include "InputPrompts.h"
@@ -19,7 +21,7 @@ void PrintDeathScreen(std::string reason);
 
 int main()
 {
-
+    srand(time(0));
 	bool restartGame = true;
 
     while (restartGame){
@@ -74,7 +76,11 @@ int main()
         std::cout << "Energy: " << player.getEnergyCeiling() << " / " << player.getMaxEnergy() << std::endl;   //substitute for energy bar
         std::cout << "Water: " << player.getWaterCeiling() << " / " << player.getMaxWater() << std::endl;      // substitute for water bar
         std::cout << "Food: " << player.getFoodCeiling() << " / " << player.getMaxFood() << std::endl;         // substitute for food bar
-        std::cout << "\n-------------------------------------\n\n";  
+        std::cout << "\n-------------------------------------\n\n";
+
+        if (rand() % 400 == 0) { //refreshes about every 8 days
+            world->randomizeFood(world->foodLoot);
+        }
 		                                                                
         if (player.getCurrentLocation() == World::HOME_KITCHEN) {
             for (Object* item : world->findLocation(player.getCurrentLocation())->getLocationObjects()) {
