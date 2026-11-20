@@ -79,7 +79,8 @@ int main()
         std::cout << "\n-------------------------------------\n\n";
 
         if (rand() % 400 == 0) { //refreshes about every 8 days
-            world->randomizeFood(world->foodLoot);
+            world->randomizeLoot(world->foodLoot);
+            world->randomizeLoot(world->drinkLoot);
         }
 		                                                                
         if (player.getCurrentLocation() == World::HOME_KITCHEN) {
