@@ -51,6 +51,7 @@ public:
     int getMaxFood();
     void changeFood(float amount);	// replacing increaseFood with changeFood as there is no decreaseFood function and it's also consistent with energy
     void removeInventoryObject(int index);
+	void changeFood();
 	/*
 	bool isCharacterStarving();
 	bool isCharacterDehydrated();*/
