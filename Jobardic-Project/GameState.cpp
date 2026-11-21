@@ -1,17 +1,26 @@
 #include "GameStates.h"
+#include "GameState.h"
 #include <string>
 #include <iostream>
 #include "InputHandler.h"
 
 
-GameStates warning(std::string userInput) {
+GameStates GameState::gameStateTest(std::string userInput) {
 
 	GameStates gameState = GameStates::Null;
 	do {
 
 		if (userInput == "restart") {
 
-			std::cout << "warning you are about to restart y/n?";
+			std::cout << "\033[41m  \033[40m \033[41m   \033[40m \033[41m   \033[40m \033[41m   \033[40m   \033[41m \033[40m \033[41m  \033[40m \033[41m \033[40m   \033[41m  \033[40m \033[41m  \033[40m \033[41m  \033[40m   \033[41m   \033[40m \033[41m  \n";
+			//                     w                           w             a     a            r      r              n                        n           i     i             n                        n            g     g               !     !                                    
+			std::cout << "\033[41m  \033[40m \033[41m   \033[40m \033[41m  \033[40m \033[41m \033[40m \033[41m  \033[40m \033[41m \033[40m \033[41m \033[40m  \033[41m \033[40m \033[41m  \033[40m \033[41m   \033[40m  \033[41m \033[40m \033[41m \033[40m \033[41m   \033[40m \033[41m  \033[40m \033[41m  \n";
+			//                     w                           w            a                       a            r                       r           n                        n            i     i             n                        n           g                         g            !     !  
+			std::cout << "\033[41m  \033[40m \033[41m   \033[40m \033[41m  \033[40m \033[41m \033[40m \033[41m  \033[40m  \033[41m  \033[40m \033[41m \033[40m  \033[41m  \033[40m \033[41m   \033[40m \033[41m \033[40m  \033[41m \033[40m \033[41m   \033[40m \033[41m  \033[40m \033[41m  \n";
+			//                     w                           w            a                       a            r     r             n                       n             i     i             n                       n            g                         g            !     !  
+			std::cout << "\033[41m  \033[40m \033[41m \033[40m \033[41m \033[40m \033[41m \033[40m     \033[41m \033[40m \033[41m \033[40m \033[41m \033[40m \033[41m  \033[40m \033[41m  \033[40m \033[41m   \033[40m \033[41m  \033[40m \033[41m \033[40m \033[41m  \033[40m  \033[41m  \033[40m \033[41m  \n";
+			//                     w                                           w            a     a              r                       r           n                        n            i     i             n                        n           g                        g             !     !  
+			std::cout << " you are about to restart y/n?";
 
 			if (InputHandler::getAndCompareUserInput("yes")) {
 				gameState = GameStates::Restart;
