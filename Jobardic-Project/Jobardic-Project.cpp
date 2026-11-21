@@ -15,6 +15,9 @@
 #include "UI.h"
 #include "World.h"
 #include "Time.h"
+#include "GameStates.h"
+#include <cstdlib>
+#include "GameState.h"
 
 void PrintDeathScreen(std::string reason);
 
@@ -23,6 +26,7 @@ int main()
 {
     srand(time(0));
 	bool restartGame = true;
+    GameStates gameState = GameStates::Running;
 
     while (restartGame){
         restartGame = false;
@@ -32,7 +36,7 @@ int main()
         InputChoice progress("Type \"Continue\" to Continue");
         std::vector<InputChoice*> choices = { &progress };
         InputPrompts opening(choices);
-        std::string openingDesc = "You wake in your bedroom ready to start the day.\nYou turn on your radio to listen to the news while you get dressed.\n\n\"\033[1mBreaking News : There has been an explosion on the moon. It is as of yet unknown how this event came to be but\nscientists warn that the resulting loss in velocity will cause the moon to descend to earth. Astrophysicists and\nastronauts across the world are working hard to prevent what could be a modern day Chicxulub. Now for the weather...\033[0m\"\n\nYou turn off the radio and stand in disbelief.After the shock has washed over you you decide to get moving. If the\nmoon is really falling you should probably prepare.\n\n";
+        std::string openingDesc = "You\033[103m \033[0mwake in your bedroom ready to start the day.\nYou turn on your radio to listen to the news while you get dressed.\n\n\"\033[1mBreaking News : There has been an explosion on the moon. It is as of yet unknown how this event came to be but\nscientists warn that the resulting loss in velocity will cause the moon to descend to earth. Astrophysicists and\nastronauts across the world are working hard to prevent what could be a modern day Chicxulub. Now for the weather...\033[0m\"\n\nYou turn off the radio and stand in disbelief.After the shock has washed over you you decide to get moving. If the\nmoon is really falling you should probably prepare.\n\n";
         Location* start = world->World::findLocation(World::LOCATION_ENUMS::HOME_BACKDOOR);
 
         StoryEvent* openingSequence = new StoryEvent(openingDesc, start, &opening);
@@ -69,6 +73,8 @@ int main()
 
         //std::string playerInput;
         //bool validInput = false;
+
+        GameStates gameState = GameStates::Running;
 
         system("cls");
         std::cout << std::endl;
@@ -127,6 +133,8 @@ int main()
         std::cout << "==== Inventory" << std::endl;
         std::cout << "==== Wait" << std::endl;  // new player action: waiting
         std::cout << "==== Drop" << std::endl;  // new player action: dropping item
+        std::cout << "==== Restart" << std::endl; 
+        std::cout << "==== Quit" << std::endl;  
 		if (world->findLocation(player.getCurrentLocation())->canPlayerSleepHere()) {
             std::cout << "==== Sleep" << std::endl;
 		}
@@ -365,6 +373,10 @@ int main()
             }            
         }
 
+        else if (playerAction == "restart" || playerAction == "quit") {
+            gameState = GameState::warning(playerAction);
+        }
+
         else if (playerAction != "") {
             std::cout << "I don't know what you mean! Try again" << std::endl;
             InputHandler::waitForUser();
@@ -380,7 +392,11 @@ int main()
 			std::cout << "You have run out of energy and can no longer continue your journey." << std::endl;
 			break;
 		}
-    } while (true);
+    } while (gameState == GameStates::Running);
+
+    if (gameState == GameStates::Restart) {
+        restartGame = true;
+    }
 
     if (player.isCharacterDead()) {
 
@@ -417,6 +433,13 @@ int main()
             }
         }
     }
+    else if (gameState == GameStates::Restart) {
+        restartGame = true;
+    }
+    else if (gameState == GameStates::Quit) {
+        //std::exit(0);
+    }
+
 
     delete world;
 
