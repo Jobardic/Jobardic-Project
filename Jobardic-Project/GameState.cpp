@@ -4,6 +4,7 @@
 #include <iostream>
 #include "InputHandler.h"
 
+#include <windows.h>
 
 GameStates GameState::gameStateTest(std::string userInput) {
 
@@ -14,16 +15,26 @@ GameStates GameState::gameStateTest(std::string userInput) {
 		if (userInput == "restart") {
 
 			system("cls");
-			warning();
+			//warning();
+			std::cout << "\033[41m  \033[40m \033[41m   \033[40m \033[41m   \033[40m \033[41m   \033[40m   \033[41m \033[40m \033[41m  \033[40m \033[41m \033[40m   \033[41m  \033[40m \033[41m  \033[40m \033[41m  \033[40m   \033[41m   \033[40m \033[41m  \n";
+			//                     w                           w             a     a            r      r              n                        n           i     i             n                        n            g     g               !     !                                    
+			std::cout << "\033[41m  \033[40m \033[41m   \033[40m \033[41m  \033[40m \033[41m \033[40m \033[41m  \033[40m \033[41m \033[40m \033[41m \033[40m  \033[41m \033[40m \033[41m  \033[40m \033[41m   \033[40m  \033[41m \033[40m \033[41m \033[40m \033[41m   \033[40m \033[41m  \033[40m \033[41m  \n";
+			//                     w                           w            a                       a            r                       r           n                        n            i     i             n                        n           g                         g            !     !  
+			std::cout << "\033[41m  \033[40m \033[41m   \033[40m \033[41m  \033[40m \033[41m \033[40m \033[41m  \033[40m  \033[41m  \033[40m \033[41m \033[40m  \033[41m  \033[40m \033[41m   \033[40m \033[41m \033[40m  \033[41m \033[40m \033[41m      \033[40m \033[41m  \n";
+			//                     w                           w            a                       a            r     r             n                       n             i     i             n                       n            g              g       !     !  
+			std::cout << "\033[41m  \033[40m \033[41m \033[40m \033[41m \033[40m \033[41m \033[40m     \033[41m \033[40m \033[41m \033[40m \033[41m \033[40m \033[41m  \033[40m \033[41m  \033[40m \033[41m   \033[40m \033[41m  \033[40m \033[41m \033[40m \033[41m  \033[40m  \033[41m     \n";
+			//                     w                                           w            a     a              r                       r           n                        n            i     i             n                        n           g                        g             !     !  
+			std::cout << "\033[41m   \033[40m \033[41m \033[40m \033[41m  \033[40m \033[41m   \033[40m \033[41m \033[40m \033[41m \033[40m \033[41m \033[40m \033[41m  \033[40m \033[41m \033[40m   \033[41m  \033[40m \033[41m  \033[40m \033[41m  \033[40m    \033[41m  \033[40m \033[41m  \n\033[40m \033[0m \n";
+			//                       w                        w           a                         a          r                       r           n                        n            i     i              n                        n            g     g               !     !  
 			std::cout << " you are about to restart y/n?\n";
 
 			if (InputHandler::getAndCompareUserInput("yes")) {
 				gameState = GameStates::Restart;
-				std::cout << "boink";
+				OutputDebugStringA("boink");
 			}
 			else if (InputHandler::getAndCompareUserInput("no")) {
 				gameState = GameStates::Running;
-				std::cout << "boink";
+				OutputDebugStringA("boink");
 			}
 			else {
 				std::cout << "Please chooose a valid option.\n";
@@ -34,15 +45,25 @@ GameStates GameState::gameStateTest(std::string userInput) {
 		else if (userInput == "quit") {
 
 			system("cls");
-			warning();
+			//warning();
+			std::cout << "\033[41m  \033[40m \033[41m   \033[40m \033[41m   \033[40m \033[41m   \033[40m   \033[41m \033[40m \033[41m  \033[40m \033[41m \033[40m   \033[41m  \033[40m \033[41m  \033[40m \033[41m  \033[40m   \033[41m   \033[40m \033[41m  \n";
+			//                     w                           w             a     a            r      r              n                        n           i     i             n                        n            g     g               !     !                                    
+			std::cout << "\033[41m  \033[40m \033[41m   \033[40m \033[41m  \033[40m \033[41m \033[40m \033[41m  \033[40m \033[41m \033[40m \033[41m \033[40m  \033[41m \033[40m \033[41m  \033[40m \033[41m   \033[40m  \033[41m \033[40m \033[41m \033[40m \033[41m   \033[40m \033[41m  \033[40m \033[41m  \n";
+			//                     w                           w            a                       a            r                       r           n                        n            i     i             n                        n           g                         g            !     !  
+			std::cout << "\033[41m  \033[40m \033[41m   \033[40m \033[41m  \033[40m \033[41m \033[40m \033[41m  \033[40m  \033[41m  \033[40m \033[41m \033[40m  \033[41m  \033[40m \033[41m   \033[40m \033[41m \033[40m  \033[41m \033[40m \033[41m      \033[40m \033[41m  \n";
+			//                     w                           w            a                       a            r     r             n                       n             i     i             n                       n            g              g       !     !  
+			std::cout << "\033[41m  \033[40m \033[41m \033[40m \033[41m \033[40m \033[41m \033[40m     \033[41m \033[40m \033[41m \033[40m \033[41m \033[40m \033[41m  \033[40m \033[41m  \033[40m \033[41m   \033[40m \033[41m  \033[40m \033[41m \033[40m \033[41m  \033[40m  \033[41m     \n";
+			//                     w                                           w            a     a              r                       r           n                        n            i     i             n                        n           g                        g             !     !  
+			std::cout << "\033[41m   \033[40m \033[41m \033[40m \033[41m  \033[40m \033[41m   \033[40m \033[41m \033[40m \033[41m \033[40m \033[41m \033[40m \033[41m  \033[40m \033[41m \033[40m   \033[41m  \033[40m \033[41m  \033[40m \033[41m  \033[40m    \033[41m  \033[40m \033[41m  \n\033[40m \033[0m \n";
+			//                       w                        w           a                         a          r                       r           n                        n            i     i              n                        n            g     g               !     !  
 			std::cout << "warning you are about to quit y/n?\n";
 			if (InputHandler::getAndCompareUserInput("yes")) {
 				gameState = GameStates::Quit;
-				std::cout << "boink";
+				OutputDebugStringA("boink");
 			}
 			else if (InputHandler::getAndCompareUserInput("no")) {
 				gameState = GameStates::Running;
-				std::cout << "boink";
+				OutputDebugStringA("boink");
 			}
 			else {
 				std::cout << "Please chooose a valid option.\n";
