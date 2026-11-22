@@ -43,6 +43,16 @@
                     e.g {"big house", BIG_HOUSE_ONE},{"big house", BIG_HOUSE_TWO} will not work
                     but {"big house", BIG_HOUSE},{"bh", BIG_HOUSE} will work.
 
+	To add objects to the world:
+		1) create a new object in the World() constructor function
+			e.g Object* newObject = new Object("object name", "object description");
+		2) add the desired number copies of the object to the desired locations using the placeObjects() function
+			e.g placeObjects(newObject, {LOCATION_ENUM1, LOCATION_ENUM2}, 2, false);
+				- the first argument is the object pointer
+				- the second argument is a vector of location enums where the object can be placed
+				- the third argument is how many copies of the object to place in random locations from the provided vector
+				- the fourth argument is a bool for if duplicates are allowed (e.g if true, all copies could be placed in one location, if false, each copy will be placed in a different location)
+
 */
 
 //World Constructor
@@ -114,6 +124,7 @@ World::World() {
     Object* lo_mein = new Object("Box of Lo Mein", "A meal that can last you a day");
     Object* broccoli_bag = new Object("Bag of Broccoli", "A vegetable that can last you a day");
     Object* carrot_bag = new Object("Bag of Carrots", "A vegetable that can last you a day");
+    Object* tree_branch = new Object("Tree Branch", "A branch fallen from a tree nearby, could be used as a weapon");
 
     Object* foodLoot[10] = {burger, cabbage, potato_bag, sandwich, corn_bag, rice_bag, chicken_bucket, lo_mein, broccoli_bag, carrot_bag};
     //Array of food that is used for loot generation
@@ -189,8 +200,8 @@ World::World() {
     addConnectedLocation(SOUTH_HUESTON_AVE, THREE_HUESTON_AVE_FRONT_DOOR);
     addConnectedLocation(THREE_HUESTON_AVE_FRONT_DOOR, SOUTH_HUESTON_AVE);
 
-	addConnectedLocation(HOME_BACKYARD, WATER_WELL);
-	addConnectedLocation(WATER_WELL, HOME_BACKYARD);
+    addConnectedLocation(HOME_BACKYARD, WATER_WELL);
+    addConnectedLocation(WATER_WELL, HOME_BACKYARD);
 
     addConnectedLocation(FIVE_HUESTON_AVE_FRONT_DOOR, THREE_HUESTON_AVE_FRONT_DOOR);
     addConnectedLocation(THREE_HUESTON_AVE_FRONT_DOOR, FIVE_HUESTON_AVE_FRONT_DOOR);
@@ -252,23 +263,25 @@ World::World() {
     addConnectedLocation(NORTHERN_FOREST_EDGE, TOWN_PARK);
     addConnectedLocation(TOWN_PARK, NORTHERN_FOREST_EDGE);
 
+    // NEW: Place objects in the world by calling placeObjects()
+    
+    placeObjects(chewtoy, { HOME_BACKDOOR }, 1, false);
+    placeObjects(burger, { HOME_KITCHEN }, 1, false);
+    placeObjects(dog, { EASTERN_FOREST_EDGE, WESTERN_FOREST_EDGE, NORTHERN_FOREST_EDGE, SOUTHERN_FOREST_EDGE, INNER_WOODS }, 1, false);
+    placeObjects(firewood, { FOUR_LINCOLN_COURT_FRONT_DOOR, FIVE_HUESTON_AVE_FRONT_DOOR }, 2, false);
+    placeObjects(coal, { TWELVE_HUESTON_AVE_FRONT_DOOR }, 1, false);
+	placeObjects(fire_axe, { THREE_HUESTON_AVE_FRONT_DOOR }, 1, false);
+	placeObjects(half_generator, { THREE_HUESTON_AVE_LIVING_ROOM }, 1, false);
+	placeObjects(potato_sack, { ONE_HUESTON_AVE_FRONT_DOOR }, 1, false);
+	placeObjects(wooden_planks, { ONE_TWELVE_MAIN_STREET_SIDE_DOOR }, 1, false);
+	placeObjects(burger_bag, { TOWN_DINER_BACKLOT }, 1, false);
+	placeObjects(dog_food_bag, { GROCERY_STORE_ENTRANCE }, 1, false);
+	placeObjects(silver_key, { GROCERY_STORE_BACKLOT }, 1, false);
+	placeObjects(wallet, { ARCADE_ALLEY }, 1, false);
+	placeObjects(cabbage, { TOWN_GARDEN }, 1, false);
+	placeObjects(bucket, { HOME_BATHROOM }, 1, false);
+	placeObjects(tree_branch, { SOUTHERN_FOREST_EDGE, WESTERN_FOREST_EDGE, EASTERN_FOREST_EDGE, NORTHERN_FOREST_EDGE, INNER_WOODS }, 4, true);
 
-    findLocation(HOME_BACKDOOR)->addLocationObject(chewtoy);
-    findLocation(HOME_KITCHEN)->addLocationObject(burger);
-    findLocation(EASTERN_FOREST_EDGE)->addLocationObject(dog);
-    findLocation(FOUR_LINCOLN_COURT_FRONT_DOOR)->addLocationObject(firewood);
-    findLocation(TWELVE_HUESTON_AVE_FRONT_DOOR)->addLocationObject(coal);
-    findLocation(FIVE_HUESTON_AVE_FRONT_DOOR)->addLocationObject(firewood);
-    findLocation(THREE_HUESTON_AVE_FRONT_DOOR)->addLocationObject(fire_axe);
-    findLocation(THREE_HUESTON_AVE_LIVING_ROOM)->addLocationObject(half_generator);
-    findLocation(ONE_HUESTON_AVE_FRONT_DOOR)->addLocationObject(potato_bag);
-    findLocation(ONE_TWELVE_MAIN_STREET_SIDE_DOOR)->addLocationObject(wooden_planks);
-    findLocation(TOWN_DINER_BACKLOT)->addLocationObject(sandwich);
-    findLocation(GROCERY_STORE_ENTRANCE)->addLocationObject(dog_food_bag);
-    findLocation(GROCERY_STORE_BACKLOT)->addLocationObject(silver_key);
-    findLocation(ARCADE_ALLEY)->addLocationObject(wallet);
-    findLocation(TOWN_GARDEN)->addLocationObject(cabbage);
-    findLocation(HOME_BATHROOM)->addLocationObject(bucket);
     randomizeFood(foodLoot);
 }
 
@@ -363,6 +376,16 @@ void World::outputLocationConnections(LOCATION_ENUMS loc_enum) {
     }
 }
 
+void World::placeObjects(Object* object, std::vector<LOCATION_ENUMS> locations, int copies, bool duplicates) {
+    for (int i = 0; i < copies; i++) {
+		int randLocationIndex = rand() % locations.size();
+		LOCATION_ENUMS randLocationEnum = locations[randLocationIndex];
+        findLocation(randLocationEnum)->addLocationObject(object);
+        if (!duplicates && (copies - i) <= locations.size()) {      // extra check just in case function is called with duplicates = false and more copies than locations in vector
+            locations.erase(locations.begin() + randLocationIndex);
+        }
+    }
+}
 
 void World::addConnectedLocation(LOCATION_ENUMS loc_enum1, LOCATION_ENUMS loc_enum2) {
     if (isLocationConnected(loc_enum1,loc_enum2) == false) {                  //IF loc_enum2 isn't already connected to loc_enum1...    (and isLocationConnected already returns false if one or both location enums are invalid)
