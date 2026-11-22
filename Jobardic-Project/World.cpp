@@ -272,9 +272,7 @@ World::World() {
     placeObjects(coal, { TWELVE_HUESTON_AVE_FRONT_DOOR }, 1, false);
 	placeObjects(fire_axe, { THREE_HUESTON_AVE_FRONT_DOOR }, 1, false);
 	placeObjects(half_generator, { THREE_HUESTON_AVE_LIVING_ROOM }, 1, false);
-	placeObjects(potato_sack, { ONE_HUESTON_AVE_FRONT_DOOR }, 1, false);
 	placeObjects(wooden_planks, { ONE_TWELVE_MAIN_STREET_SIDE_DOOR }, 1, false);
-	placeObjects(burger_bag, { TOWN_DINER_BACKLOT }, 1, false);
 	placeObjects(dog_food_bag, { GROCERY_STORE_ENTRANCE }, 1, false);
 	placeObjects(silver_key, { GROCERY_STORE_BACKLOT }, 1, false);
 	placeObjects(wallet, { ARCADE_ALLEY }, 1, false);
