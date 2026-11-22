@@ -66,7 +66,7 @@ int main()
         //===================================================================================================
         bool wellDry = false;
         bool bucketFilled = false;
-    
+        GameStates gameState = GameStates::Running;
     
         do 
         {
@@ -74,7 +74,7 @@ int main()
             //std::string playerInput;
             //bool validInput = false;
 
-            GameStates gameState = GameStates::Running;
+            
 
             system("cls");
             std::cout << std::endl;
