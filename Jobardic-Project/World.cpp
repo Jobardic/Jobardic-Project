@@ -126,9 +126,9 @@ World::World() {
 
 
     Object* weather_report_letter = new Object("NOAA Report Letter", "\"WEATHER ADVISORY:\n   Residents are advised to stay indoors and exercise caution for the next 48 hours\n   due to predicted incoming heavy rainfall and thunder\"");
-    int weather_report_time[3] = { 0,0,1 }; //Day 2, Hour 0, Minute 0
+    int weather_report_time[3] = { 2,0,0 }; //Day 2, Hour 0, Minute 0
     std::unordered_map<World::LOCATION_ENUMS, std::vector<Object*>> weather_report_objects = { 
-        {HOME_BEDROOM,{weather_report_letter}}
+        {HOME_FRONTPORCH,{weather_report_letter}}
     };
     StoryEvent* addWeatherReportToMailboxEvent = new StoryEvent(weather_report_time,weather_report_objects, this);
     EventManager::addEvent(addWeatherReportToMailboxEvent);
