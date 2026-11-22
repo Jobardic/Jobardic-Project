@@ -385,8 +385,9 @@ void World::randomizeLoot(Object** lootArray) { // Iterates over all the locatio
     srand(time(0)); //randomizes the chance
     for (int fooInt = HOME_BEDROOM; fooInt != INVALID_LOCATION; fooInt++) { //Invalid Location must be the last location for this to work
         LOCATION_ENUMS foo = static_cast<LOCATION_ENUMS>(fooInt); //turns the "index" into the enum
+        int num = rand();
         if (rand() % 101 < ((findLocation(foo)->getLootChance()) * 100)) { //if random chance is within the % chance of the location, put food there
-            findLocation(foo)->addLocationObject(new Object(lootArray[rand() % 10]->getName(), lootArray[rand() % 10]->getDescription())); //assigns a random food to the location
+            findLocation(foo)->addLocationObject(new Object(lootArray[num % 10]->getName(), lootArray[num % 10]->getDescription())); //assigns a random food to the location
         }
     }
 }
