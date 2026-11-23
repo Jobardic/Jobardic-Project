@@ -6,7 +6,7 @@
 class Location
 {
 public:
-	Location(std::string name, std::string description, bool allowsSleep, bool isIndoors); // two new parameters for if the player can sleep here, and if the location is indoors
+	Location(std::string name, std::string description, bool allowsSleep, bool isIndoors, float lootChanc); // two new parameters for if the player can sleep here, and if the location is indoors
 	Location(std::string name, std::string description, std::vector<Object*> locationObjects);
 	std::string getName();
 	std::string getDescription();
@@ -15,6 +15,7 @@ public:
 	void removeLocationObject(std::string objectName);
 	bool canPlayerSleepHere();  // Getter for allowsSleep
 	bool getIndoors();			// Getter for indoors
+	float getLootChance();			// Getter for the % chance of food loot
 	Object* findLocationObject(std::string objectName);
 	bool hasObject(std::string objectName);
 
@@ -22,6 +23,7 @@ private:
 	std::string name;
 	std::string description;
 	std::vector<Object*> locationObjects;
+	float lootChance = 0.0;
 	bool allowsSleep = false; // by default you shouldn't be able to sleep
 	bool indoors;
 };
