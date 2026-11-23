@@ -1,5 +1,6 @@
 #include "Time.h"
 #include "Character.h"
+#include "EventManager.h"
 
 int Time::day = START_DAY;
 int Time::hour = START_HOUR;
@@ -28,6 +29,8 @@ void Time::passTime(int hours, int minutes) {
 		hour -= 24;
 		day++;
 	}
+
+	EventManager::enactEvents();
 }
 
 std::string Time::clockString(int unit) {

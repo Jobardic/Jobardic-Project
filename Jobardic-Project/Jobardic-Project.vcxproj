@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="InputChoice.cpp" />
     <ClCompile Include="InputPrompts.cpp" />
@@ -155,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="Character.h" />
     <ClInclude Include="Commands.h" />
+    <ClInclude Include="EventManager.h" />
     <ClInclude Include="StoryEvent.h" />
     <ClInclude Include="InputChoice.h" />
     <ClInclude Include="InputPrompts.h" />
