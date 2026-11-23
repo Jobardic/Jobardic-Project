@@ -3,6 +3,9 @@
 #include <vector>
 #include "../Jobardic-Project/Location.h"
 #include "../Jobardic-Project/Object.h"
+#include "../Jobardic-Project/StoryEvent.h"
+#include "../Jobardic-Project/World.h"
+#include "../Jobardic-Project/EventManager.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -25,8 +28,8 @@ namespace UnitTest1
 			bool bedroomSleep = true;
 			bool roomSleep = false;
 
-			Location bedroom(bedroomName,bedroomDescription,bedroomSleep,false);
-			Location room(roomName, roomDescription, roomSleep,false);
+			Location bedroom(bedroomName,bedroomDescription,bedroomSleep,false,0.0f);
+			Location room(roomName, roomDescription, roomSleep,false,0.0f);
 
 			Assert::AreEqual(bedroomName, bedroom.getName(),L"Name constructor argument and name returned by getName() do not match");
 			Assert::AreEqual(bedroomDescription, bedroom.getDescription(), L"Description constructor argument and description returned by getDescription() do not match");
@@ -37,7 +40,7 @@ namespace UnitTest1
 		}
 		TEST_METHOD(LOCATION_OBJECT_MANIPULATION) //implementation may change significantly in the future
 		{
-			Location room("room name", "room description", false,false);
+			Location room("room name", "room description", false,false,0.0f);
 			Object object_A("A name","A description");
 			Object object_B("B name", "B description");
 			Object object_C("C name", "C description");
@@ -57,7 +60,7 @@ namespace UnitTest1
 		}
 		TEST_METHOD(LOCATION_OBJECT_REMOVAL_WITH_EMPTY_INVENTORY) 
 		{
-			Location room("room name", "room description", false,false);
+			Location room("room name", "room description", false,false,0.0f);
 			auto initialObjects = room.getLocationObjects();
 	
 			try {
@@ -69,5 +72,121 @@ namespace UnitTest1
 			}
 			
 		}
+
+		TEST_METHOD(STORY_EVENT_ADDSOBJECTSTOLOCATIONS_METHOD) {
+			World* world = new World();
+
+			Object* object = new Object("object name", "object description");
+			int time[3] = { 1,3,10 };
+			std::unordered_map<World::LOCATION_ENUMS, std::vector<Object*>> objects = {{World::HOME_BEDROOM,{object}}};
+			StoryEvent event(time,objects,world);
+			StoryEvent event_two(time, {}, world);
+
+			Assert::IsTrue(event.addsObjectsToLocations() == true,L"addObjectsToLocations() returned false when true was expected");
+			Assert::IsFalse(event_two.addsObjectsToLocations() == true, L"addObjectsToLocations() returned true when false was expected");
+		}
+		
+		TEST_METHOD(ITEM_STORY_EVENT_EXECUTION_AT_VARIOUS_TIMES) {
+			World* world = new World();
+
+			//Portion creating an event which is set to occur immediately, directly using Time::get... methods for the event's time threshold
+			Object* instant_event_object = new Object("instant event object", "object description");
+			int instant[3] = { Time::getDay(),Time::getHour(),Time::getMinute()};
+			std::unordered_map<World::LOCATION_ENUMS, std::vector<Object*>> objects = { {World::HOME_BEDROOM,{instant_event_object}} };
+			StoryEvent event(instant, objects, world);
+
+			event.attemptEvent();
+
+			//checks that the event's execution boolean has been switched to true
+			Assert::IsTrue(event.hasExecuted() == true);
+			//checks that the locationhas the object its supposed to have using hasObject()
+			Assert::IsTrue(world->findLocation(World::HOME_BEDROOM)->hasObject("instant event object") == true);
+			//extra check confirming hasObject worked properly; ToDo: seperate automated test for hasObject instead
+			Assert::IsTrue(world->findLocation(World::HOME_BEDROOM)->findLocationObject("instant event object") == instant_event_object);
+
+
+
+
+            //creating events with time thresholds later than initial starting time time. Testing three events for a later Day, Hour, and Minute seperately to confirm all 3 threshold values work properly
+			int day_one[3] = { Time::getDay() + 1,Time::getHour(),Time::getMinute() };
+			int hour_one[3] = { Time::getDay(),Time::getHour() + 1,Time::getMinute() };
+			int minute_one[3] = { Time::getDay(),Time::getHour(),Time::getMinute() + 1 };
+			World* world_two = new World();
+			World* world_three = new World();
+			World* world_four = new World();
+
+			StoryEvent event_two(day_one,objects,world_two);
+			StoryEvent event_three(hour_one, objects, world_three);
+			StoryEvent event_four(minute_one, objects, world_four);
+
+
+
+			//similar checks as above but confirming that they haven't executed yet.
+			event_two.attemptEvent();
+			Assert::IsFalse(event_two.hasExecuted() == true);
+			Assert::IsFalse(world_two->findLocation(World::HOME_BEDROOM)->hasObject("instant event object") == true);
+			Assert::IsFalse(world_two->findLocation(World::HOME_BEDROOM)->findLocationObject("instant event object") == instant_event_object);
+
+			event_three.attemptEvent();
+			Assert::IsFalse(event_three.hasExecuted() == true);
+			Assert::IsFalse(world_three->findLocation(World::HOME_BEDROOM)->hasObject("instant event object") == true);
+			Assert::IsFalse(world_three->findLocation(World::HOME_BEDROOM)->findLocationObject("instant event object") == instant_event_object);
+
+			event_four.attemptEvent();
+			Assert::IsFalse(event_four.hasExecuted() == true);
+			Assert::IsFalse(world_four->findLocation(World::HOME_BEDROOM)->hasObject("instant event object") == true);
+			Assert::IsFalse(world_four->findLocation(World::HOME_BEDROOM)->findLocationObject("instant event object") == instant_event_object);
+			
+		}
+		TEST_METHOD(ITEM_STORY_EVENT_GETTER_METHODS) {
+			World* world = new World();
+
+			int time[3] = {1,5,10};
+			StoryEvent event(time, {}, world);
+
+			
+			Assert::AreEqual(1,event.getDayThreshold());
+			Assert::AreEqual(5, event.getHourThreshold());
+			Assert::AreEqual(10, event.getMinuteThreshold());
+			Assert::AreEqual(false, event.hasExecuted());
+		}
+		//The following is more of a test of the EventManager as EventManager::enactEvents() executes after every Time::passTime() call.
+		//EventManager::enactEvents() runs attemptEvent() for all events added to it.
+	
+		TEST_METHOD(EVENTMANAGER_EXECUTION_WHEN_TIME_PASSES) {
+			World* world = new World();
+
+			//creating an event which is set to execute 3 hours after current time
+			Object* event_object = new Object("event object", "object description");
+			int time[3] = { Time::getDay(),Time::getHour()+3,Time::getMinute() };
+			std::unordered_map<World::LOCATION_ENUMS, std::vector<Object*>> objects = { {World::HOME_BEDROOM,{event_object}} };
+			StoryEvent* event = new StoryEvent(time, objects, world);
+
+			//Adding it to EventManager; Time::passTime()'s execution of EventManager:enactEvents() now includes the event created above
+			EventManager::addEvent(event);
+			
+			//checking that it hasnt immediately executed
+			Assert::IsFalse(event->hasExecuted() == true);
+			Assert::IsFalse(world->findLocation(World::HOME_BEDROOM)->hasObject("event object") == true);
+			Assert::IsFalse(world->findLocation(World::HOME_BEDROOM)->findLocationObject("event object") == event_object);
+
+			//checking that passTime doesn't immediately execute the event in the EventManager when the events time threshold hasnt been met
+			Time::passTime(1,0);
+			Assert::IsFalse(event->hasExecuted() == true);
+			Assert::IsFalse(world->findLocation(World::HOME_BEDROOM)->hasObject("event object") == true);
+			Assert::IsFalse(world->findLocation(World::HOME_BEDROOM)->findLocationObject("event object") == event_object);
+
+			//checking that the event now executes as the time threshold has been met
+			Time::passTime(2,0);
+			Assert::IsTrue(event->hasExecuted() == true);
+			Assert::IsTrue(world->findLocation(World::HOME_BEDROOM)->hasObject("event object") == true);
+			Assert::IsTrue(world->findLocation(World::HOME_BEDROOM)->findLocationObject("event object") == event_object);
+
+
+		}
+
+
+
+
 	};
 }
