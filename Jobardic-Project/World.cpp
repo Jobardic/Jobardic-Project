@@ -114,8 +114,15 @@ World::World() {
     Object* lo_mein = new Object("Box of Lo Mein", "A meal that can last you a day");
     Object* broccoli_bag = new Object("Bag of Broccoli", "A vegetable that can last you a day");
     Object* carrot_bag = new Object("Bag of Carrots", "A vegetable that can last you a day");
+    Object* water_bottle = new Object("Bottle of Water", "A plastic bottle of water to quench your thirst");
+    Object* iced_tea = new Object("Bottle of Iced Tea", "A bottle of sweet iced tea that can fill your thirst");
+    Object* fruit_juice = new Object("Bottle of Fruit Juice", "A bottle of fruit juice that can fill your thirst");
+    Object* coffee = new Object("Can of Coffee", "A can of coffee to give you energy for the day");
+    Object* sports_drink = new Object("Sports drink", "A sports drink that can give you energy for the day");
 
-    Object* foodLoot[10] = {burger, cabbage, potato_bag, sandwich, corn_bag, rice_bag, chicken_bucket, lo_mein, broccoli_bag, carrot_bag};
+    Object* foodLoot[10] = { burger, cabbage, potato_bag, sandwich, corn_bag, rice_bag, chicken_bucket, lo_mein, broccoli_bag, carrot_bag };
+    //Array of food that is used for loot generation
+    Object* drinkLoot[10] = { water_bottle, water_bottle, water_bottle, water_bottle, water_bottle, water_bottle, iced_tea, fruit_juice, coffee, sports_drink };
     //Array of food that is used for loot generation
 
     //ToDo: combine the connected location adding & item adding w/ createLocation() function
@@ -269,7 +276,8 @@ World::World() {
     findLocation(ARCADE_ALLEY)->addLocationObject(wallet);
     findLocation(TOWN_GARDEN)->addLocationObject(cabbage);
     findLocation(HOME_BATHROOM)->addLocationObject(bucket);
-    randomizeFood(foodLoot);
+    randomizeLoot(foodLoot);
+    randomizeLoot(drinkLoot);
 }
 
 void World::createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep, bool isIndoors, float lootChance) {
@@ -373,12 +381,13 @@ void World::addConnectedLocation(LOCATION_ENUMS loc_enum1, LOCATION_ENUMS loc_en
     }
 }
 
-void World::randomizeFood(Object** lootArray) { // Iterates over all the locations
+void World::randomizeLoot(Object** lootArray) { // Iterates over all the locations
     srand(time(0)); //randomizes the chance
     for (int fooInt = HOME_BEDROOM; fooInt != INVALID_LOCATION; fooInt++) { //Invalid Location must be the last location for this to work
         LOCATION_ENUMS foo = static_cast<LOCATION_ENUMS>(fooInt); //turns the "index" into the enum
-        if (rand()%101 < ((findLocation(foo)->getLootChance())*100)) { //if random chance is within the % chance of the location, put food there
-            findLocation(foo)->addLocationObject(new Object(lootArray[rand() % 10]->getName(), lootArray[rand() % 10]->getDescription())); //assigns a random food to the location
+        int num = rand();
+        if (rand() % 101 < ((findLocation(foo)->getLootChance()) * 100)) { //if random chance is within the % chance of the location, put food there
+            findLocation(foo)->addLocationObject(new Object(lootArray[num % 10]->getName(), lootArray[num % 10]->getDescription())); //assigns a random food to the location
         }
     }
 }

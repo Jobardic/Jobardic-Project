@@ -86,8 +86,9 @@ public:
 	bool isValidLocation(LOCATION_ENUMS loc_enum);
 	bool isLocationConnected(LOCATION_ENUMS loc_enum1, LOCATION_ENUMS loc_enum2);
 	void outputLocationConnections(LOCATION_ENUMS loc_enum);
-	void randomizeFood(Object** lootArray);
+	void randomizeLoot(Object** lootArray);
 	Object* foodLoot[10] = {}; //forward declared so it can be referenced in Jobardic-Project.cpp
+	Object* drinkLoot[10] = {}; //forward declared so it can be referenced in Jobardic-Project.cpp
 
 private:
 	void createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep, bool isIndoors, float lootChance); // two bool values are for if the player can sleep, and if the location is indoors
