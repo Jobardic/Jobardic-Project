@@ -89,7 +89,7 @@ public:
 	void outputLocationConnections(LOCATION_ENUMS loc_enum);
 	void placeObjects(Object* object, std::vector<LOCATION_ENUMS> locations, int copies, bool duplicates);
 	
-	void randomizeFood(Object** lootArray);
+	void randomizeLoot(Object** lootArray);
 	Object* foodLoot[10] = {}; //forward declared so it can be referenced in Jobardic-Project.cpp
 	Object* drinkLoot[10] = {}; //forward declared so it can be referenced in Jobardic-Project.cpp
 

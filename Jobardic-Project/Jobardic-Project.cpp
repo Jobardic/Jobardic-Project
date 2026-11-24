@@ -420,6 +420,7 @@ int main()
     }
 
     delete world;
+	Time::resetTime(); // ensure time is reset for the next game loop if the player chooses to restart
 
     } // End restart loop
 

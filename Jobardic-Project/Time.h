@@ -13,7 +13,8 @@
 ///		getHour() - returns the current hour
 ///		getMinute() - returns the current minute
 ///		passTime(int hours, int minutes) - accepts an integer number of hours and minutes to pass, and updates time accordingly
-///		string timeDisplay() - returns a string with the current day and time in the format "Day X HH:MM"
+///		resetTime() - resets the time to the starting day and hour
+///		timeDisplay() - returns a string with the current day and time in the format "Day X HH:MM"
 
 class Character;
 
@@ -32,6 +33,7 @@ public:
 	static int getHour();
 	static int getMinute();
 	static void passTime(int hours, int minutes);
+	static void resetTime();
 	static std::string timeDisplay();
 };
 

@@ -306,8 +306,8 @@ World::World() {
 	placeObjects(bucket, { HOME_BATHROOM }, 1, false);
 	placeObjects(tree_branch, { SOUTHERN_FOREST_EDGE, WESTERN_FOREST_EDGE, EASTERN_FOREST_EDGE, NORTHERN_FOREST_EDGE, INNER_WOODS }, 4, true);
 
-    randomizeFood(foodLoot);
-    randomizeFood(drinkLoot);
+    randomizeLoot(foodLoot);
+    randomizeLoot(drinkLoot);
 }
 
 void World::createLocation(LOCATION_ENUMS location_enum, std::string name, std::string description, bool allowsSleep, bool isIndoors, float lootChance) {

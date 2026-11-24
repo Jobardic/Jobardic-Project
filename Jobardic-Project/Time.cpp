@@ -33,6 +33,12 @@ void Time::passTime(int hours, int minutes) {
 	EventManager::enactEvents();
 }
 
+void Time::resetTime() {
+	day = START_DAY;
+	hour = START_HOUR;
+	minute = START_MINUTE;
+}
+
 std::string Time::clockString(int unit) {
 	int initalClockValue = unit;
 	if (unit < 10) {
