@@ -1,6 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include <string>
+#include <vector>
 #include <random>
 #include <ctime>
 #include "Location.h"
@@ -11,13 +12,13 @@ class World
 {
 	/*
 	* public methods
-	*	World()                                              - constructor, no arguments.
-	*   findLocation(string)                                 - returns the enum of the location which maps t the passed string. returns INVALID_LOCATION if none are found. passed string is processed to remove preceding/following white spaces & remove capitalization.
-	*   findLocation(LOCATION_ENUMS)                         - returns a pointer to the location class instance which maps to the passed enum. returns nullptr if none are found.
-	*   locationString(LOCATION_ENUMS)                       - returns the name of the location class instance which maps to the passed enum. returns "INVALID_LOCATION" if none are found.
-	*   isLocationConnected(LOCATION_ENUMS, LOCATION_ENUMS)  - returns true if the second location is connected to the first location (e.g player can move from location1 -> location2)), returns false if not or if invalid location(s) passed.
-	*   outputLocationConnections(LOCATION_ENUMS)            - prints the names of the connected locations of the  location class instance which maps to the passed enum
-	* 
+	*	World()													 - constructor, no arguments.
+	*   findLocation(string)									 - returns the enum of the location which maps t the passed string. returns INVALID_LOCATION if none are found. passed string is processed to remove preceding/following white spaces & remove capitalization.
+	*   findLocation(LOCATION_ENUMS)							 - returns a pointer to the location class instance which maps to the passed enum. returns nullptr if none are found.
+	*   locationString(LOCATION_ENUMS)							 - returns the name of the location class instance which maps to the passed enum. returns "INVALID_LOCATION" if none are found.
+	*   isLocationConnected(LOCATION_ENUMS, LOCATION_ENUMS)		 - returns true if the second location is connected to the first location (e.g player can move from location1 -> location2)), returns false if not or if invalid location(s) passed.
+	*   outputLocationConnections(LOCATION_ENUMS)				 - prints the names of the connected locations of the  location class instance which maps to the passed enum
+	*	placeObjects(Object*, vector<LOCATION_ENUMS>, int, bool) - places copies the provided object into random locations in the provided vector, bool determines if object can appear multiple times in one location (allows you to fill each location with exactly one object)
 	* private methods
 	*	createLocation(LOCATION_ENUMS,string,string,bool,bool)	- creates a new location class instance, mapped to the provided enum & initialized with the name (first string) and description (second string) provided, 
 																	plus if the location allwos sleep (first bool) and if it's indoors (second bool)
@@ -86,7 +87,9 @@ public:
 	bool isValidLocation(LOCATION_ENUMS loc_enum);
 	bool isLocationConnected(LOCATION_ENUMS loc_enum1, LOCATION_ENUMS loc_enum2);
 	void outputLocationConnections(LOCATION_ENUMS loc_enum);
-	void randomizeLoot(Object** lootArray);
+	void placeObjects(Object* object, std::vector<LOCATION_ENUMS> locations, int copies, bool duplicates);
+	
+	void randomizeFood(Object** lootArray);
 	Object* foodLoot[10] = {}; //forward declared so it can be referenced in Jobardic-Project.cpp
 	Object* drinkLoot[10] = {}; //forward declared so it can be referenced in Jobardic-Project.cpp
 
@@ -103,11 +106,11 @@ private:
 		{"home front porch", HOME_FRONTPORCH},
 		{"home back door", HOME_BACKDOOR},
 		{"home backyard", HOME_BACKYARD},
-		{"southern forest edge", SOUTHERN_FOREST_EDGE },
-		{"inner woods", INNER_WOODS },
-		{"western forest edge", WESTERN_FOREST_EDGE },
-		{"eastern forest edge", EASTERN_FOREST_EDGE },
-		{"northern forest edge", NORTHERN_FOREST_EDGE },
+		{"southern forest edge", SOUTHERN_FOREST_EDGE},{"sfe", SOUTHERN_FOREST_EDGE},{"southern edge", SOUTHERN_FOREST_EDGE},{"se", SOUTHERN_FOREST_EDGE},
+		{"inner woods", INNER_WOODS },{"iw", INNER_WOODS},{"woods", INNER_WOODS},
+		{"western forest edge", WESTERN_FOREST_EDGE},{"wfe", WESTERN_FOREST_EDGE},{"western edge", WESTERN_FOREST_EDGE},{"we", WESTERN_FOREST_EDGE},
+		{"eastern forest edge", EASTERN_FOREST_EDGE},{"efe", EASTERN_FOREST_EDGE},{"eastern edge", EASTERN_FOREST_EDGE},{"ee", EASTERN_FOREST_EDGE},
+		{"northern forest edge", NORTHERN_FOREST_EDGE},{"nfe", NORTHERN_FOREST_EDGE},{"northern edge", NORTHERN_FOREST_EDGE},{"ne", NORTHERN_FOREST_EDGE},
 		{"home lawn", HOME_LAWN },
 		{"lincoln court", LINCOLN_COURT },
 		{"3 lincoln court front door", THREE_LINCOLN_COURT_FRONT_DOOR },
@@ -135,7 +138,6 @@ private:
 		{"arcade alley", ARCADE_ALLEY},
 		{"town park", TOWN_PARK},
 		{"town garden", TOWN_GARDEN},
-
 		{"water well", WATER_WELL }, { "well", WATER_WELL }, {"water", WATER_WELL }, {"ww", WATER_WELL }
 	};
 
