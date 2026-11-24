@@ -13,8 +13,16 @@ namespace UnitTest1
 {
 	TEST_CLASS(UnitTest1)
 	{
+
 	public:
-		
+
+		//Important tech debt:
+		//Many test methods declare a new World specific to the test to guarentee everthing is reset to normal
+		//however, this presents the issue of technically causing a memory leak
+		//while we can easily delete the World class pointer itself, the object pointers and other dynamically allocated variables in the world class constructor will still linger around
+		//though since these are just automated tests run once and closed out by Visual Studio naturally we woludn't face any issues with it
+		//thus a proper destructor function is technically needed though the lack of it will mostly likely not impact us.
+
 		TEST_METHOD(HELLO)
 		{
 			Logger::WriteMessage("Hello Jobard Test Automation");
@@ -72,7 +80,35 @@ namespace UnitTest1
 			}
 			
 		}
+		TEST_METHOD(LOCATION_HASOBJECT_METHOD) {
+			Location room("room name", "room description", false, false, 0.0f);
+			Object object("object", "object description");
+			Object other_object("other object", "other object description");
 
+			//Tests that hasObject reflects that neither object are in the location yet
+			Assert::IsFalse(room.hasObject("object"));
+			Assert::IsFalse(room.hasObject("other object"));
+
+			//Tests thas hasObject reflects that the first object has been added and not the second
+			room.addLocationObject(&object);
+			Assert::IsTrue(room.hasObject("object"));
+			Assert::IsFalse(room.hasObject("other object"));
+
+			//Tests thas hasObject reflects that the second object has been added, now both are in the location
+			room.addLocationObject(&other_object);
+			Assert::IsTrue(room.hasObject("object"));
+			Assert::IsTrue(room.hasObject("other object"));
+
+			//Tests thas hasObject reflects that the first object has been removed, so only the second object is in the location
+			room.removeLocationObject("object");
+			Assert::IsFalse(room.hasObject("object"));
+			Assert::IsTrue(room.hasObject("other object"));
+
+			//Tests thas hasObject reflects that the second object has been removed, so neither object is in the location now
+			room.removeLocationObject("other object");
+			Assert::IsFalse(room.hasObject("object"));
+			Assert::IsFalse(room.hasObject("other object"));
+		}
 		TEST_METHOD(STORY_EVENT_ADDSOBJECTSTOLOCATIONS_METHOD) {
 			World* world = new World();
 
@@ -101,7 +137,7 @@ namespace UnitTest1
 			Assert::IsTrue(event.hasExecuted() == true);
 			//checks that the locationhas the object its supposed to have using hasObject()
 			Assert::IsTrue(world->findLocation(World::HOME_BEDROOM)->hasObject("instant event object") == true);
-			//extra check confirming hasObject worked properly; ToDo: seperate automated test for hasObject instead
+			//extra check confirming hasObject worked properly;
 			Assert::IsTrue(world->findLocation(World::HOME_BEDROOM)->findLocationObject("instant event object") == instant_event_object);
 
 
